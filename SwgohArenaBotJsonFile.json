@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Ely",
+    "comment": "",
+    "allyCode": "286931757",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "364574977455816725",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "blde2",
+    "comment": "",
+    "allyCode": "584651389",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "430332421154537503",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "suspendingbj",
+    "comment": "",
+    "allyCode": "118977722",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "401527809375338497",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "Kerch Kujac",
+    "comment": "",
+    "allyCode": "636752312",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "392479993810255872",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "UlicQelDroma11",
+    "comment": "",
+    "allyCode": "788721269",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "432966847491604490",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "Obi Erreip",
+    "comment": "",
+    "allyCode": "875224673",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "557970399963381760",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "Delmon Sid",
+    "comment": "",
+    "allyCode": "953816196",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "563079020179095554",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "spinogryz",
+    "comment": "",
+    "allyCode": "644411821",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "468089411012263977",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "chaze",
+    "comment": "",
+    "allyCode": "382494463",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "423762178705850368",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "Wedge",
+    "comment": "",
+    "allyCode": "392785594",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "570688254886805524",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "Zeeven",
+    "comment": "",
+    "allyCode": "971734255",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "508176588937101312",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "NBH Xard75",
+    "comment": "just a commment, not used by the bot",
+    "allyCode": "846764618",
+    "tagIdOnDrop": "461574456071028736",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnClimb": ""
+  },
+  {
+    "name": "",
+    "comment": "if skip:true -> bot will ignore this ally code",
+    "allyCode": "",
+    "tagIdOnDrop": "",
+    "tagIdOnClimb": "",
+    "userIcon": "",
+    "skip": true
+  },
+  {
+    "name": "",
+    "comment": "adding & in front of the discord id will tag the role",
+    "allyCode": "",
+    "tagIdOnDrop": "",
+    "tagIdOnClimb": "&000000000000000000",
+    "userIcon": ""
+  }
+]
