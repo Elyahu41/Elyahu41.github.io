@@ -106,10 +106,16 @@
   },
   {
     "name": "",
-    "comment": "adding & in front of the discord id will tag the role",
+    "comment": "adding & in front of the discord id will tag the role | enemies below",
     "allyCode": "",
     "tagIdOnDrop": "",
     "tagIdOnClimb": "&000000000000000000",
     "userIcon": ""
   }
+  {
+    "name": "JCBro",
+    "allyCode": "781945775",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "",
+  },
 ]
