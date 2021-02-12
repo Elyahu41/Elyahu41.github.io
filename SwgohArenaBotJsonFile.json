@@ -126,7 +126,8 @@
     "allyCode": "",
     "tagIdOnDrop": "",
     "tagIdOnClimb": "&000000000000000000",
-    "userIcon": ""
+    "userIcon": "",
+    "skip": true
   },
   {
     "name": "JCBro",
