@@ -13,6 +13,20 @@
     "userIcon": ":innocent:",
     "tagIdOnDrop": "430332421154537503"
   },
+   {
+    "name": "Jade Tigress",
+    "comment": "",
+    "allyCode": "727715284",
+    "userIcon": ":innocent:",
+    "tagIdOnDrop": "396522877630808069"
+  },
+  {
+    "name": "Kadre",
+    "comment": "",
+    "allyCode": "777531645",
+    "userIcon": ":innocent:",
+    "tagIdOnDrop": "378654515919978506"
+  },
   {
     "name": "wololo",
     "comment": "",
@@ -168,13 +182,6 @@
     "tagIdOnDrop": "557970399963381760"
   },
   {
-    "name": "Delmon Sid",
-    "comment": "",
-    "allyCode": "953816196",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "563079020179095554"
-  },
-  {
     "name": "spinogryz",
     "comment": "",
     "allyCode": "644411821",
@@ -233,6 +240,13 @@
     "allyCode": "221557637",
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
+  },
+  {
+    "name": "Delmon Sid",
+    "comment": "",
+    "allyCode": "953816196",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": "563079020179095554"
   },
   {
     "name": "Wedge",
