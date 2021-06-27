@@ -68,6 +68,7 @@
     "allyCode": "376553862",
     "userIcon": ":innocent:",
     "tagIdOnDrop": "834899414396567582"
+     "skip": true
   },
   {
     "name": "Delanor",
@@ -82,13 +83,6 @@
     "allyCode": "493269532",
     "userIcon": ":innocent:",
     "tagIdOnDrop": "795687346477334560"
-  },
-   {
-    "name": "Dark Black",
-    "comment": "",
-    "allyCode": "894112881  ",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "265977991786528770"
   },
    {
     "name": "a90s2cs",
@@ -246,13 +240,6 @@
     "tagIdOnDrop": "401527809375338497"
   },
   {
-    "name": "Kerch Kujac",
-    "comment": "",
-    "allyCode": "636752312",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "392479993810255872"
-  },
-  {
     "name": "UlicQelDroma11",
     "comment": "",
     "allyCode": "788721269",
@@ -280,13 +267,6 @@
     "userIcon": ":innocent:",
     "tagIdOnDrop": "508176588937101312",
     "skip": true
-  },
-  {
-    "name": "NBH Xard75",
-    "comment": "",
-    "allyCode": "846764618",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "461574456071028736"
   },
   {
     "name": "",
@@ -320,6 +300,13 @@
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
   },
+   {
+    "name": "Dark Black",
+    "comment": "",
+    "allyCode": "894112881  ",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
   {
     "name": "Delmon Sid",
     "comment": "",
@@ -331,6 +318,20 @@
     "comment": "",
     "allyCode": "864965953",
     "userIcon": ":skull_crossbones:",
+  },
+   {
+    "name": "NBH Xard75",
+    "comment": "",
+    "allyCode": "846764618",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+  {
+    "name": "Kerch Kujac",
+    "comment": "",
+    "allyCode": "636752312",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
   },
   {
     "name": "Obi Erreip",
