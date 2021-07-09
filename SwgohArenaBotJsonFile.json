@@ -7,13 +7,6 @@
     "tagIdOnDrop": "364574977455816725"
   },
   {
-    "name": "blde2",
-    "comment": "",
-    "allyCode": "584651389",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "430332421154537503"
-  },
-  {
     "name": "Hutasopi",
     "comment": "",
     "allyCode": "376553862",
@@ -205,13 +198,6 @@
     "tagIdOnDrop": "300586944059015171"
   },
   {
-    "name": "Hal 10000",
-    "comment": "",
-    "allyCode": "544975331",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "341614874301956097"
-  },
-  {
     "name": "Dark Barnak",
     "comment": "",
     "allyCode": "247228233 ",
@@ -338,6 +324,20 @@
     "comment": "",
     "allyCode": "875224673",
     "userIcon": ":skull_crossbones:",
+  },
+   {
+    "name": "blde2",
+    "comment": "",
+    "allyCode": "584651389",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+  {
+    "name": "Hal 10000",
+    "comment": "",
+    "allyCode": "544975331",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
   },
   {
     "name": "Wedge",
