@@ -132,7 +132,8 @@
     "comment": "",
     "allyCode": "546251642",
     "userIcon": ":innocent:",
-    "tagIdOnDrop": "557730282245980170"
+    "tagIdOnDrop": "557730282245980170",
+    "skip": true
   },
   {
     "name": "Hrip86",
@@ -217,13 +218,6 @@
     "allyCode": "113611225",
     "userIcon": ":innocent:",
     "tagIdOnDrop": "455713123538829314"
-  },
-  {
-    "name": "suspendingbj",
-    "comment": "",
-    "allyCode": "118977722",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "401527809375338497"
   },
   {
     "name": "UlicQelDroma11",
@@ -336,6 +330,13 @@
     "name": "Hal 10000",
     "comment": "",
     "allyCode": "544975331",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+   {
+    "name": "suspendingbj",
+    "comment": "",
+    "allyCode": "118977722",
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
   },
