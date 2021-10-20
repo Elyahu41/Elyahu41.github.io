@@ -150,13 +150,6 @@
     "tagIdOnDrop": "496419102752112640"
   },
   {
-    "name": "Pormath Alyan",
-    "comment": "",
-    "allyCode": "419761416",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "437960447178833950"
-  },
-  {
     "name": "Neihmo",
     "comment": "",
     "allyCode": "665918683",
@@ -337,6 +330,13 @@
     "name": "suspendingbj",
     "comment": "",
     "allyCode": "118977722",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+   {
+    "name": "Pormath Alyan",
+    "comment": "",
+    "allyCode": "419761416",
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
   },
