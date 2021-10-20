@@ -205,13 +205,6 @@
     "userIcon": ":innocent:",
     "tagIdOnDrop": "556642863354740736"
   },
-   {
-    "name": "OttiJR",
-    "comment": "",
-    "allyCode": "113611225",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "455713123538829314"
-  },
   {
     "name": "UlicQelDroma11",
     "comment": "",
@@ -337,6 +330,13 @@
     "name": "Pormath Alyan",
     "comment": "",
     "allyCode": "419761416",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+   {
+    "name": "OttiJR",
+    "comment": "",
+    "allyCode": "113611225",
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
   },
