@@ -14,12 +14,19 @@
     "tagIdOnDrop": "834899414396567582",
     "skip": true
   },
-   {
+  {
     "name": "spurs",
     "comment": "",
     "allyCode": "136375434",
     "userIcon": ":innocent:",
     "tagIdOnDrop": "488431827070222356"
+  },
+  {
+    "name": "DeelJade",
+    "comment": "",
+    "allyCode": "926749576",
+    "userIcon": ":innocent:",
+    "tagIdOnDrop": "507908993218379786"
   },
   {
     "name": "myler",
@@ -34,13 +41,6 @@
     "allyCode": "161771357",
     "userIcon": ":innocent:",
     "tagIdOnDrop": "563861372203565056"
-  },
-  {
-    "name": "Alp",
-    "comment": "",
-    "allyCode": "994971334",
-    "userIcon": ":innocent:",
-    "tagIdOnDrop": "553460222924947476"
   },
   {
     "name": "camo801",
@@ -337,6 +337,13 @@
     "name": "suspendingbj",
     "comment": "",
     "allyCode": "118977722",
+    "userIcon": ":skull_crossbones:",
+    "tagIdOnDrop": ""
+  },
+  {
+    "name": "Alp",
+    "comment": "",
+    "allyCode": "994971334",
     "userIcon": ":skull_crossbones:",
     "tagIdOnDrop": ""
   },
