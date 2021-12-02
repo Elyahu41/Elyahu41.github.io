@@ -62,3 +62,4 @@ pubmatic.com, 160989, RESELLER, 5d62403b186f2ace
 indexexchange.com, 192829, RESELLER, 50b1c356f2c5c8fc
 conversantmedia.com, 100097, RESELLER, 03113cd04947736d
 facebook.com, 886374211982146, DIRECT, c3e20eee3f780d68
+media.net, 8CU4229U9, DIRECT
