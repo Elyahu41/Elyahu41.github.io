@@ -64,3 +64,4 @@ conversantmedia.com, 100097, RESELLER, 03113cd04947736d
 facebook.com, 886374211982146, DIRECT, c3e20eee3f780d68
 media.net, 8CU4229U9, DIRECT
 adingo.jp,26170, RESELLER
+rubiconproject.com, 22884, DIRECT, 0bfd66d529a55807
