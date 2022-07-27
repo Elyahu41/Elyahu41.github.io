@@ -28,7 +28,7 @@ function getAverageElevation(lat, long) {
   //we make 3 JSON requests to get the elevation data from the 3 different sources on geonames.org and we average the results
   //whichever is the last one to return will be the one to sum up and divide by the number of elevations to get the average
   getJSON(
-    "http://api.geonames.org/srtm3JSON?lat=" +
+    "https://secure.geonames.org/srtm3JSON?lat=" +
       lat +
       "&lng=" +
       long +
@@ -55,7 +55,7 @@ function getAverageElevation(lat, long) {
   });
 
   getJSON(
-    "http://api.geonames.org/astergdemJSON?lat=" +
+    "https://secure.geonames.org/astergdemJSON?lat=" +
       lat +
       "&lng=" +
       long +
@@ -82,7 +82,7 @@ function getAverageElevation(lat, long) {
   });
 
   getJSON(
-    "http://api.geonames.org/gtopo30JSON?lat=" +
+    "https://secure.geonames.org/gtopo30JSON?lat=" +
       lat +
       "&lng=" +
       long +
