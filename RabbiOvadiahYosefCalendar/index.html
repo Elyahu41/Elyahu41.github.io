@@ -26,26 +26,29 @@
       alt="banner"
     />
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
-    <p id="LocationName"></p><!--The location name. Important for elevation and chaitables-->
-    <p id="Date"></p>
-    <p id="Parasha"></p>
-    <p id="DayOfWeek"></p>
-    <p id="Tachanun"></p>
+    <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
+    <p id="LocationName" class="border"></p><!--The location name. Important for elevation and chaitables-->
+    <p id="Date" class="border"></p>
+    <p id="Parasha" class="border"></p>
+    <p id="SpecialDay" class="border"></p>
+    <p id="Tachanun" class="border"></p>
 
-    <p id="Alot"></p>
-    <p id="Talit"></p>
-    <p id="Sunrise"></p>
-    <p id="LatestShmaMGA"></p>
-    <p id="LatestShmaGRA"></p>
-    <p id="LatestBerachotShmaGRA"></p>
-    <p id="Chatzot"></p>
-    <p id="MinchaGedola"></p>
-    <p id="MinchaKetana"></p>
-    <p id="Plag"></p>
-    <p id="Sunset"></p>
-    <p id="Tzeit"></p>
-    <p id="RT"></p>
-    <p id="ChatzotLayla"></p>
+    <p id="Alot" class="border"></p>
+    <p id="Talit" class="border"></p>
+    <p id="Sunrise" class="border"></p>
+    <p id="LatestShmaMGA" class="border"></p>
+    <p id="LatestShmaGRA" class="border"></p>
+    <p id="LatestBerachotShmaGRA" class="border"></p>
+    <p id="Chatzot" class="border"></p>
+    <p id="MinchaGedola" class="border"></p>
+    <p id="MinchaKetana" class="border"></p>
+    <p id="Plag" class="border"></p>
+    <p id="Sunset" class="border"></p>
+    <p id="Tzeit" class="border"></p>
+    <p id="RT" class="border"></p>
+    <p id="ChatzotLayla" class="border"></p>
+    <p id="Daf" class="border"></p>
+    <p id="DafYerushalmi" class="border"></p>
 
     <noscript>This website requires JavaScript to run</noscript>
     <script src="https://unpkg.com/kosher-zmanim@0.8.2/dist/kosher-zmanim.min.js"></script><!--Include kosherjava js port-->
@@ -63,9 +66,10 @@
     <script src="zmanimListUpdater.js" type="text/javascript"></script><!-- This script has a method to update the zmanim list in html and change the dates-->
     <script src="location.js" type="text/javascript"></script><!--Get and request user location-->
 
-    <p>
-    <button onclick="backwardOneDay()">Previous Day</button>
-    <button onclick="forwardOneDay()">Next Day</button>
+    <p class="noBorder">
+    <button class="button-85" onclick="backwardOneDay()">Previous Day</button>
+    <input type="date" id="date" onchange="updateDate()" />
+    <button class="button-85" onclick="forwardOneDay()">Next Day</button>
     </p>
   </body>
 </html>
