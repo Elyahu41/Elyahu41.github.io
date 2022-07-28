@@ -1,6 +1,7 @@
 class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   constructor(geoLocation) {
     super(geoLocation);
+    this.setCandleLightingOffset(20);
   }
 
   getEarliestTalitAndTefilin() {
@@ -22,14 +23,26 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
     return new Date(this.getTzait().getTime() - (shaahZmanit + (15 * dakahZmanit)));
   }
 
+  getCandleLighting() {
+    return new Date(this.getSunset().toMillis() - (this.getCandleLightingOffset() * 60_000));
+  }
+
   getTzait() {
     var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
     var dakahZmanit = shaahZmanit / 60;
     return new Date(this.getSunset().toMillis() + ((13 * dakahZmanit) + (dakahZmanit / 2)))
   }
 
+  getTzaitTaanit() {
+    return new Date(this.getSunset().toMillis() + (20 * 60_000));
+  }
+
+  getTzaitTaanitLChumra() {
+    return new Date(this.getSunset().toMillis() + (30 * 60_000));
+  }
 }
 
+//TODO! finish location name, no music, ulchaparat pesha, tekufas, morid hatal, shaah zmanit MGA/GRA, birchot hachama, birkat helevana, debug elevation on the bottom of the page, 
 
 function updateZmanimList() {
   //common information first
@@ -79,13 +92,19 @@ function updateZmanimList() {
   var sunrise = document.getElementById("Sunrise");
   var latestShmaMGA = document.getElementById("LatestShmaMGA");
   var latestShmaGRA = document.getElementById("LatestShmaGRA");
+  var sofZmanAchilatChametz = document.getElementById("SofZmanAchilatChametz");
+  var sofZmanBiurChametz = document.getElementById("SofZmanBiurChametz");
   var latestBerachotShmaGRA = document.getElementById("LatestBerachotShmaGRA");
   var chatzot = document.getElementById("Chatzot");
   var minchaGedola = document.getElementById("MinchaGedola");
   var minchaKetana = document.getElementById("MinchaKetana");
   var plag = document.getElementById("Plag");
+  var candle = document.getElementById("Candle");
   var sunset = document.getElementById("Sunset");
   var tzeit = document.getElementById("Tzeit");
+  var tzeitT = document.getElementById("TzeitT");
+  var tzeitTL = document.getElementById("TzeitTL");
+  var tzeitSC = document.getElementById("TzeitShabbatChag");
   var rt = document.getElementById("RT");
   var chatzotLayla = document.getElementById("ChatzotLayla");
   var daf = document.getElementById("Daf");
@@ -96,17 +115,57 @@ function updateZmanimList() {
     sunrise.innerHTML = "Sunrise (Mishor): " + zmanimCalendar.getSeaLevelSunrise().toJSDate().toLocaleTimeString();
     latestShmaMGA.innerHTML = "Latest Shma MG'A: " + zmanimCalendar.getSofZmanShmaMGA72MinutesZmanis().toJSDate().toLocaleTimeString();
     latestShmaGRA.innerHTML = "Latest Shma GR'A: " + zmanimCalendar.getSofZmanShmaGRA().toJSDate().toLocaleTimeString();
-    latestBerachotShmaGRA.innerHTML = "Latest Berachot Shma GR'A: " + zmanimCalendar.getSofZmanTfilaGRA().toJSDate().toLocaleTimeString();
+
+    if (jewishCalendar.getYomTovIndex() === KosherZmanim.JewishCalendar.EREV_PESACH) {
+      sofZmanAchilatChametz.style.display = "block";
+      sofZmanBiurChametz.style.display = "block";
+      sofZmanAchilatChametz.innerHTML = "Sof Zman Achilat Chametz: " + zmanimCalendar.getSofZmanTfilaMGA72MinutesZmanis().toJSDate().toLocaleTimeString();
+      latestBerachotShmaGRA.innerHTML = "Latest Berachot Shma GR'A: " + zmanimCalendar.getSofZmanTfilaGRA().toJSDate().toLocaleTimeString();
+      sofZmanBiurChametz.innerHTML = "Sof Zman Biur Chametz: " + zmanimCalendar.getSofZmanBiurChametzMGA().toLocaleTimeString();//no need to convert to JSDate
+    } else {
+      sofZmanAchilatChametz.style.display = "none";
+      sofZmanBiurChametz.style.display = "none";
+      latestBerachotShmaGRA.innerHTML = "Latest Berachot Shma GR'A: " + zmanimCalendar.getSofZmanTfilaGRA().toJSDate().toLocaleTimeString();
+    }
+    
     chatzot.innerHTML = "Chatzot: " + zmanimCalendar.getChatzos().toJSDate().toLocaleTimeString();
     minchaGedola.innerHTML = "Mincha Gedola: " + zmanimCalendar.getMinchaGedolaGreaterThan30().toJSDate().toLocaleTimeString();
     minchaKetana.innerHTML = "Mincha Ketana: " + zmanimCalendar.getMinchaKetana().toJSDate().toLocaleTimeString();
     plag.innerHTML = "Plag HaMincha: " + zmanimCalendar.getPlagHamincha().toLocaleTimeString();//no need to convert to JSDate
+
+    if (jewishCalendar.hasCandleLighting()) {
+      candle.style.display = "block";
+      candle.innerHTML = "Candle Lighting: " + zmanimCalendar.getCandleLighting().toLocaleTimeString();//no need to convert to JSDate
+    } else {
+      candle.style.display = "none";
+    }
+
     sunset.innerHTML = "Sunset: " + zmanimCalendar.getSunset().toJSDate().toLocaleTimeString();
     tzeit.innerHTML = "Tzeit Hacochavim: " + zmanimCalendar.getTzait().toLocaleTimeString();//no need to convert to JSDate
+
+    if (jewishCalendar.isTaanis() && !(jewishCalendar.getYomTovIndex() === KosherZmanim.JewishCalendar.YOM_KIPPUR)) {
+      tzeitT.style.display = "block";
+      tzeitTL.style.display = "block";
+      tzeitT.innerHTML = "Tzeit Taanit: " + zmanimCalendar.getTzaitTaanit().toLocaleTimeString();
+      tzeitTL.innerHTML = "Tzeit Taanit L'Chumra: " + zmanimCalendar.getTzaitTaanitLChumra().toLocaleTimeString();
+    } else {
+      tzeitT.style.display = "none";
+      tzeitTL.style.display = "none";
+    }
+
+    if (jewishCalendar.isAssurBemelacha() && !jewishCalendar.hasCandleLighting()) {
+      tzeitSC.style.display = "block";
+      tzeitSC.innerHTML = "Tzeit Shabbat/Chag (40 minutes): " + zmanimCalendar.getTzaisAteretTorah().toJSDate().toLocaleTimeString();
+    } else {
+      tzeitSC.style.display = "none";
+    }
+
     rt.innerHTML = "Rabbeinu Tam: " + zmanimCalendar.getTzais72Zmanis().toJSDate().toLocaleTimeString();
     chatzotLayla.innerHTML = "Chatzot Layla: " + zmanimCalendar.getSolarMidnight().toJSDate().toLocaleTimeString();
+
     var dafObject = KosherZmanim.YomiCalculator.getDafYomiBavli(jewishCalendar);
     daf.innerHTML = "Daf Yomi: " + dafObject.getMasechta() + " " + numberToHebrew(dafObject.getDaf());
+
     var dafYerushalmiObject = KosherZmanim.YerushalmiYomiCalculator.getDafYomiYerushalmi(jewishCalendar);
     dafYerushalmi.innerHTML = "Daf Yomi Yerushalmi: " + dafYerushalmiObject.getMasechta() + " " + numberToHebrew(dafYerushalmiObject.getDaf());
 }
