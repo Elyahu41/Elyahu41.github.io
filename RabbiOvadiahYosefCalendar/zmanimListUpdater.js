@@ -244,8 +244,7 @@ function updateZmanimList() {
         zmanimCalendar
           .getCandleLighting()
           .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); //no need to convert to JSDate
-      // add on click event to the candle lighting time to save the time to a cookie
-      candle.onclick = function () {
+      candle.onclick = function () {// add on click event to the candle lighting time to save the time to a cookie
         if (document.getElementById("candleMinutes") == null) {
           candle.innerHTML =
             'Candle Lighting (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>): ' +
@@ -298,13 +297,30 @@ function updateZmanimList() {
       jewishCalendar.isAssurBemelacha() &&
       !jewishCalendar.hasCandleLighting()
     ) {
+        var cookieForTSC = getCookie("tzeitShabbatTime");
+      if (cookieForTSC) {
+        zmanimCalendar.setAteretTorahSunsetOffset(parseInt(cookieForTSC));
+      } else {
+        zmanimCalendar.setAteretTorahSunsetOffset(40); //default to 40 minutes
+      }
       tzeitSC.style.display = "block";
       tzeitSC.innerHTML =
-        "Tzeit Shabbat/Chag (40): " +
+        "Tzeit Shabbat/Chag (" + zmanimCalendar.getAteretTorahSunsetOffset() + "): " +
         zmanimCalendar
           .getTzaisAteretTorah()
           .toJSDate()
           .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+          tzeitSC.onclick = function () {// add on click event to the tzeit shabbat time to save the time to a cookie
+            if (document.getElementById("tzeitShabbatMinutes") == null) {
+              tzeitSC.innerHTML =
+                'Tzeit Shabbat/Chag (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
+                zmanimCalendar
+                  .getTzaisAteretTorah()
+                  .toJSDate()
+                  .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+            }
+        }
     } else {
       tzeitSC.style.display = "none";
     }
@@ -865,6 +881,21 @@ function saveCandleLightingSetting() {
     "): " +
     zmanimCalendar.getCandleLighting().toLocaleTimeString(); //update the candle lighting time TODO: fix when time is separated from title
   setCookie("candleLightingTime", candleLightingTime, expires);
+}
+
+function saveTzeitShabbatSetting() {
+    var date = new Date();
+    date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + date.toUTCString();
+    var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
+    var tzeitShabbat = document.getElementById("TzeitShabbatChag");
+    zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
+    tzeitShabbat.innerHTML =
+        "Tzeit Shabbat (" +
+        tzeitShabbatTime +
+        "): " +
+        zmanimCalendar.getTzaisAteretTorah().toJSDate().toLocaleTimeString(); //update the tzeit shabbat time TODO: fix when time is separated from title
+    setCookie("tzeitShabbatTime", tzeitShabbatTime, expires);
 }
 
 function setCookie(name, value, days) {
