@@ -33,7 +33,10 @@
     <p id="SpecialDay" class="border"></p>
     <p id="Tachanun" class="border"></p>
 
-    <p id="Alot" class="border"></p>
+    <p id="Alot" class="border">
+      <span id="AlotTitle">Alot</span><!--TODO-->
+      <span id="AlotTime">4:00AM</span>
+    </p>
     <p id="Talit" class="border"></p>
     <p id="Sunrise" class="border"></p>
     <p id="LatestShmaMGA" class="border"></p>
@@ -68,15 +71,16 @@
       var jewishCalendar = new KosherZmanim.JewishCalendar();
       var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
       hebrewFormatter.setHebrewFormat(true);
+      var showSeconds = false;
     </script>
     <script src="zmanimListUpdater.js" type="text/javascript"></script><!-- This script has a method to update the zmanim list in html and change the dates-->
     <script src="location.js" type="text/javascript"></script><!--Get and request user location-->
 
     <p class="noBorder">
-    <button class="button-85" onclick="backwardOneDay()">Previous Day</button>
+    <button class="button-18" onclick="backwardOneDay()">Previous Day</button>
     <input type="date" id="date" onchange="updateDate()" />
-    <button class="button-85" onclick="forwardOneDay()">Next Day</button>
+    <button class="button-18" onclick="forwardOneDay()">Next Day</button>
     </p>
   </body>
-  <footer>Made by Elyahu Jacobi</footer>
+  <footer>Made by Elyahu Jacobi (This project is it's in Alpha Stage)</footer>
 </html>

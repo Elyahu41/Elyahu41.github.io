@@ -5,7 +5,7 @@ function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(setLatLong, showError);
   } else {
-    alert("Geolocation is not supported by this browser.");
+    locationName.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
@@ -14,7 +14,7 @@ function setLatLong(position) {
   long = position.coords.longitude;
   elevation = 0;
 
-  locationName.innerHTML = "Latitude: " + lat + " Longitude: " + long; //temp
+  locationName.innerHTML = "Latitude and Longitude: " + lat + ", " + long; //temp
 
   getAverageElevation(lat, long) | 0;
   
@@ -130,16 +130,16 @@ const getJSON = async (url) => {
 function showError(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      alert("User denied the request for Geolocation.");
+      locationName.innerHTML = "User denied the request for Geolocation.";
       break;
     case error.POSITION_UNAVAILABLE:
-      alert("Location information is unavailable.");
+      locationName.innerHTML = "Location information is unavailable.";
       break;
     case error.TIMEOUT:
-      alert("The request to get user location timed out.");
+      locationName.innerHTML = "The request to get user location timed out.";
       break;
     case error.UNKNOWN_ERROR:
-      alert("An unknown error occurred.");
+      locationName.innerHTML = "An unknown error occurred.";
       break;
   }
 }
