@@ -1,7 +1,38 @@
-class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
+var locationName = "";
+var lat = 0;
+var long = 0;
+var elevation = 0;
+var timezone = "";
+var geoLocation = null;
+var zmanimCalendar = null;
+var jewishCalendar = new KosherZmanim.JewishCalendar();
+var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
+hebrewFormatter.setHebrewFormat(true);
+var isShabbatMode = false;
+var showSeconds = false;
+//end of global variables
+
+//get the location details from the query string and create the zmanim calendar
+var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+locationName = urlParams.get("locationName");
+lat = parseFloat(urlParams.get("lat"));
+long = parseFloat(urlParams.get("long"));
+elevation = parseFloat(urlParams.get("elevation"));
+timezone = urlParams.get("timeZone");
+var geoLocation = new KosherZmanim.GeoLocation(
+  locationName,
+  lat,
+  long,
+  elevation,
+  Intl.DateTimeFormat().resolvedOptions().timeZone
+);
+
+class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {//custom zmanim class, RO stands for Rabbi Ovadia
   constructor(geoLocation) {
     super(geoLocation);
     this.setCandleLightingOffset(20);
+    this.setUseElevation(true);
   }
 
   getEarliestTalitAndTefilin() {
@@ -51,9 +82,33 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   }
 }
 
-//TODO! finish location name, tekufas, morid hatal, shaah zmanit MGA/GRA, birchot hachama, birkat helevana, debug elevation on the bottom of the page,
+function init() {
+  zmanimCalendar = new ROZmanim(geoLocation);
+  document.getElementById("LocationName").innerHTML = locationName;
+  updateZmanimList();
+  var shabbatModeButton = document.getElementById("shabbatMode");
+  shabbatModeButton.addEventListener("click", function () {
+    if (isShabbatMode) {
+      shabbatModeButton.innerHTML = "Shabbat Mode";
+    } else {
+      shabbatModeButton.innerHTML = "Undo Shabbat Mode";
+    }
+    shabbatMode();
+  });
+  var showSecondsButton = document.getElementById("showSeconds");
+  showSecondsButton.addEventListener("click", function () {
+    showSeconds = !showSeconds;
+    if (showSeconds) {
+      showSecondsButton.innerHTML = "Hide Seconds";
+    } else {
+      showSecondsButton.innerHTML = "Show Seconds";
+    }
+    updateZmanimList();
+  });
+}
+//TODO: finish tekufas, morid hatal, shaah zmanit MGA/GRA, birchot hachama, birkat helevana, debug elevation on the bottom of the page,
 
-function updateZmanimList() {
+function updateZmanimList() {//TODO separate the zmanim names and times for better readability, put names to the left and times to the right of the <p> element 
   //common information first
   var date = document.getElementById("Date");
   date.innerHTML =
@@ -72,11 +127,21 @@ function updateZmanimList() {
     return d;
   }
   jewishCalendar.setDate(luxon.DateTime.fromJSDate(s));
-  parasha.innerHTML =
-    hebrewFormatter.formatParsha(jewishCalendar) +
-    " " +
-    hebrewFormatter.formatSpecialParsha(jewishCalendar);
+  if (hebrewFormatter.formatParsha(jewishCalendar) !== "") {
+    parasha.innerHTML = hebrewFormatter.formatParsha(jewishCalendar);
+  } else {
+    parasha.innerHTML = "No Parasha this week";
+  }
+  if (hebrewFormatter.formatSpecialParsha(jewishCalendar) !== "") {
+    parasha.innerHTML += " / " + hebrewFormatter.formatSpecialParsha(jewishCalendar);
+  }
   jewishCalendar.setDate(currentDay); //reset to current day
+
+  var day = document.getElementById("Day");
+  //day of week should show the day of the week in English and Hebrew for example: Sunday / ראשון
+  day.innerHTML = currentDay.toJSDate().toLocaleDateString("en-US", {
+    weekday: "long",
+  }) + " / " + "יום " + hebrewFormatter.formatDayOfWeek(jewishCalendar);
 
   var specialDay = document.getElementById("SpecialDay");
   var specialDayText = getSpecialDay();
@@ -297,7 +362,7 @@ function updateZmanimList() {
       jewishCalendar.isAssurBemelacha() &&
       !jewishCalendar.hasCandleLighting()
     ) {
-        var cookieForTSC = getCookie("tzeitShabbatTime");
+      var cookieForTSC = getCookie("tzeitShabbatTime");
       if (cookieForTSC) {
         zmanimCalendar.setAteretTorahSunsetOffset(parseInt(cookieForTSC));
       } else {
@@ -311,25 +376,25 @@ function updateZmanimList() {
           .toJSDate()
           .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
-          tzeitSC.onclick = function () {// add on click event to the tzeit shabbat time to save the time to a cookie
-            if (document.getElementById("tzeitShabbatMinutes") == null) {
-              tzeitSC.innerHTML =
-                'Tzeit Shabbat/Chag (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
-                zmanimCalendar
-                  .getTzaisAteretTorah()
-                  .toJSDate()
-                  .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-            }
+      tzeitSC.onclick = function () {// add on click event to the tzeit shabbat time to save the time to a cookie
+        if (document.getElementById("tzeitShabbatMinutes") == null) {
+          tzeitSC.innerHTML =
+            'Tzeit Shabbat/Chag (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
+            zmanimCalendar
+              .getTzaisAteretTorah()
+              .toJSDate()
+              .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
         }
+      }
     } else {
       tzeitSC.style.display = "none";
     }
 
     rt.innerHTML =
       "Rabbeinu Tam: " +
-      zmanimCalendar
+      roundUpToMinute(zmanimCalendar
         .getTzais72Zmanis()
-        .toJSDate()
+        .toJSDate())
         .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
     chatzotLayla.innerHTML =
       "Chatzot Layla: " +
@@ -337,8 +402,7 @@ function updateZmanimList() {
         .getSolarMidnight()
         .toJSDate()
         .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  } else {
-    // if the user wants to see the seconds
+  } else {// if the user wants to see the seconds
     alot.innerHTML =
       "Alot Hashachar: " +
       zmanimCalendar.getAlos72Zmanis().toJSDate().toLocaleTimeString();
@@ -473,19 +537,25 @@ function updateZmanimList() {
     " " +
     numberToHebrew(dafObject.getDaf());
 
-  var dafYerushalmiObject =
-    KosherZmanim.YerushalmiYomiCalculator.getDafYomiYerushalmi(jewishCalendar);
-  if (numberToHebrew(dafYerushalmiObject.getDaf()) === null) {
-    //edge case for Yom Kippur and Tisha B'Av
-    dafYerushalmi.innerHTML = "No Daf Yomi Yerushalmi";
-  } else {
+  try {
+    var dafYerushalmiObject = KosherZmanim.YerushalmiYomiCalculator.getDafYomiYerushalmi(jewishCalendar);
     dafYerushalmi.innerHTML =
       "Daf Yomi Yerushalmi: " +
       dafYerushalmiObject.getMasechta() +
       " " +
       numberToHebrew(dafYerushalmiObject.getDaf());
+  } catch (error) {//edge case for Yom Kippur and Tisha B'Av
+    dafYerushalmi.innerHTML = "No Daf Yomi Yerushalmi";
   }
   // end of zmanim list update
+}
+
+function roundUpToMinute(date) {
+  var roundedDate = new Date(date);
+  roundedDate.setSeconds(0);
+  roundedDate.setMilliseconds(0);
+  roundedDate.setMinutes(roundedDate.getMinutes() + 1);
+  return roundedDate;
 }
 
 function forwardOneDay() {
@@ -514,49 +584,38 @@ function updateDate() {
 }
 
 function getSpecialDay() {
-  var result = "";
+  var result = [];
   var yomTovOfToday = getYomTov(jewishCalendar);
   var yomTovOfNextDay = getYomTovForNextDay();
 
   if (yomTovOfToday === "" && yomTovOfNextDay === "") {
-    //NEEDED if both empty
-    result = "";
+    //if no yom tov today or tomorrow, do nothing to the result array
   } else if (yomTovOfToday === "" && !yomTovOfNextDay.startsWith("Erev")) {
     //if next day has yom tov
-    result = "Erev " + yomTovOfNextDay;
+    result.push("Erev " + yomTovOfNextDay);
   } else if (
     !(yomTovOfNextDay === "") &&
     !yomTovOfNextDay.startsWith("Erev") &&
     !yomTovOfToday.endsWith(yomTovOfNextDay)
   ) {
     //if today and the next day have yom tov
-    result = yomTovOfToday + " / Erev " + yomTovOfNextDay;
+    result.push(yomTovOfToday + " / Erev " + yomTovOfNextDay);
   } else {
-    result = yomTovOfToday;
+    result.push(yomTovOfToday);
   }
-
   result = addTaanitBechorot(result);
   result = addRoshChodesh(result);
   result = addDayOfOmer(result);
   result = addDayOfChanukah(result);
-  return result;
+  return result.join(" / ");
 }
 
 function addTaanitBechorot(result) {
-  if (tomorrowIsTaanitBechorot()) {
-    //edge case
-    if (result === "") {
-      result = "Erev Ta'anit Bechorot";
-    } else {
-      result = "Erev Ta'anit Bechorot / " + result;
-    }
+  if (tomorrowIsTaanitBechorot()) {//edge case
+    result.push("Erev Ta'anit Bechorot");
   }
   if (isTaanisBechoros(jewishCalendar)) {
-    if (result === "") {
-      result = "Ta'anit Bechorot";
-    } else {
-      result = "Ta'anit Bechorot / " + result;
-    }
+    result.push("Ta'anit Bechorot");
   }
   return result;
 }
@@ -582,12 +641,8 @@ function isTaanisBechoros(jewishCalendar) {
 
 function addRoshChodesh(result) {
   var roshChodeshOrErevRoshChodesh = getRoshChodeshOrErevRoshChodesh();
-  if (!(roshChodeshOrErevRoshChodesh === "")) {
-    if (!(result === "")) {
-      result = roshChodeshOrErevRoshChodesh + " / " + result;
-    } else {
-      result = roshChodeshOrErevRoshChodesh;
-    }
+  if (roshChodeshOrErevRoshChodesh !== "") {
+    result.push(roshChodeshOrErevRoshChodesh);
   }
   return result;
 }
@@ -624,31 +679,24 @@ function getRoshChodeshOrErevRoshChodesh() {
   return result;
 }
 
-function addDayOfChanukah(result) {
-  var dayOfChanukah = jewishCalendar.getDayOfChanukah();
-  if (dayOfChanukah != -1) {
-    if (!result === "") {
-      result += " / " + getOrdinal(dayOfChanukah) + " day of Chanukah";
-    } else {
-      result = getOrdinal(dayOfChanukah) + " day of Chanukah";
-    }
-  }
-  return result;
-}
-
 function addDayOfOmer(result) {
   var dayOfOmer = jewishCalendar.getDayOfOmer();
   if (dayOfOmer != -1) {
-    if (!result === "") {
-      result += " / " + getOrdinal(dayOfOmer) + " day of Omer";
-    } else {
-      result = getOrdinal(dayOfOmer) + " day of Omer";
-    }
+    result.push(getOrdinal(dayOfOmer) + " day of Omer");
   }
   return result;
 }
 
-function getOrdinal(number) {
+function addDayOfChanukah(result) {
+  var dayOfChanukah = jewishCalendar.getDayOfChanukah();
+  if (dayOfChanukah != -1) {
+    result.splice(result.indexOf("Chanukah"), 1);//remove Chanukah from the list to avoid duplication
+    result.push(getOrdinal(dayOfChanukah) + " day of Chanukah");
+  }
+  return result;
+}
+
+function getOrdinal(number) {//https://stackoverflow.com/questions/13627308/add-st-nd-rd-and-th-ordinal-suffix-to-a-number
   var suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
   switch (number % 100) {
     case 11:
@@ -708,7 +756,7 @@ function getYomTov(jewishCalendar) {
       return "Simchat Torah";
     //20 was erev chanuka which was deleted
     case KosherZmanim.JewishCalendar.CHANUKAH:
-      return "Chanuka";
+      return "Chanukah";
     case KosherZmanim.JewishCalendar.TENTH_OF_TEVES:
       return "Asarah Be'Tevet";
     case KosherZmanim.JewishCalendar.TU_BESHVAT:
@@ -808,28 +856,27 @@ function getYomTovIndexForNextDay() {
 }
 
 function numberToHebrew(num) {
-  if (num <= 0 || num >= 6000) return null; // should refactor
+  var buffer = [];
+  if (num <= 0 || num >= 6000) return null; // only support 1-5999 for now, since that's all we need, but could be extended
   var let1000 = [" א'", " ב'", " ג'", " ד'", " ה'"];
   var let100 = ["ק", "ר", "ש", "ת"];
   var let10 = ["י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ"];
   var let1 = ["א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט"];
 
-  var result = new StringBuilder();
-
   if (num >= 100) {
     if (num >= 1000) {
-      result.append(let1000[Math.floor(num) / 1000 - 1]);
+      buffer.push(let1000[Math.floor(num) / 1000 - 1]);
       num %= 1000;
     }
 
     if (num < 500) {
-      result.append(let100[Math.floor(num) / 100 - 1]);
+      buffer.push(let100[Math.floor(num) / 100 - 1]);
     } else if (num < 900) {
-      result.append("ת");
-      result.append(let100[(Math.floor(num) - 400) / 100 - 1]);
+      buffer.push("ת");
+      buffer.push(let100[(Math.floor(num) - 400) / 100 - 1]);
     } else {
-      result.append("תת");
-      result.append(let100[(Math.floor(num) - 800) / 100 - 1]);
+      buffer.push("תת");
+      buffer.push(let100[(Math.floor(num) - 800) / 100 - 1]);
     }
 
     num %= 100;
@@ -837,35 +884,23 @@ function numberToHebrew(num) {
   switch (num) {
     // Avoid letter combinations from the Tetragrammaton
     case 16:
-      result.append("טז");
+      buffer.push("טז");
       break;
     case 15:
-      result.append("טו");
+      buffer.push("טו");
       break;
     default:
       if (num >= 10) {
-        result.append(let10[Math.floor(num / 10) - 1]);
+        buffer.push(let10[Math.floor(num / 10) - 1]);
         num %= 10;
       }
       if (num > 0) {
-        result.append(let1[Math.floor(num) - 1]);
+        buffer.push(let1[Math.floor(num) - 1]);
       }
       break;
   }
-  return result.toString();
+  return buffer.join("");
 }
-
-function StringBuilder() {
-  this.buffer = [];
-}
-
-StringBuilder.prototype.append = function (str) {
-  this.buffer.push(str);
-};
-
-StringBuilder.prototype.toString = function () {
-  return this.buffer.join("");
-};
 
 // create a function the saves the candle lighting times for the current user to cookies
 function saveCandleLightingSetting() {
@@ -884,18 +919,18 @@ function saveCandleLightingSetting() {
 }
 
 function saveTzeitShabbatSetting() {
-    var date = new Date();
-    date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + date.toUTCString();
-    var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
-    var tzeitShabbat = document.getElementById("TzeitShabbatChag");
-    zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
-    tzeitShabbat.innerHTML =
-        "Tzeit Shabbat (" +
-        tzeitShabbatTime +
-        "): " +
-        zmanimCalendar.getTzaisAteretTorah().toJSDate().toLocaleTimeString(); //update the tzeit shabbat time TODO: fix when time is separated from title
-    setCookie("tzeitShabbatTime", tzeitShabbatTime, expires);
+  var date = new Date();
+  date.setTime(date.getTime() + 3650 * 24 * 60 * 60 * 1000);
+  var expires = "expires=" + date.toUTCString();
+  var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
+  var tzeitShabbat = document.getElementById("TzeitShabbatChag");
+  zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
+  tzeitShabbat.innerHTML =
+    "Tzeit Shabbat (" +
+    tzeitShabbatTime +
+    "): " +
+    zmanimCalendar.getTzaisAteretTorah().toJSDate().toLocaleTimeString(); //update the tzeit shabbat time TODO: fix when time is separated from title
+  setCookie("tzeitShabbatTime", tzeitShabbatTime, expires);
 }
 
 function setCookie(name, value, days) {
@@ -967,3 +1002,57 @@ function getUlchaparatPesha() {
   }
   return "";
 }
+
+function shabbatMode() {//shabbat mode is a mode that disables all the buttons to change the date, and slowly scrolls the zmanim up and down the screen while displaying the shabbat mode banner
+  isShabbatMode = !isShabbatMode;
+  if (!isShabbatMode) {
+    //undo shabbat mode
+    document.getElementById("date").disabled = false;
+    document.getElementById("date").style.backgroundColor = "white";
+    document.getElementById("date").style.color = "black";
+    document.getElementById("date").style.cursor = "pointer";
+    document.getElementById("backButton").disabled = false;
+    document.getElementById("forwardButton").disabled = false;
+  } else {
+    var date = new luxon.DateTime.now();
+    jewishCalendar.setDate(date);
+    zmanimCalendar.setDate(date);
+    updateZmanimList();//update the zmanim list to the current date
+    //disable the date buttons
+    document.getElementById("date").disabled = true;
+    document.getElementById("date").style.backgroundColor = "grey";
+    document.getElementById("date").style.color = "black";
+    document.getElementById("date").style.cursor = "default";
+    document.getElementById("backButton").disabled = true;
+    document.getElementById("forwardButton").disabled = true;
+    //TODO add a shabbat mode banner
+    scrollPage();//scroll the zmanim up and down the screen
+    updateShabbatZmanim();
+  }
+}
+
+var scrollDirection = 1;
+function scrollPage() {
+  if (isShabbatMode) {
+    window.scrollBy(0, scrollDirection); // horizontal and vertical scroll increments
+    scrolldelay = setTimeout('scrollPage()', 50); // scrolls every 50 milliseconds
+    if (window.pageYOffset == 0) {
+      scrollDirection = 1;
+    } else if (window.pageYOffset == document.body.scrollHeight - window.innerHeight) {
+      scrollDirection = -1;
+    }
+  }
+}
+
+function updateShabbatZmanim() {
+  //at 12:00 AM the next day, update the zmanim to the next day's zmanim
+    var tomorrow = new luxon.DateTime.now().plus({ days: 1 });
+    tomorrow = tomorrow.set({ hour: 0, minute: 0, second: 2, millisecond: 0 });
+    var timeUntilTomorrow = tomorrow.diffNow().as("milliseconds");
+    setTimeout(function () {//TODO test this
+      updateZmanimList();
+      updateShabbatZmanim();
+    }, timeUntilTomorrow);
+}
+
+init();// initialize the page with the current date and location

@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /><!--TODO replace github.io-->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta
       name="Description"
-      content="github.io is an online calendar for all Zmanim and Davening according to Rabbi Ovadiah Yosef Zt'l for everywhere in the world."
+      content="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html is an online calendar for all Zmanim and Davening according to Rabbi Ovadiah Yosef Zt'l for everywhere in the world."
     />
     <meta
       name="Keywords"
@@ -20,70 +20,93 @@
   </head>
 
   <body>
-    <img
-      src="banner.png"
-      style="display: block; margin-left: auto; margin-right: auto; width: 10%"
-      alt="banner"
-    />
+    <noscript>This website requires JavaScript to run</noscript>
+    <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
+      ><img
+        src="banner.png"
+        style="display: block; margin-left: auto; margin-right: auto; width: 10%"
+        alt="banner"
+    /></a>
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
-    <p id="LocationName" class="border"></p><!--The location name. Important for elevation and chaitables-->
-    <p id="Date" class="border"></p>
-    <p id="Parasha" class="border"></p>
-    <p id="SpecialDay" class="border"></p>
-    <p id="Music" class="border"></p>
-    <p id="Ulchaparat" class="border"></p>
-    <p id="Chamah" class="border"></p>
-    <p id="Tachanun" class="border"></p>
 
-    <p id="Alot" class="border">
-      <span id="AlotTitle"></span><!--TODO-->
-      <span id="AlotTime"></span>
+    <p class="border">
+      Help this webpage find your location. <br /><br />
+      You have three options to choose from: <br /><br />
+      1. Allow us to see your location by clicking this button and agreeing to
+      the notification: <br />
+      <button class="button-18" onclick="getLocation()">Use My Location</button>
+      <br /><br />
+      2. Enter your location manually here: <br />
+      <button
+        id="showManualLocation"
+        class="button-18"
+        onclick="showManualLocationSettings()"
+      >
+        Manual Location</button
+      ><br /><br />
+      3. Search for your location in the search bar below.
     </p>
-    <p id="Talit" class="border"></p>
-    <p id="Sunrise" class="border"></p>
-    <p id="LatestShmaMGA" class="border"></p>
-    <p id="LatestShmaGRA" class="border"></p>
-    <p id="SofZmanAchilatChametz" class="border"></p>
-    <p id="SofZmanBiurChametz" class="border"></p>
-    <p id="LatestBerachotShmaGRA" class="border"></p>
-    <p id="Chatzot" class="border"></p>
-    <p id="MinchaGedola" class="border"></p>
-    <p id="MinchaKetana" class="border"></p>
-    <p id="Plag" class="border"></p>
-    <p id="Candle" class="border"></p>
-    <p id="Sunset" class="border"></p>
-    <p id="Tzeit" class="border"></p>
-    <p id="TzeitT" class="border"></p>
-    <p id="TzeitTL" class="border"></p>
-    <p id="TzeitShabbatChag" class="border"></p>
-    <p id="RT" class="border"></p>
-    <p id="ChatzotLayla" class="border"></p>
-    <p id="Daf" class="border"></p>
-    <p id="DafYerushalmi" class="border"></p>
-
-    <noscript>This website requires JavaScript to run</noscript>
-    <script src="https://unpkg.com/kosher-zmanim@0.8.2/dist/kosher-zmanim.min.js"></script><!--Include kosherjava js port-->
-    <script src="luxon.min.js"></script><!--Include luxon js for date time manipulation-->
-    <script>
-      var lat = 0;
-      var long = 0;
-      var elevation = 0;
-      var geoLocation = null;
-      var zmanimCalendar = null;
-      var jewishCalendar = new KosherZmanim.JewishCalendar();
-      var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
-      hebrewFormatter.setHebrewFormat(true);
-      var showSeconds = false;
-    </script>
-    <script src="zmanimListUpdater.js" type="text/javascript"></script><!-- This script has a method to update the zmanim list in html and change the dates-->
-    <script src="location.js" type="text/javascript"></script><!--Get and request user location-->
+    <p class="border" id="manualLocation" style="display: none">
+      <!--Hidden until shown-->
+      Enter your location manually here: <br />
+      <input
+        type="text"
+        id="cityInput"
+        placeholder="City Name? (optional)"
+      /><br /><br />
+      <input type="text" id="latInput" placeholder="Latitude?" /><br /><br />
+      <input type="text" id="longInput" placeholder="Longitude?" /><br /><br />
+      <input
+        type="text"
+        id="elevationInput"
+        placeholder="Elevation in meters? (optional)"
+      /><br /><br />
+      Timezone?
+      <select id="timezoneInput"></select
+      ><br /><br />
+      <button class="button-18" onclick="manualLocationSubmit()">Submit</button>
+    </p>
+    <p class="border" id="error" style="display: none">
+      <!--Hidden until shown-->
+    </p>
+    <script src="location.js" type="text/javascript"></script>
+    <input
+      type="text"
+      id="Main"
+      onkeyup="updateList()"
+      placeholder="Search for a place.."
+    />
+    <ul id="list" class="list"></ul>
+    <!--write a diclaimer message under the list-->
+    <h5 style="text-align: center">
+      Disclaimer!: The results of this search bar are based on a 3rd party
+      website and are not guaranteed to match what you are looking for. If you
+      are not sure about the results, please use the manual location settings.
+    </h5>
 
     <p class="noBorder">
-    <button class="button-18" onclick="backwardOneDay()">Previous Day</button>
-    <input type="date" id="date" onchange="updateDate()" />
-    <button class="button-18" onclick="forwardOneDay()">Next Day</button>
+      <!--TODO
+      <a href="https://apps.apple.com/app/id1551353775">
+        <img 
+          class="apple"
+          src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" 
+          alt="Download on the App Store">
+      </a>
+-->
+      Download the app on Google Play! <br />
+      <a
+        href="https://play.google.com/store/apps/details?id=com.EJ.ROvadiahYosefCalendar&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+      >
+        <img
+          class="android"
+          alt="Get it on Google Play"
+          src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+        />
+      </a>
     </p>
   </body>
-  <footer>Made by Elyahu Jacobi (This project is it's in Alpha Stage)</footer>
+  <footer style="text-align: center">
+    Made by Elyahu Jacobi (This project is it's in Beta Stage)
+  </footer>
 </html>
