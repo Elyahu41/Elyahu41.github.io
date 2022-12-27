@@ -1,5 +1,5 @@
 /* allow using an icon font instead of the images from jQuery UI */
-@import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 .fontawesome .ui-icon{
 	background-image:none !important;
 	text-indent: 0 !important;
