@@ -102,6 +102,31 @@ body {
     padding: 6px;
 }
 
+.border-split {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;;
+  max-width: 400px;
+  text-align: left;
+  margin-top: 100px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+  border: solid 1px #cfd8e4;
+  padding: 6px;
+}
+
+.border-split span {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;;
+  max-width: 400px;
+  float: right;
+  margin-left: 10px;
+  color: #fff;
+}
+
 .noBorder {
     font-family: 'Roboto',
     sans-serif;
@@ -173,6 +198,10 @@ body {
   width: 100%;
 }
 
+.btn-group label {
+  color: white;
+}
+
 .app-icons {
     display: flex;
     align-items: center;
@@ -183,5 +212,5 @@ body {
 }
 
 .apple {
-    width: 164px;
+    width: 150px;
 }

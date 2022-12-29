@@ -36,6 +36,7 @@ function showManualLocationSettings() {
     for (const timeZone of Intl.supportedValuesOf("timeZone")) {
       select.options.add(new Option(timeZone));
     }
+    select.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 }
 
@@ -195,7 +196,9 @@ function showError(error) {
   errorBox.style.display = "block";
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      errorBox.innerHTML = "User denied the request for Geolocation.";
+      //user denied the request for Geolocation, show image "chrome-location-prompt.png"
+      errorBox.innerHTML = "User denied the request for Geolocation. Please allow location access in your browser settings.";
+      errorBox.innerHTML += '<img src="chrome-location-prompt.png" alt="chrome-location-prompt" style="display: block; margin-left: auto; margin-right: auto; width: 100%" id="loading" />';
       break;
     case error.POSITION_UNAVAILABLE:
       errorBox.innerHTML = "Location information is unavailable.";
@@ -318,15 +321,4 @@ function openCalendarWithLocationInfo() {
     "&timeZone=" +
     timezone;
   window.location.href = urlWithLocationInfo;
-
-  // geoLocation = new KosherZmanim.GeoLocation(
-  //   "",
-  //   lat,
-  //   long,
-  //   elevation,
-  //   Intl.DateTimeFormat().resolvedOptions().timeZone
-  // );
-  // zmanimCalendar = new ROZmanim(geoLocation);
-  // zmanimCalendar.setUseElevation(true);
-  // updateZmanimList();
 }

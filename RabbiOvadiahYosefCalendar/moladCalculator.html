@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta
+      name="Description"
+      content="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/moladCalculator.html is an online molad calculator for birchat helevanah according to Rabbi Ovadiah Yosef Zt'l for everywhere in the world."
+    />
+    <meta
+      name="Keywords"
+      content="Rabbi, Ovadia, Ovadiah, Yosef, Calendar, Zmanim, Daven, Davening"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link href="banner.ico" rel="icon" type="image/x-icon" />
+    <title>Rabbi Ovadiah Yosef Calendar</title>
+  </head>
+
+  <body style="background-image: url(https://wallpaperaccess.com/full/627835.jpg); height: 100%; background-repeat: no-repeat; background-size: cover;">
+    <noscript>This website requires JavaScript to run</noscript>
+    <h2>Molad Calculator</h2>
+    <p class="border">
+        This is a molad calculator for birchat helevanah to help you find the correct times to say birchat helevanah. <br /><br />
+        Please choose a time zone and a date to calculate the molad for. <br /><br />
+        The website will automatically calculate the molad for your default time zone and date. <br /><br />
+        If you want to calculate the molad for a different time zone and/or date, please change the time zone or date in the drop down menu. <br /><br />
+        <select id="timezoneInput"></select> <br /><br />
+        <input type="date" id="dateInput"/> <br /><br />
+        <input type="button" value="Calculate" onclick="calculateMolad()" />
+        <input type="button" value="Reset" onclick="resetMolad()" />
+    </p>
+    <p class="border" id="molad"></p>
+    <p class="border" id="moladTime"></p>
+    <p class="border" id="Earliest Birchat Halevanah"></p>
+    <p class="border" id="Latest Birchat Halevanah"></p>
+
+    <script src="kosher-zmanim.min.js"></script>
+    <script src="luxon.min.js"></script>
+    <script>
+        let select = document.getElementById("timezoneInput");
+  if (!Intl.supportedValuesOf) {
+    let opt = new Option(
+      "Your browser does not support Intl.supportedValuesOf().",
+      null,
+      true,
+      true
+    );
+    opt.disabled = true;
+    select.options.add(opt);
+  } else {
+    for (const timeZone of Intl.supportedValuesOf("timeZone")) {
+      select.options.add(new Option(timeZone));
+    }
+    select.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  }
+        var jewishCalendar = new KosherZmanim.JewishCalendar();
+        var dateInput = document.getElementById("dateInput");
+        var timeZoneInput = document.getElementById("timezoneInput");
+
+        var molad = jewishCalendar.getMolad();
+        var moladTimeAnnounced = "The molad time announced: " + molad.getMoladHours() + "h:" + molad.getMoladMinutes() + "m and " + molad.getMoladChalakim() + " chalakim";
+        var moladParagraph = document.getElementById("molad");
+        moladParagraph.innerHTML = "<h2>" + moladTimeAnnounced + "</h2>";
+
+        var moladTime = new Date(jewishCalendar.getMoladAsDate());
+        var moladTimeParagraph = document.getElementById("moladTime");
+        moladTimeParagraph.innerHTML = "The molad for the month:<h2>" + moladTime.toLocaleString() + "</h2>";
+
+        var earliestBirchatHalevanah = jewishCalendar.getTchilasZmanKidushLevana7Days();
+        var earliestBirchatHalevanahParagraph = document.getElementById("Earliest Birchat Halevanah");
+        earliestBirchatHalevanahParagraph.innerHTML = "The earliest time to say birchat helevanah:<h2>" + earliestBirchatHalevanah.toJSDate().toLocaleString() + "</h2>";
+
+        var latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
+        var latestBirchatHalevanahParagraph = document.getElementById("Latest Birchat Halevanah");
+        latestBirchatHalevanahParagraph.innerHTML = "The latest time to say birchat helevana:<h2>" + latestBirchatHalevanah.toJSDate().toLocaleString() + "</h2>";
+
+        function calculateMolad() {
+            if (dateInput.value == "") {
+                dateInput.value = new Date().toISOString().slice(0, 10);//if no date is selected, use today's date
+            }
+            var JSDate = dateInput.value;
+            var dateObject = luxon.DateTime.fromFormat(JSDate, "yyyy-MM-dd");
+            jewishCalendar.setDate(dateObject);
+            molad = jewishCalendar.getMolad();
+            moladTimeAnnounced = "The molad time announced: " + molad.getMoladHours() + "h:" + molad.getMoladMinutes() + "m and " + molad.getMoladChalakim() + " chalakim";
+            moladParagraph.innerHTML = "<h2>" + moladTimeAnnounced + "</h2>";
+
+            moladTime = new Date(jewishCalendar.getMoladAsDate());
+            moladTimeParagraph.innerHTML = "The molad for the month:<h2>" + moladTime.toLocaleString("en-US", {timeZone: select.value}) + "</h2>";
+
+            earliestBirchatHalevanah = jewishCalendar.getTchilasZmanKidushLevana7Days();
+            earliestBirchatHalevanahParagraph.innerHTML = "The earliest time to say birchat helevanah:<h2>" + earliestBirchatHalevanah.toJSDate().toLocaleString("en-US", {timeZone: select.value}) + "</h2>";
+
+            latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
+            latestBirchatHalevanahParagraph.innerHTML = "The latest time to say birchat helevana:<h2>" + latestBirchatHalevanah.toJSDate().toLocaleString("en-US", {timeZone: select.value}) + "</h2>";
+        }
+
+        function resetMolad() {
+            jewishCalendar.setDate(luxon.DateTime.local());
+            molad = jewishCalendar.getMolad();
+            moladTimeAnnounced = "The molad time announced: " + molad.getMoladHours() + "h:" + molad.getMoladMinutes() + "m and " + molad.getMoladChalakim() + " chalakim";
+            moladParagraph.innerHTML = "<h2>" + moladTimeAnnounced + "</h2>";
+
+            moladTime = new Date(jewishCalendar.getMoladAsDate());
+            moladTimeParagraph.innerHTML = "The molad for the month:<h2>" + moladTime.toLocaleString() + "</h2>";
+
+            earliestBirchatHalevanah = jewishCalendar.getTchilasZmanKidushLevana7Days();
+            earliestBirchatHalevanahParagraph.innerHTML = "The earliest time to say birchat helevanah:<h2>" + earliestBirchatHalevanah.toJSDate().toLocaleString() + "</h2>";
+
+            latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
+            latestBirchatHalevanahParagraph.innerHTML = "The latest time to say birchat helevana:<h2>" + latestBirchatHalevanah.toJSDate().toLocaleString() + "</h2>";
+        }
+    </script>
+
+  </body>
+  <footer style="color: aqua; text-align: center; text-shadow: black 0px 0px 8px;">
+    <p>Disclaimer: These times are just for reference, you should ask a rav if you can say the bracha earlier or later.</p>
+    </footer>
+
+</html>
