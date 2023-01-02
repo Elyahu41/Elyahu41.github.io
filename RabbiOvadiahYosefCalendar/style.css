@@ -2,6 +2,46 @@
 * {
     box-sizing: border-box;
 }
+
+.marquee {
+  background-color: #0A66C2;
+  color: #f6f6f6;
+  margin: 0 auto;
+  overflow: clip;
+  padding: 12px;
+  white-space: nowrap;
+  position: fixed;
+  width: 100%;
+  display: none;
+}
+.marquee span {
+  display: inline-block;
+  font-size: 20px;
+  position: relative;
+  left: 100%;
+  animation: marquee 16s linear infinite;
+}
+
+.marquee span:nth-child(1) {
+  animation-delay: 0s;
+}
+.marquee span:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.marquee span:nth-child(3) {
+  animation-delay: 1.6s;
+}
+.marquee span:nth-child(4) {
+  animation-delay: 2.4s;
+}
+.marquee span:nth-child(5) {
+  animation-delay: 3.2s;
+}
+
+@keyframes marquee {
+  0%   { left: 100%; }
+  100% { left: -100%; }
+}
  
 body,
 html {
@@ -45,7 +85,7 @@ body {
     font-family: 'Roboto',
     sans-serif;
     margin: 0;
-    background-color: #32312C;
+    background-color: #303030;
 }
 
 #Main {
@@ -194,7 +234,7 @@ body {
   flex-direction: row;
   justify-content: center;
   margin: 0 auto;
-  max-width: 480px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -213,4 +253,23 @@ body {
 
 .apple {
     width: 150px;
+}
+
+.location-button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.location-button:hover {
+  background-color: #3e8e41;
+}
+
+.location-button i {
+  margin-right: 8px;
 }

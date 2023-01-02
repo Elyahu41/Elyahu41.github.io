@@ -17,6 +17,12 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link href="banner.ico" rel="icon" type="image/x-icon" />
     <title>Rabbi Ovadiah Yosef Calendar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
@@ -24,7 +30,12 @@
     <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
       ><img
         src="banner.png"
-        style="display: block; margin-left: auto; margin-right: auto; width: 10%"
+        style="
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 10%;
+        "
         alt="banner"
     /></a>
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
@@ -34,10 +45,13 @@
       Help this webpage find your location. <br /><br />
       You have three options to choose from: <br /><br />
       1. Allow us to see your location by clicking this button and agreeing to
-      the notification: <br />
-      <button class="button-18" onclick="getLocation()">Use My Location</button>
+      the notification (Your location information is only used to calculate the zmanim and to figure out your city/country names) This option is preferable for <b>mobile phones</b> and a network vpn/filter may disrubt the results. <br />
+      <button class="location-button" onclick="getLocation()">
+        <i class="fas fa-map-marker-alt"></i>
+        Use My Location
+      </button>
       <br /><br />
-      2. Enter your location manually here: <br />
+      2. Enter your location manually here (advanced): <br />
       <button
         id="showManualLocation"
         class="button-18"
@@ -75,18 +89,18 @@
       type="text"
       id="Main"
       onkeyup="updateList()"
-      placeholder="Search for a place.."
+      placeholder="Search for a place/zipcode..."
     />
     <ul id="list" class="list"></ul>
     <!--write a diclaimer message under the list-->
     <h5 style="text-align: center">
       Disclaimer!: The results of this search bar are based on a 3rd party
       website and are not guaranteed to match what you are looking for. If you
-      are not sure about the results, please use the manual location settings.
+      are not sure about the results, please use the manual location button.
     </h5>
 
     <p class="noBorder">
-      Download the app on Google Play! <br/>
+      Download the app on Google Play now! <br />
       <!--<a href="https://apps.apple.com/app/id1551353775">
         <img 
           class="apple"
@@ -94,10 +108,11 @@
           alt="Download on the App Store">
       </a>-->
       <a href="#">
-        <img 
+        <img
           class="apple"
-          src="http://1radionews.com/wp-content/uploads/app_store_coming_soon.png" 
-          alt="Download on the App Store">
+          src="http://1radionews.com/wp-content/uploads/app_store_coming_soon.png"
+          alt="Download on the App Store"
+        />
       </a>
       <a
         href="https://play.google.com/store/apps/details?id=com.EJ.ROvadiahYosefCalendar&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
@@ -110,7 +125,12 @@
       </a>
     </p>
   </body>
-  <footer style="text-align: center; color: gold;">
-    Made by Elyahu Jacobi (This project is it's in Beta Stage)
+  <footer style="text-align: center; color: gold">
+    Made by Elyahu Jacobi (This project is in it's Beta Stage and is
+    open-source. You can look at the source code here:
+    <a
+      href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
+      >Source Code</a
+    >)
   </footer>
 </html>

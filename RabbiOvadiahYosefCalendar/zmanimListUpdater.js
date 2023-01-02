@@ -8,6 +8,8 @@ var zmanimCalendar = null;
 var jewishCalendar = new KosherZmanim.JewishCalendar();
 var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
 hebrewFormatter.setHebrewFormat(true);
+var zmanimFormatter = new KosherZmanim.ZmanimFormatter();
+zmanimFormatter.setTimeFormat(KosherZmanim.ZmanimFormatter.SEXAGESIMAL_FORMAT);
 var isShabbatMode = false;
 var showSeconds = false;
 //end of global variables
@@ -286,6 +288,11 @@ function init() {
     shabbatMode();
   });
   var showSecondsButton = document.getElementById("showSeconds");
+  if (showSeconds) {
+    showSecondsButton.innerHTML = "Hide Seconds";
+  } else {
+    showSecondsButton.innerHTML = "Show Seconds";
+  }
   showSecondsButton.addEventListener("click", function () {
     showSeconds = !showSeconds;
     if (showSeconds) {
@@ -333,7 +340,8 @@ function updateZmanimList() {
   date.innerHTML =
     jewishCalendar.getDate().toJSDate().toDateString() +
     " • " +
-    jewishCalendar.toString() +
+    jewishCalendar.toString().replace("Teves", "Tevet").replace("Tishrei", "Tishri")
+    +
     "  •  " +
     hebrewFormatter.format(jewishCalendar);
 
@@ -402,8 +410,41 @@ function updateZmanimList() {
     chamah.style.display = "none";
   }
 
+  var birchatHalevana = document.getElementById("BirchatHalevana");
+  var birchatHalevanaText = getIsTonightStartOrEndBirchatLevana();
+  if (birchatHalevanaText === "") {
+    birchatHalevana.style.display = "none";
+  } else {
+    birchatHalevana.style.display = "block";
+    birchatHalevana.innerHTML = birchatHalevanaText;
+  }
+
   var tachanun = document.getElementById("Tachanun");
   tachanun.innerHTML = getTachanun();
+
+  var hallel = document.getElementById("Hallel");
+  var hallelText = getHallel();
+  if (hallelText === "") {
+    hallel.style.display = "none";
+  } else {
+    hallel.style.display = "block";
+    hallel.innerHTML = hallelText;
+  }
+
+  var tekufa = document.getElementById("Tekufa");
+  var tekufaToday = getTekufa();
+  var tekufaNextDay = getTekufaForNextDay();
+  if ((tekufaToday === null && tekufaNextDay === null) //if no tekufa today or tomorrow
+  || (tekufaToday === null && getTekufaForNextDayAsDate().toJSDate().toLocaleDateString() !== currentDay.toJSDate().toLocaleDateString())//if no tekufa today but there is one tomorrow and it's not today
+  || (tekufaNextDay === null && getTekufaAsDate().toJSDate().toLocaleDateString() !== currentDay.toJSDate().toLocaleDateString())) {//if no tekufa tomorrow but there is one today and it's not today
+    tekufa.style.display = "none";
+  } else if (tekufaToday !== null && getTekufaAsDate().toJSDate().toLocaleDateString() === currentDay.toJSDate().toLocaleDateString()) {//if tekufa date is today
+    tekufa.style.display = "block";
+    tekufa.innerHTML = "Tekufa " + getTekufaName() + " is today at " + getTekufaAsDate().toJSDate().toLocaleTimeString();
+  } else {// if tekufa date is tomorrow but is on the same day as today
+    tekufa.style.display = "block";
+    tekufa.innerHTML = "Tekufa " + getTekufaName() + " is today at " + getTekufaForNextDayAsDate().toJSDate().toLocaleTimeString();
+  }
 
   //zmanim list updated here
   var alot = document.getElementById("Alot");
@@ -429,7 +470,8 @@ function updateZmanimList() {
   var chatzotLayla = document.getElementById("ChatzotLayla");
   var daf = document.getElementById("Daf");
   var dafYerushalmi = document.getElementById("DafYerushalmi");
-  var seasonal = document.getElementById("seasonalPrayers");
+  var seasonal = document.getElementById("SeasonalPrayers");
+  var shaahZmanit = document.getElementById("ShaahZmanit");
 
   if (!showSeconds) {
     alot.innerHTML =
@@ -925,6 +967,8 @@ function updateZmanimList() {
 
   seasonal.innerHTML = getSeasonalPrayers();
 
+  shaahZmanit.innerHTML = getShaahZmanits();
+
   // end of zmanim list update
 }
 
@@ -937,7 +981,7 @@ function roundUpToMinute(date) {
 }
 
 function forwardOneDay() {
-  var nextDay = jewishCalendar.getDate().toJSDate();
+  var nextDay = zmanimCalendar.getDate().toJSDate();
   nextDay.setDate(nextDay.getDate() + 1);
   jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
   zmanimCalendar.setDate(nextDay);
@@ -945,7 +989,7 @@ function forwardOneDay() {
 }
 
 function backwardOneDay() {
-  var previousDay = jewishCalendar.getDate().toJSDate();
+  var previousDay = zmanimCalendar.getDate().toJSDate();
   previousDay.setDate(previousDay.getDate() - 1);
   jewishCalendar.setDate(luxon.DateTime.fromJSDate(previousDay));
   zmanimCalendar.setDate(previousDay);
@@ -1103,6 +1147,143 @@ function getSeasonalPrayers() {
   }
   return result.join(" / ");
 }
+
+function getShaahZmanits() {
+  var result = [];
+  result.push("Shaah Zmanit GR'A: " + zmanimFormatter.format(zmanimCalendar.getShaahZmanisGra()));
+  result.push("MG'A: " + zmanimFormatter.format(zmanimCalendar.getShaahZmanis72MinutesZmanis()));
+  return result.join(" / ");
+}
+
+function getHallel() {
+  var yomTovIndex = jewishCalendar.getYomTovIndex();
+        if ((jewishCalendar.getJewishMonth() == KosherZmanim.JewishCalendar.NISSAN
+                && jewishCalendar.getJewishDayOfMonth() == 15)//First day of Pesach
+                || (!jewishCalendar.getInIsrael() &&
+                jewishCalendar.getJewishMonth() == KosherZmanim.JewishCalendar.NISSAN
+                && jewishCalendar.getJewishDayOfMonth() == 16)//First day of Pesach outside of israel
+                || yomTovIndex == KosherZmanim.JewishCalendar.SHAVUOS
+                || yomTovIndex == KosherZmanim.JewishCalendar.SUCCOS
+                || yomTovIndex == KosherZmanim.JewishCalendar.SHEMINI_ATZERES
+                || jewishCalendar.isCholHamoedSuccos()
+                || jewishCalendar.isChanukah()) {
+            return "הלל שלם";
+        } else if (jewishCalendar.isRoshChodesh() || jewishCalendar.isCholHamoedPesach()
+                || (jewishCalendar.getJewishMonth() == KosherZmanim.JewishCalendar.NISSAN && jewishCalendar.getJewishDayOfMonth() == 21)
+                || (!jewishCalendar.getInIsrael() && jewishCalendar.getJewishMonth() == KosherZmanim.JewishCalendar.NISSAN && jewishCalendar.getJewishDayOfMonth() == 22)) {
+            return "חצי הלל";
+        } else {
+            return "";
+        }
+}
+
+function getTekufaForNextDay() {
+  var nextDay = jewishCalendar.getDate().toJSDate();
+  nextDay.setDate(nextDay.getDate() + 1);
+  jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+  var tekufa = getTekufa();
+  nextDay.setDate(nextDay.getDate() - 1);
+  jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+  return tekufa;
+}
+
+function getTekufaForNextDayAsDate() {
+  var nextDay = jewishCalendar.getDate().toJSDate();
+  nextDay.setDate(nextDay.getDate() + 1);
+  jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+  var tekufaDate = getTekufaAsDate();
+  nextDay.setDate(nextDay.getDate() - 1);
+  jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+  return tekufaDate;
+}
+
+function getTekufa() {
+  var INITIAL_TEKUFA_OFFSET = 12.625;  // the number of days Tekufas Tishrei occurs before JEWISH_EPOCH
+
+  var days = KosherZmanim.JewishCalendar.getJewishCalendarElapsedDays(jewishCalendar.getJewishYear()) +
+   KosherZmanim.JewishCalendar.getDaysSinceStartOfJewishYear(
+    jewishCalendar.getJewishYear(),
+    jewishCalendar.getJewishMonth(),
+    jewishCalendar.getJewishDayOfMonth()) + INITIAL_TEKUFA_OFFSET - 1;  // total days since first Tekufas Tishrei event
+
+  var solarDaysElapsed = days % 365.25;  // total days elapsed since start of solar year
+  var tekufaDaysElapsed = solarDaysElapsed % 91.3125;  // the number of days that have passed since a tekufa event
+  if (tekufaDaysElapsed > 0 && tekufaDaysElapsed <= 1){  // if the tekufa happens in the upcoming 24 hours
+      return ((1.0 - tekufaDaysElapsed) * 24.0) % 24;// rationalize the tekufa event to number of hours since start of jewish day
+  } else {
+      return null;
+  }
+}
+
+function getTekufaName() {
+  var tekufaNameForToday = getTekufaType();
+  if (tekufaNameForToday === "") {
+    jewishCalendar.setDate(jewishCalendar.getDate().plus({days: 1}));
+    var tekufaNameForTomorrow = getTekufaType();
+    jewishCalendar.setDate(jewishCalendar.getDate().minus({days: 1}));
+    if (tekufaNameForTomorrow === "") {
+      return "";
+    } else {
+      return tekufaNameForTomorrow;
+    }
+  } else {
+    return tekufaNameForToday;
+  }
+
+  function getTekufaType() {
+  var tekufaNames = ["Tishri","Tevet","Nissan","Tammuz"];
+  var INITIAL_TEKUFA_OFFSET = 12.625;  // the number of days Tekufas Tishrei occurs before JEWISH_EPOCH
+  var days = KosherZmanim.JewishCalendar.getJewishCalendarElapsedDays(jewishCalendar.getJewishYear()) +
+   KosherZmanim.JewishCalendar.getDaysSinceStartOfJewishYear(
+    jewishCalendar.getJewishYear(),
+    jewishCalendar.getJewishMonth(),
+    jewishCalendar.getJewishDayOfMonth()) + INITIAL_TEKUFA_OFFSET - 1;  // total days since first Tekufas Tishrei event
+
+  var solarDaysElapsed = days % 365.25;  // total days elapsed since start of solar year
+  var currentTekufaNumber = parseInt(solarDaysElapsed / 91.3125);  // the number of days that have passed since a tekufa event
+  var tekufaDaysElapsed = solarDaysElapsed % 91.3125;  // the number of days that have passed since a tekufa event
+  if (tekufaDaysElapsed > 0 && tekufaDaysElapsed <= 1){  // if the tekufa happens in the upcoming 24 hours
+      return tekufaNames[currentTekufaNumber];//0 for Tishrei, 1 for Tevet, 2, for Nissan, 3 for Tammuz
+  } else {
+      return "";
+  }
+}
+}
+
+function getTekufaAsDate() {
+  var hours = getTekufa() - 6;
+  var minutes = parseInt((hours - parseInt(hours)) * 60);
+  hours = parseInt(hours);
+  var date = luxon.DateTime.fromObject({
+    year: jewishCalendar.getGregorianYear(),
+    month: jewishCalendar.getGregorianMonth() + 1,
+    day: jewishCalendar.getGregorianDayOfMonth(),
+    hour: 0,
+    minute: 0,
+    second: 0,
+    millisecond: 0},
+    {zone: 'Asia/Jerusalem'}).plus({hours: hours, minutes: minutes});
+  return date;
+}
+
+function getIsTonightStartOrEndBirchatLevana() {
+  // The start time of Birchat Levana is is 7 days into the jewish month after the molad
+  // The end time of Birchat Levana is 15 days into the jewish month after the molad
+  var startTimeSevenDays = jewishCalendar.getTchilasZmanKidushLevana7Days();//getSofZmanKidushLevana7Days() returns a luxon.DateTime object
+  var endTimeFifteenDays = jewishCalendar.getSofZmanKidushLevana15Days();// returns a luxon.DateTime object
+
+  // if the current date set in the zmanim calendar is on the same day as the start time of Birchat Levana, return "start"
+  if (zmanimCalendar.getDate().hasSame(startTimeSevenDays, "day")) {
+    return "Birchat HaLevana starts tonight";
+  }
+  // if the current date set in the zmanim calendar is on the same day as the end time of Birchat Levana, return "end"
+  if (zmanimCalendar.getDate().hasSame(endTimeFifteenDays, "day")) {
+    return "Last night for Birchat HaLevana";
+  }
+
+  return "";
+}
+
 
 function isBarechAleinu() {
   var tekufatTishriElapsedDays =
@@ -1271,7 +1452,7 @@ function getTachanun() {
   }
   var yomTovIndexForNextDay = getYomTovIndexForNextDay();
   if (
-    jewishCalendar.getDate().toJSDate().getDay == 5 ||
+    jewishCalendar.getDayOfWeek() == 6 ||
     yomTovIndex == KosherZmanim.JewishCalendar.FAST_OF_ESTHER ||
     yomTovIndexForNextDay == KosherZmanim.JewishCalendar.TISHA_BEAV ||
     yomTovIndexForNextDay == KosherZmanim.JewishCalendar.TU_BEAV ||
@@ -1283,7 +1464,7 @@ function getTachanun() {
   ) {
     return "There is only Tachanun in the morning";
   }
-  if (jewishCalendar.getDate().toJSDate().getDay() == 6) {
+  if (jewishCalendar.getDayOfWeek() == 7) {
     return "צדקתך";
   }
   return "There is Tachanun today";
@@ -1351,7 +1532,7 @@ function numberToHebrew(num) {
 
 function saveCandleLightingSetting() {
   var date = new Date();
-  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);
+  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
   var expires = "expires=" + date.toUTCString();
   var candleLightingTime = document.getElementById("candleMinutes").value;
   var candle = document.getElementById("Candle");
@@ -1369,7 +1550,7 @@ function saveCandleLightingSetting() {
 
 function saveTzeitShabbatSetting() {
   var date = new Date();
-  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);
+  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
   var expires = "expires=" + date.toUTCString();
   var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
   var tzeitShabbat = document.getElementById("TzeitShabbatChag");
@@ -1466,6 +1647,7 @@ function shabbatMode() {
     document.getElementById("date").style.cursor = "pointer";
     document.getElementById("backButton").disabled = false;
     document.getElementById("forwardButton").disabled = false;
+    document.getElementById("shabbatModeBanner").style.display = "none";
   } else {
     var date = new luxon.DateTime.now();
     jewishCalendar.setDate(date);
@@ -1478,7 +1660,7 @@ function shabbatMode() {
     document.getElementById("date").style.cursor = "default";
     document.getElementById("backButton").disabled = true;
     document.getElementById("forwardButton").disabled = true;
-    //TODO add a shabbat mode banner
+    document.getElementById("shabbatModeBanner").style.display = "block";
     scrollPage(); //scroll the zmanim up and down the screen
     initUpdaterForZmanim();
   }
@@ -1510,6 +1692,8 @@ function initUpdaterForZmanim() {
   var timeUntilTomorrow = tomorrow.diffNow().as("milliseconds");
   setTimeout(function () {
     //TODO test this
+    var date = new luxon.DateTime.now();
+    jewishCalendar.setDate(date);
     updateZmanimList();
     initUpdaterForZmanim();
   }, timeUntilTomorrow);

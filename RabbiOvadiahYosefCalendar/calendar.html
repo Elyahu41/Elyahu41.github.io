@@ -20,6 +20,13 @@
   </head>
 
   <body>
+    <p id="shabbatModeBanner" class="marquee">
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+    </p>
     <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
     ><img
       src="banner.png"
@@ -36,9 +43,9 @@
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
     <div class="btn-group">
-      <button id="hebrewZmanim" style="width:33%" class="button-18">Hebrew</button>
-      <button id="defaultZmanim" style="width:33%" class="button-18">Default</button>
-      <button id="englishZmanim" style="width:33%" class="button-18">Translated English</button>
+      <button id="hebrewZmanim" style="width:33%; height: auto;" class="button-18">Hebrew</button>
+      <button id="defaultZmanim" style="width:33%; height: auto;" class="button-18">Default</button>
+      <button id="englishZmanim" style="width:33%; height: auto;" class="button-18">English</button>
     </div>
     <p id="LocationName" class="border"></p>
     <p id="Date" class="border"></p>
@@ -49,6 +56,9 @@
     <p id="Ulchaparat" class="border"></p>
     <p id="Chamah" class="border"></p>
     <p id="Tachanun" class="border"></p>
+    <p id="BirchatHalevana" class="border"></p>
+    <p id="Hallel" class="border"></p>
+    <p id="Tekufa" class="border"></p>
 
     <p id="Alot" class="border-split"></p>
     <p id="Talit" class="border-split"></p>
@@ -73,35 +83,40 @@
     <p id="ChatzotLayla" class="border-split"></p>
     <p id="Daf" class="border"></p>
     <p id="DafYerushalmi" class="border"></p>
-    <p id="seasonalPrayers" class="border"></p>
+    <p id="SeasonalPrayers" class="border"></p>
+    <p id="ShaahZmanit" class="border"></p>
 
     <noscript>This website requires JavaScript to run</noscript>
     <script src="/RabbiOvadiahYosefCalendar/kosher-zmanim.min.js"></script>
     <!--Include kosherjava js port-->
-    <script src="luxon.min.js"></script>
+    <script src="luxon.js"></script>
     <!--Include luxon js for date time manipulation-->
     <script src="zmanimTimeNames.js" type="text/javascript"></script>
     <!--This file just has different names for the same zmanim-->
     <script src="zmanimListUpdater.js" type="text/javascript"></script>
     <!-- This script has a method to update the zmanim list in html and change the dates-->
+
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="flexcal.css" />
     <script src="jquery.textpopup.js" type="text/javascript"></script>
     <script src="jquery.flexcal.js" type="text/javascript"></script>
     
-    
     <p class="noBorder">
       <button id="backButton" class="button-18" onclick="backwardOneDay()">Previous Day</button>
-      <input type="date" id="date" onchange="updateDate()" /><!--TODO fixme-->
-      <!--<input id="hebrewDate" />-->
+      <input type="date" id="date" onchange="updateDate()" />
+
+      <input id="hebrewDate" /><!--TODO fixme-->
       <script>
       $('#hebrewDate').flexcal({
-        calendars: ['jewish', 'he-jewish']
+        calendars: ['en', 'jewish', 'he-jewish'],       
       });
       </script>
+
       <button id="forwardButton" class="button-18" onclick="forwardOneDay()">Next Day</button>
     </p>
   </body>
-  <footer style="text-align:center; color: gold;">Made by Elyahu Jacobi (This project is it's in Beta Stage)</footer>
+  <footer style="text-align:center; color: gold;">Made by Elyahu Jacobi (This project is in it's Beta Stage and is open-source. You can look at the source code here: 
+    <a href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar">Source Code</a>)
+  </footer>
 </html>

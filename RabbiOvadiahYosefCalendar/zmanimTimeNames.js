@@ -30,22 +30,22 @@ function getMishorSunriseString() {
 
 function getLatestShmaMGAString() {
   if (isZmanimInHebrew) {
-    return "סוף זמן שמע (מג'א)";
+    return "סוף זמן שמע מג'א";
   }
   if (isZmanimInTranslatedEnglish) {
-    return "Latest Shma (MGA)";
+    return "Latest Shma MG'A";
   }
-  return "Sof Zman Shma (MGA)";
+  return "Sof Zman Shma MG'A";
 }
 
 function getLatestShmaGRAString() {
   if (isZmanimInHebrew) {
-    return "סוף זמן שמע (גר'א)";
+    return "סוף זמן שמע גר'א";
   }
   if (isZmanimInTranslatedEnglish) {
-    return "Latest Shma (GRA)";
+    return "Latest Shma GR'A";
   }
-  return "Sof Zman Shma (GRA)";
+  return "Sof Zman Shma GR'A";
 }
 
 function getSofZmanAchilatChametzString() {
@@ -99,10 +99,16 @@ function getMinchaGedolaString() {
 }
 
 function getMinchaKetanaString() {
+  if (isZmanimInHebrew) {
+    return "מנחה קטנה";
+  }
   return "Mincha Ketana";
 }
 
 function getPlagString() {
+  if (isZmanimInHebrew) {
+    return "פלג המנחה";
+  }
   return "Plag HaMincha";
 }
 
@@ -148,7 +154,7 @@ function getTzaitTaanitLChumraString() {
     return "צאת תענית לחומרה";
   }
   if (isZmanimInTranslatedEnglish) {
-    return "Fast Ends (L'Chumra)";
+    return "Fast Ends (Stringent)";
   }
   return "Tzait Taanit L'Chumra";
 }
