@@ -206,7 +206,7 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   getEarliestTalitAndTefilin() {
     var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
     var dakahZmanit = shaahZmanit / 60;
-    return new Date(this.getAlos72Zmanis().toMillis() + 6 * dakahZmanit);
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getAlos72Zmanis(), 6 * dakahZmanit);
   }
 
   //TODO Netz
@@ -216,37 +216,37 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
       this.getAlos72Zmanis(),
       this.getTzais72Zmanis()
     );
-    return new Date(this.getAlos72Zmanis().toMillis() + shaahZmanit * 5);
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getAlos72Zmanis(), shaahZmanit * 5);
   }
 
   getPlagHamincha() {
     var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
     var dakahZmanit = shaahZmanit / 60;
-    return new Date(
-      this.getTzait().getTime() - (shaahZmanit + 15 * dakahZmanit)
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+      this.getTzait(), - (shaahZmanit + 15 * dakahZmanit)
     );
   }
 
   getCandleLighting() {
-    return new Date(
-      this.getSunset().toMillis() - this.getCandleLightingOffset() * 60_000
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+      this.getSunset(), - (this.getCandleLightingOffset() * 60_000)
     );
   }
 
   getTzait() {
     var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
     var dakahZmanit = shaahZmanit / 60;
-    return new Date(
-      this.getSunset().toMillis() + (13 * dakahZmanit + dakahZmanit / 2)
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+      this.getSunset(), (13 * dakahZmanit + dakahZmanit / 2)
     );
   }
 
   getTzaitTaanit() {
-    return new Date(this.getSunset().toMillis() + 20 * 60_000);
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSunset(), 20 * 60_000);
   }
 
   getTzaitTaanitLChumra() {
-    return new Date(this.getSunset().toMillis() + 30 * 60_000);
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSunset(), 30 * 60_000);
   }
 }
 
@@ -278,6 +278,7 @@ function init() {
   setButtonsState(isZmanimInHebrew, isZmanimInTranslatedEnglish);
   initLanguageButtons();
   updateZmanimList();
+
   var shabbatModeButton = document.getElementById("shabbatMode");
   shabbatModeButton.addEventListener("click", function () {
     if (isShabbatMode) {
@@ -287,6 +288,7 @@ function init() {
     }
     shabbatMode();
   });
+
   var showSecondsButton = document.getElementById("showSeconds");
   if (showSeconds) {
     showSecondsButton.innerHTML = "Hide Seconds";
@@ -302,6 +304,25 @@ function init() {
     }
     updateZmanimList();
     localStorage.setItem("isShowSeconds", showSeconds);
+  });
+  var darkModeButton = document.getElementById("darkMode");
+  var isDarkMode = localStorage.getItem("isDarkMode");
+  if (isDarkMode == "true") {
+    toggleDarkMode();
+    document.getElementById("banner").src = "banner.png";
+    darkModeButton.innerHTML = "Light Mode";
+  }
+  darkModeButton.addEventListener("click", function () {
+    toggleDarkMode();
+    var isDarkMode = localStorage.getItem("isDarkMode");
+    if (isDarkMode == "true") {
+      darkModeButton.innerHTML = "Dark Mode";
+      isDarkMode = "false";
+    } else if (isDarkMode == "false") {
+      darkModeButton.innerHTML = "Light Mode";
+      isDarkMode = "true";
+    }
+    localStorage.setItem("isDarkMode", isDarkMode);
   });
 }
 
@@ -332,7 +353,7 @@ function initLanguageButtons() {
   });
 }
 
-//TODO: finish tekufas, morid hatal, shaah zmanit MGA/GRA, birchot hachama, birkat helevana, debug elevation on the bottom of the page,
+//TODO: debug elevation on the bottom of the page,
 
 function updateZmanimList() {
   //common information first
@@ -475,43 +496,38 @@ function updateZmanimList() {
 
   if (!showSeconds) {
     alot.innerHTML =
-      getAlotString() +
+    "<b>" + getAlotString() + "</b>" +
       "<span>" +
       zmanimCalendar
-        .getAlos72Zmanis()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .getAlos72Zmanis().setZone(timezone).toFormat("h:mm a") + 
       "</span>";
     talit.innerHTML =
-      getTalitTefilinString() +
+      "<b>" + getTalitTefilinString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getEarliestTalitAndTefilin()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + //no need to convert to JSDate
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     sunrise.innerHTML =
-      getMishorSunriseString() +
+      "<b>" + getMishorSunriseString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSeaLevelSunrise()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") + 
       "</span>";
     latestShmaMGA.innerHTML =
-      getLatestShmaMGAString() +
+      "<b>" + getLatestShmaMGAString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSofZmanShmaMGA72MinutesZmanis()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") + 
       "</span>";
     latestShmaGRA.innerHTML =
-      getLatestShmaGRAString() +
+      "<b>" + getLatestShmaGRAString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSofZmanShmaGRA()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     if (
       jewishCalendar.getYomTovIndex() ===
@@ -520,77 +536,71 @@ function updateZmanimList() {
       sofZmanAchilatChametz.style.display = "block";
       sofZmanBiurChametz.style.display = "block";
       sofZmanAchilatChametz.innerHTML =
-        getSofZmanAchilatChametzString() +
+        "<b>" + getSofZmanAchilatChametzString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getSofZmanTfilaMGA72MinutesZmanis()
-          .toJSDate()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
       latestBerachotShmaGRA.innerHTML =
-        getLatestBerachotShmaGRAString() +
+        "<b>" + getLatestBerachotShmaGRAString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getSofZmanTfilaGRA()
-          .toJSDate()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
       sofZmanBiurChametz.innerHTML =
-        getSofZmanBiurChametzString() +
+        "<b>" + getSofZmanBiurChametzString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getSofZmanBiurChametzMGA()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + //no need to convert to JSDate
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
     } else {
       sofZmanAchilatChametz.style.display = "none";
       sofZmanBiurChametz.style.display = "none";
       latestBerachotShmaGRA.innerHTML =
-        getLatestBerachotShmaGRAString() +
+        "<b>" + getLatestBerachotShmaGRAString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getSofZmanTfilaGRA()
-          .toJSDate()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
     }
 
     chatzot.innerHTML =
-      getChatzotString() +
+      "<b>" + getChatzotString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getChatzos()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     minchaGedola.innerHTML =
-      getMinchaGedolaString() +
+      "<b>" + getMinchaGedolaString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getMinchaGedolaGreaterThan30()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     minchaKetana.innerHTML =
-      getMinchaKetanaString() +
+      "<b>" + getMinchaKetanaString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getMinchaKetana()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     plag.innerHTML =
-      getPlagString() +
+      "<b>" + getPlagString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getPlagHamincha()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
-      "</span>"; //no need to convert to JSDate
+        .setZone(timezone).toFormat("h:mm a") +
+      "</span>";
 
       if (jewishCalendar.hasCandleLighting() && jewishCalendar.isAssurBemelacha()) {
         if (jewishCalendar.getDayOfWeek() !== 6) {
           tzeitCandles.style.display = "block";
-          tzeitCandles.innerHTML = getCandleLightingString() + "<span>" + zmanimCalendar.getTzait().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) + "</span>";
+          tzeitCandles.innerHTML = "<b>" + getCandleLightingString() + "</b>" + "<span>" + zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm a") + "</span>";
         } else {
           tzeitCandles.style.display = "none";
         }
@@ -606,25 +616,25 @@ function updateZmanimList() {
       }
       candle.style.display = "block";
       candle.innerHTML =
-        getCandleLightingString() +
+        "<b>" + getCandleLightingString() +
         " (" +
         zmanimCalendar.getCandleLightingOffset() +
-        ") " +
+        ") " + "</b>" +
         "<span>" +
         zmanimCalendar
           .getCandleLighting()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
-        "</span>"; //no need to convert to JSDate
+          .setZone(timezone).toFormat("h:mm a") +
+        "</span>"; 
       candle.onclick = function () {
         // add on click event to the candle lighting time to save the time to a cookie
         if (document.getElementById("candleMinutes") == null) {
           candle.innerHTML =
-            getCandleLightingString() +
-            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            "<b>" + getCandleLightingString() +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' + "</b>" +
             "<span>" +
             zmanimCalendar
               .getCandleLighting()
-              .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+              .setZone(timezone).toFormat("h:mm a") +
             "</span>"; //no need to convert to JSDate
         }
       };
@@ -633,19 +643,18 @@ function updateZmanimList() {
     }
 
     sunset.innerHTML =
-      getSunsetString() +
+      "<b>" + getSunsetString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSunset()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     tzeit.innerHTML =
-      getTzeitString() +
+      "<b>" + getTzeitString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getTzait()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>"; //no need to convert to JSDate
 
     if (
@@ -658,18 +667,18 @@ function updateZmanimList() {
       tzeitT.style.display = "block";
       tzeitTL.style.display = "block";
       tzeitT.innerHTML =
-        getTzaitTaanitString() +
+        "<b>" + getTzaitTaanitString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getTzaitTaanit()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
       tzeitTL.innerHTML =
-        getTzaitTaanitLChumraString() +
+        "<b>" + getTzaitTaanitLChumraString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getTzaitTaanitLChumra()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
     } else {
       tzeitT.style.display = "none";
@@ -688,28 +697,26 @@ function updateZmanimList() {
       }
       tzaitSC.style.display = "block";
       tzaitSC.innerHTML =
-        getTzaitShabbatChagString(jewishCalendar) +
+        "<b>" + getTzaitShabbatChagString(jewishCalendar) +
         " (" +
         zmanimCalendar.getAteretTorahSunsetOffset() +
-        ") " +
+        ") " + "</b>" +
         "<span>" +
         zmanimCalendar
           .getTzaisAteretTorah()
-          .toJSDate()
-          .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+          .setZone(timezone).toFormat("h:mm a") +
         "</span>";
 
       tzaitSC.onclick = function () {
         // add on click event to the tzeit shabbat time to save the time to a cookie
         if (document.getElementById("tzeitShabbatMinutes") == null) {
           tzaitSC.innerHTML =
-            getTzaitShabbatChagString(jewishCalendar) +
-            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
+            "<b>" + getTzaitShabbatChagString(jewishCalendar) +
+            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' + "</b>" +
             "<span>" +
             zmanimCalendar
               .getTzaisAteretTorah()
-              .toJSDate()
-              .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+              .setZone(timezone).toFormat("h:mm a") +
             "</span>";
         }
       };
@@ -718,49 +725,45 @@ function updateZmanimList() {
     }
 
     rt.innerHTML =
-      getRabbeinuTamString() +
+      "<b>" + getRabbeinuTamString() + "</b>" +
       "<span>" +
-      roundUpToMinute(
-        zmanimCalendar.getTzais72Zmanis().toJSDate()
-      ).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+     zmanimCalendar.getTzais72Zmanis().set({second: 0}).plus({minutes: 1})
+     .setZone(timezone).toFormat("h:mm a") +
       "</span>";
     chatzotLayla.innerHTML =
-      getChatzotLaylaString() +
+      "<b>" + getChatzotLaylaString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSolarMidnight()
-        .toJSDate()
-        .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
+        .setZone(timezone).toFormat("h:mm a") +
       "</span>";
-  } else {
-    // if the user wants to see the seconds
+  } else {// if the user wants to see the seconds
     alot.innerHTML =
-      getAlotString() +
+      "<b>" + getAlotString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getAlos72Zmanis().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getAlos72Zmanis().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     talit.innerHTML =
-      getTalitTefilinString() +
+      "<b>" + getTalitTefilinString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getEarliestTalitAndTefilin().toLocaleTimeString() +
+      zmanimCalendar.getEarliestTalitAndTefilin().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
     sunrise.innerHTML =
-      getMishorSunriseString() +
+      "<b>" + getMishorSunriseString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getSeaLevelSunrise().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getSeaLevelSunrise().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     latestShmaMGA.innerHTML =
-      getLatestShmaMGAString() +
+      "<b>" + getLatestShmaMGAString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getSofZmanShmaMGA72MinutesZmanis()
-        .toJSDate()
-        .toLocaleTimeString() +
+        .setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     latestShmaGRA.innerHTML =
-      getLatestShmaGRAString() +
+      "<b>" + getLatestShmaGRAString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getSofZmanShmaGRA().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getSofZmanShmaGRA().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
 
     if (
@@ -770,60 +773,58 @@ function updateZmanimList() {
       sofZmanAchilatChametz.style.display = "block";
       sofZmanBiurChametz.style.display = "block";
       sofZmanAchilatChametz.innerHTML =
-        getSofZmanAchilatChametzString() +
+        "<b>" + getSofZmanAchilatChametzString() + "</b>" +
         "<span>" +
         zmanimCalendar
           .getSofZmanTfilaMGA72MinutesZmanis()
-          .toJSDate()
-          .toLocaleTimeString() +
+          .setZone(timezone).toFormat("h:mm:ss a") +
         "</span>";
       latestBerachotShmaGRA.innerHTML =
-        getLatestBerachotShmaGRAString() +
+        "<b>" + getLatestBerachotShmaGRAString() + "</b>" +
         "<span>" +
-        zmanimCalendar.getSofZmanTfilaGRA().toJSDate().toLocaleTimeString() +
+        zmanimCalendar.getSofZmanTfilaGRA().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>";
       sofZmanBiurChametz.innerHTML =
-        getSofZmanBiurChametzString() +
+        "<b>" + getSofZmanBiurChametzString() + "</b>" +
         "<span>" +
-        zmanimCalendar.getSofZmanBiurChametzMGA().toLocaleTimeString() +
+        zmanimCalendar.getSofZmanBiurChametzMGA().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>"; //no need to convert to JSDate
     } else {
       sofZmanAchilatChametz.style.display = "none";
       sofZmanBiurChametz.style.display = "none";
       latestBerachotShmaGRA.innerHTML =
-        getLatestBerachotShmaGRAString() +
+        "<b>" + getLatestBerachotShmaGRAString() + "</b>" +
         "<span>" +
-        zmanimCalendar.getSofZmanTfilaGRA().toJSDate().toLocaleTimeString() +
+        zmanimCalendar.getSofZmanTfilaGRA().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>";
     }
 
     chatzot.innerHTML =
-      getChatzotString() +
+      "<b>" + getChatzotString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getChatzos().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getChatzos().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     minchaGedola.innerHTML =
-      getMinchaGedolaString() +
+      "<b>" + getMinchaGedolaString() + "</b>" +
       "<span>" +
       zmanimCalendar
         .getMinchaGedolaGreaterThan30()
-        .toJSDate()
-        .toLocaleTimeString() +
+        .setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     minchaKetana.innerHTML =
-      getMinchaKetanaString() +
+      "<b>" + getMinchaKetanaString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getMinchaKetana().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getMinchaKetana().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     plag.innerHTML =
-      getPlagString() +
+      "<b>" + getPlagString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getPlagHamincha().toLocaleTimeString() +
+      zmanimCalendar.getPlagHamincha().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
       if (jewishCalendar.hasCandleLighting() && jewishCalendar.isAssurBemelacha()) {
         if (jewishCalendar.getDayOfWeek() !== 6) {
           tzeitCandles.style.display = "block";
-          tzeitCandles.innerHTML = getCandleLightingString() + "<span>" + zmanimCalendar.getTzait().toLocaleTimeString() + "</span>";
+          tzeitCandles.innerHTML = "<b>" + getCandleLightingString() + "</b>" + "<span>" + zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm:ss a") + + "</span>";
         } else {
           tzeitCandles.style.display = "none";
         }
@@ -839,22 +840,22 @@ function updateZmanimList() {
       }
       candle.style.display = "block";
       candle.innerHTML =
-        getCandleLightingString() +
+        "<b>" + getCandleLightingString() +
         " (" +
         zmanimCalendar.getCandleLightingOffset() +
-        ") " +
+        ") " + "</b>" +
         "<span>" +
-        zmanimCalendar.getCandleLighting().toLocaleTimeString() +
+        zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>"; //no need to convert to JSDate
       // add on click event to the candle lighting time to save the time to a cookie
       candle.onclick = function () {
         if (document.getElementById("candleMinutes") == null) {
           //if the input element doesn't exist yet then add it to the webpage
           candle.innerHTML =
-            getCandleLightingString() +
-            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            "<b>" + getCandleLightingString() + "</b>" +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' + "</b>" +
             "<span>" +
-            zmanimCalendar.getCandleLighting().toLocaleTimeString() +
+            zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm:ss a") +
             "</span>"; //no need to convert to JSDate
         }
       };
@@ -863,14 +864,14 @@ function updateZmanimList() {
     }
 
     sunset.innerHTML =
-      getSunsetString() +
+      "<b>" + getSunsetString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getSunset().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getSunset().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
     tzeit.innerHTML =
-      getTzeitString() +
+      "<b>" + getTzeitString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getTzait().toLocaleTimeString() +
+      zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
 
     if (
@@ -883,14 +884,14 @@ function updateZmanimList() {
       tzeitT.style.display = "block";
       tzeitTL.style.display = "block";
       tzeitT.innerHTML =
-        getTzaitTaanitString() +
+        "<b>" + getTzaitTaanitString() + "</b>" +
         "<span>" +
-        zmanimCalendar.getTzaitTaanit().toLocaleTimeString() +
+        zmanimCalendar.getTzaitTaanit().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>"; //no need to convert to JSDate
       tzeitTL.innerHTML =
-        getTzaitTaanitLChumraString() +
+        "<b>" + getTzaitTaanitLChumraString() + "</b>" +
         "<span>" +
-        zmanimCalendar.getTzaitTaanitLChumra().toLocaleTimeString() +
+        zmanimCalendar.getTzaitTaanitLChumra().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>"; //no need to convert to JSDate
     } else {
       tzeitT.style.display = "none";
@@ -909,25 +910,24 @@ function updateZmanimList() {
       }
       tzaitSC.style.display = "block";
       tzaitSC.innerHTML =
-        getTzaitShabbatChagString(jewishCalendar) +
+        "<b>" + getTzaitShabbatChagString(jewishCalendar) +
         " (" +
         zmanimCalendar.getAteretTorahSunsetOffset() +
-        ") " +
+        ") " + "</b>" +
         "<span>" +
-        zmanimCalendar.getTzaisAteretTorah().toJSDate().toLocaleTimeString() +
+        zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm:ss a") +
         "</span>";
 
       tzaitSC.onclick = function () {
         // add on click event to the tzeit shabbat time to save the time to a cookie
         if (document.getElementById("tzeitShabbatMinutes") == null) {
           tzaitSC.innerHTML =
-            getTzaitShabbatChagString(jewishCalendar) +
-            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>) ' +
+            "<b>" + getTzaitShabbatChagString(jewishCalendar) + "</b>" +
+            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>) ' + "</b>" +
             "<span>" +
             zmanimCalendar
               .getTzaisAteretTorah()
-              .toJSDate()
-              .toLocaleTimeString() +
+              .setZone(timezone).toFormat("h:mm:ss a") +
             "</span>";
         }
       };
@@ -936,14 +936,14 @@ function updateZmanimList() {
     }
 
     rt.innerHTML =
-      getRabbeinuTamString() +
+      "<b>" + getRabbeinuTamString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getTzais72Zmanis().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getTzais72Zmanis().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
     chatzotLayla.innerHTML =
-      getChatzotLaylaString() +
+      "<b>" + getChatzotLaylaString() + "</b>" +
       "<span>" +
-      zmanimCalendar.getSolarMidnight().toJSDate().toLocaleTimeString() +
+      zmanimCalendar.getSolarMidnight().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"; //no need to convert to JSDate
   }
   var dafObject = KosherZmanim.YomiCalculator.getDafYomiBavli(jewishCalendar);
@@ -969,16 +969,8 @@ function updateZmanimList() {
 
   shaahZmanit.innerHTML = getShaahZmanits();
 
-  // end of zmanim list update
-}
-
-function roundUpToMinute(date) {
-  var roundedDate = new Date(date);
-  roundedDate.setSeconds(0);
-  roundedDate.setMilliseconds(0);
-  roundedDate.setMinutes(roundedDate.getMinutes() + 1);
-  return roundedDate;
-}
+  
+}// end of zmanim list update
 
 function forwardOneDay() {
   var nextDay = zmanimCalendar.getDate().toJSDate();
@@ -999,7 +991,7 @@ function backwardOneDay() {
 function updateDate() {
   var date = document.getElementById("date");
   var JSDate = date.value;
-  var dateObject = luxon.DateTime.fromFormat(JSDate, "yyyy-MM-dd");
+  var dateObject = luxon.DateTime.fromFormat(JSDate, "MM/dd/yyyy");
   jewishCalendar.setDate(dateObject);
   zmanimCalendar.setDate(dateObject);
   updateZmanimList();
@@ -1386,7 +1378,7 @@ function getYomTov(jewishCalendar) {
     case KosherZmanim.JewishCalendar.CHANUKAH:
       return "Chanukah";
     case KosherZmanim.JewishCalendar.TENTH_OF_TEVES:
-      return "Asarah Be'Tevet";
+      return "Fast of Asarah Be'Tevet";
     case KosherZmanim.JewishCalendar.TU_BESHVAT:
       return "Tu Be'Shevat";
     case KosherZmanim.JewishCalendar.FAST_OF_ESTHER:
@@ -1535,17 +1527,9 @@ function saveCandleLightingSetting() {
   date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
   var expires = "expires=" + date.toUTCString();
   var candleLightingTime = document.getElementById("candleMinutes").value;
-  var candle = document.getElementById("Candle");
   zmanimCalendar.setCandleLightingOffset(candleLightingTime);
-  candle.innerHTML =
-    getCandleLightingString() +
-    " (" +
-    candleLightingTime +
-    ") " +
-    "<span>" +
-    zmanimCalendar.getCandleLighting().toLocaleTimeString() +
-    "</span>";
   setCookie("candleLightingTime", candleLightingTime, expires);
+  updateZmanimList();
 }
 
 function saveTzeitShabbatSetting() {
@@ -1553,17 +1537,9 @@ function saveTzeitShabbatSetting() {
   date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
   var expires = "expires=" + date.toUTCString();
   var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
-  var tzeitShabbat = document.getElementById("TzeitShabbatChag");
   zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
-  tzeitShabbat.innerHTML =
-    getTzeitShabbatString() +
-    " (" +
-    tzeitShabbatTime +
-    ") " +
-    "<span>" +
-    zmanimCalendar.getTzaisAteretTorah().toLocaleTimeString() +
-    "</span>";
   setCookie("tzeitShabbatTime", tzeitShabbatTime, expires);
+  updateZmanimList();
 }
 
 function setCookie(name, value, days) {
@@ -1713,6 +1689,32 @@ function setButtonsState(isZmanimInHebrew, isZmanimInTranslatedEnglish) {
     document.getElementById("hebrewZmanim").disabled = false;
     document.getElementById("englishZmanim").disabled = false;
   }
+}
+
+function toggleDarkMode() {
+    document.querySelector("title").classList.toggle("titleDarkMode");
+    if (document.getElementById("banner").src.includes("banner.png")) {
+        document.getElementById("banner").src = "banner_light.png";
+    } else {
+        document.getElementById("banner").src = "banner.png";
+    }
+    document.querySelector("body").classList.toggle("bodyDarkMode");
+    document.querySelector("h2").classList.toggle("h2DarkMode");
+    document.querySelector("h5").classList.toggle("h5DarkMode");
+    var borders = document.getElementsByClassName("border");
+    for (var i = 0; i < borders.length; i++) {
+        borders[i].classList.toggle("borderDarkMode");
+    }
+    var bordersSplit = document.getElementsByClassName("border-split");
+    for (var i = 0; i < bordersSplit.length; i++) {
+        bordersSplit[i].classList.toggle("border-splitDarkMode");
+    }
+    document.addEventListener("DOMContentLoaded", function(event) {
+      document.getElementById("footer").classList.toggle("footerDarkMode");
+   });
+   if (document.getElementById("footer") !== null) {
+    document.getElementById("footer").classList.toggle("footerDarkMode");
+   }
 }
 
 init(); // initialize the page with the current date and location as well as any other buttons that need to be initialized

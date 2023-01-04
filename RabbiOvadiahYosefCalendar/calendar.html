@@ -28,25 +28,59 @@
       <span>Shabbat Mode</span>
     </p>
     <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
-    ><img
-      src="banner.png"
-      style="display: block; margin-left: auto; margin-right: auto; width: 10%"
-      alt="banner"
-  /></a>
+      ><img
+        id="banner"
+        src="banner_light.png"
+        style="
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 20%;
+        "
+        alt="banner"
+    /></a>
     <div class="btn-group">
-      <button id="shabbatMode" style="width:25%" class="button-18">Shabbat Mode</button>
-      <button id="showSeconds" style="width:25%" class="button-18">Show Seconds</button>
-      <button style="width:25%" onclick="window.open('/RabbiOvadiahYosefCalendar/moladCalculator.html')" class="button-18">
-        Molad Calculator</button>
-      <button style="width:25%">Light/Dark Mode</button>
+      <button id="shabbatMode" style="width: 25%" class="button-18">
+        Shabbat Mode
+      </button>
+      <button id="showSeconds" style="width: 25%" class="button-18">
+        Show Seconds
+      </button>
+      <button
+        style="width: 25%"
+        onclick="window.open('/RabbiOvadiahYosefCalendar/moladCalculator.html')"
+        class="button-18"
+      >
+        Molad Calculator
+      </button>
+      <button id="darkMode" style="width: 25%" class="button-18">Dark Mode</button>
     </div>
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
     <div class="btn-group">
-      <button id="hebrewZmanim" style="width:33%; height: auto;" class="button-18">Hebrew</button>
-      <button id="defaultZmanim" style="width:33%; height: auto;" class="button-18">Default</button>
-      <button id="englishZmanim" style="width:33%; height: auto;" class="button-18">English</button>
+      <button
+        id="hebrewZmanim"
+        style="width: 33%; height: auto"
+        class="button-18"
+      >
+        Hebrew
+      </button>
+      <button
+        id="defaultZmanim"
+        style="width: 33%; height: auto"
+        class="button-18"
+      >
+        Default
+      </button>
+      <button
+        id="englishZmanim"
+        style="width: 33%; height: auto"
+        class="button-18"
+      >
+        English
+      </button>
     </div>
+    <!--Non Zmanim Information-->
     <p id="LocationName" class="border"></p>
     <p id="Date" class="border"></p>
     <p id="Parasha" class="border"></p>
@@ -59,7 +93,7 @@
     <p id="BirchatHalevana" class="border"></p>
     <p id="Hallel" class="border"></p>
     <p id="Tekufa" class="border"></p>
-
+    <!--Zmanim-->
     <p id="Alot" class="border-split"></p>
     <p id="Talit" class="border-split"></p>
     <p id="Sunrise" class="border-split"></p>
@@ -81,6 +115,7 @@
     <p id="TzeitShabbatChag" class="border-split"></p>
     <p id="RT" class="border-split"></p>
     <p id="ChatzotLayla" class="border-split"></p>
+    <!--Misc Information-->
     <p id="Daf" class="border"></p>
     <p id="DafYerushalmi" class="border"></p>
     <p id="SeasonalPrayers" class="border"></p>
@@ -92,23 +127,56 @@
     <script src="luxon.js"></script>
     <!--Include luxon js for date time manipulation-->
     <script src="zmanimTimeNames.js" type="text/javascript"></script>
-    <!--This file just has different names for the same zmanim-->
+    <!--This file just has multiple different names for the same zmanim. I find it easier to put these methods in a different file-->
     <script src="zmanimListUpdater.js" type="text/javascript"></script>
-    <!-- This script has a method to update the zmanim list in html and change the dates-->
+    <!-- This script has all the magic methods that update the information-->
 
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="flexcal.css" />
+    <link rel="stylesheet" href="jquery-ui.css" />
     <script src="jquery.textpopup.js" type="text/javascript"></script>
     <script src="jquery.flexcal.js" type="text/javascript"></script>
-    
+    <!--All these files just to include flexcal.js for a jewish calendar popup widget-->
+
     <p class="noBorder">
-      <button id="backButton" class="button-18" onclick="backwardOneDay()">Previous Day</button>
-      <input type="date" id="date" onchange="updateDate()" />
-      <button id="forwardButton" class="button-18" onclick="forwardOneDay()">Next Day</button>
+      <button id="backButton" class="button-18" onclick="backwardOneDay()">
+        Previous Day
+      </button>
+      <!--<input type="date" id="date" onchange="updateDate()" />-->
+      <input id="date" style="text-align: center" /><input
+        type="button"
+        value="Go"
+        onclick="updateDate()"
+      />
+      <script>
+        $("document").ready(function () {
+          //This is the code for the calendar popup
+          $("#date").flexcal({
+            calendars: ["en", "jewish", "he-jewish"],
+            selected: "en",
+          });
+        });
+      </script>
+      <button id="forwardButton" class="button-18" onclick="forwardOneDay()">
+        Next Day
+      </button>
     </p>
   </body>
-  <footer style="text-align:center; color: gold;">Made by Elyahu Jacobi (This project is in it's Beta Stage and is open-source. You can look at the source code here: 
-    <a href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar">Source Code</a>)
+  <footer id="footer">
+    Made by Elyahu Jacobi (This project is in it's Beta Stage and is
+    open-source. You can look at the source code here:
+    <button class="button-18">
+      <a
+        href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
+        >Source Code</a
+      ></button
+    >) <br />
+    <br />
+    If you have any questions, feedback, or concerns, please contact me at my
+    email:
+    <a href="mailto:ElyahuJacobi@gmail.com">
+      <button class="button-18">ElyahuJacobi@gmail.com</button>
+    </a>
   </footer>
 </html>

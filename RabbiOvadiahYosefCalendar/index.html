@@ -29,12 +29,13 @@
     <noscript>This website requires JavaScript to run</noscript>
     <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
       ><img
-        src="banner.png"
+      id="banner"
+        src="banner_light.png"
         style="
           display: block;
           margin-left: auto;
           margin-right: auto;
-          width: 10%;
+          width: 20%;
         "
         alt="banner"
     /></a>
@@ -45,7 +46,10 @@
       Help this webpage find your location. <br /><br />
       You have three options to choose from: <br /><br />
       1. Allow us to see your location by clicking this button and agreeing to
-      the notification (Your location information is only used to calculate the zmanim and to figure out your city/country names) This option is preferable for <b>mobile phones</b> and a network vpn/filter may disrubt the results. <br />
+      the notification (Your location information is only used to calculate the
+      zmanim and to figure out your city/country names) This option is
+      preferable for <b>mobile phones</b> and a network vpn/filter may disrubt
+      the results. <br />
       <button class="location-button" onclick="getLocation()">
         <i class="fas fa-map-marker-alt"></i>
         Use My Location
@@ -93,7 +97,7 @@
     />
     <ul id="list" class="list"></ul>
     <!--write a diclaimer message under the list-->
-    <h5 style="text-align: center">
+    <h5 id="disclaimer" style="text-align: center">
       Disclaimer!: The results of this search bar are based on a 3rd party
       website and are not guaranteed to match what you are looking for. If you
       are not sure about the results, please use the manual location button.
@@ -124,13 +128,54 @@
         />
       </a>
     </p>
+    <script>
+      function toggleDarkMode() {
+      document.querySelector("title").classList.toggle("titleDarkMode");
+      if (document.getElementById("banner").src.includes("banner.png")) {
+          document.getElementById("banner").src = "banner_light.png";
+      } else {
+          document.getElementById("banner").src = "banner.png";
+      }
+      document.querySelector("body").classList.toggle("bodyDarkMode");
+      document.querySelector("h2").classList.toggle("h2DarkMode");
+      document.querySelector("h5").classList.toggle("h5DarkMode");
+      document.getElementById("disclaimer").classList.toggle("h5DarkMode");
+      var borders = document.getElementsByClassName("border");
+      for (var i = 0; i < borders.length; i++) {
+          borders[i].classList.toggle("borderDarkMode");
+      }
+      var bordersSplit = document.getElementsByClassName("border-split");
+      for (var i = 0; i < bordersSplit.length; i++) {
+          bordersSplit[i].classList.toggle("border-splitDarkMode");
+      }
+      var noBorders = document.getElementsByClassName("noBorder");
+      for (var i = 0; i < noBorders.length; i++) {
+          noBorders[i].classList.toggle("noBorderDarkMode");
+      }
+      document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("footer").classList.toggle("footerDarkMode");
+     });
+     if (document.getElementById("footer") !== null) {
+      document.getElementById("footer").classList.toggle("footerDarkMode");
+     }
+    }
+  toggleDarkMode();
+    </script>
   </body>
-  <footer style="text-align: center; color: gold">
+  <footer id="footer">
     Made by Elyahu Jacobi (This project is in it's Beta Stage and is
     open-source. You can look at the source code here:
-    <a
-      href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
-      >Source Code</a
-    >)
+    <button class="button-18">
+      <a
+        href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
+        >Source Code</a
+      ></button
+    >) <br />
+    <br />
+    If you have any questions, feedback, or concerns, please contact me at my
+    email:
+    <a href="mailto:ElyahuJacobi@gmail.com">
+      <button class="button-18">ElyahuJacobi@gmail.com</button>
+    </a>  
   </footer>
 </html>

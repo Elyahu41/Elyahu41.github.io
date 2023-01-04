@@ -144,7 +144,14 @@ function showAllLocations() {
 }
 
 function setLocation(name, admin, country, latitude, longitude) {
-  locationName = name + ", " + admin + ", " + country;
+  var array = [name, admin, country];
+  if (name == admin) {
+    array = [name, country];
+  }
+  if (name == admin && admin == country) {
+    array = [name];
+  }
+  locationName = array.join(", ");
   lat = latitude;
   long = longitude;
   document.getElementById("list").style.display = "none";

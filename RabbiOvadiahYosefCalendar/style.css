@@ -49,13 +49,32 @@ html {
     min-height: 100%;
 }
 
-.title {
+title {
+  font-size: 18px;
+  margin: 0;
+  color: rgb(0, 0, 0);
+}
+
+.titleDarkMode {
     font-size: 18px;
     margin: 0;
-    color: #5e6977;
+    color: #fff;
 }
 
 h2 {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;
+  max-width: 900px;
+  text-align: center;
+  margin-top: 100px;
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(37, 93, 175);
+}
+
+.h2DarkMode {
     font-family: 'Roboto',
     sans-serif;
     align-content: center;
@@ -67,8 +86,21 @@ h2 {
     margin-right: auto;
     color: #fff;
 }
- 
+
 h5 {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;
+  max-width: 900px;
+  text-align: center;
+  margin-top: 0px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(37, 93, 175);
+}
+ 
+.h5DarkMode {
     font-family: 'Roboto',
     sans-serif;
     align-content: center;
@@ -82,6 +114,13 @@ h5 {
 }
 
 body {
+  font-family: 'Roboto',
+  sans-serif;
+  margin: 0;
+  background-color: #e5e5e5;
+}
+
+.bodyDarkMode {
     font-family: 'Roboto',
     sans-serif;
     margin: 0;
@@ -98,7 +137,7 @@ body {
     margin: 0 auto;
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
-    border: 1px solid #ddd; /* Add a grey border */
+    border: 2px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
 }
 
@@ -125,9 +164,23 @@ body {
   #list li a:hover:not(.header) {
     background-color: #eee; /* Add a hover effect to all links, except for headers */
   }
-    
 
 .border {
+    font-family: 'Roboto',
+    sans-serif;
+    align-content: center;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 100px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(37, 93, 175);
+    border: solid 1px #000000;
+    padding: 6px;
+}
+
+.borderDarkMode {
     font-family: 'Roboto',
     sans-serif;
     align-content: center;
@@ -152,12 +205,44 @@ body {
   margin: 10px;
   margin-left: auto;
   margin-right: auto;
+  color: rgb(37, 93, 175);
+  border: solid 1px #000000;
+  padding: 6px;
+}
+
+.border-splitDarkMode {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;;
+  max-width: 400px;
+  text-align: left;
+  margin-top: 100px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
   color: #fff;
   border: solid 1px #cfd8e4;
   padding: 6px;
 }
 
+.border-split b {
+  font-family: 'Roboto',
+  sans-serif;
+  font-size: large;
+  text-shadow: none;
+}
+
 .border-split span {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;;
+  max-width: 400px;
+  float: right;
+  margin-left: 10px;
+  color: rgb(37, 93, 175);
+}
+
+.border-splitDarkMode span {
   font-family: 'Roboto',
   sans-serif;
   align-content: center;;
@@ -168,6 +253,18 @@ body {
 }
 
 .noBorder {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;
+  text-align: center;
+  margin-top: 100px;
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(37, 93, 175);
+}
+
+.noBorderDarkMode {
     font-family: 'Roboto',
     sans-serif;
     align-content: center;
@@ -238,10 +335,6 @@ body {
   width: 100%;
 }
 
-.btn-group label {
-  color: white;
-}
-
 .app-icons {
     display: flex;
     align-items: center;
@@ -272,4 +365,14 @@ body {
 
 .location-button i {
   margin-right: 8px;
+}
+
+footer {
+  text-align: center; 
+  color: rgb(0, 0, 0);
+}
+
+.footerDarkMode {
+  text-align: center; 
+  color: rgb(255, 255, 255);
 }
