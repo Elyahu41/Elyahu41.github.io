@@ -258,12 +258,7 @@ function init() {
     document.getElementById("LocationName").innerHTML =
       "No Location Name Provided";
   }
-  var isShowSeconds = localStorage.getItem("isShowSeconds");
-  if (isShowSeconds == "true") {
-    showSeconds = true;
-  } else {
-    showSeconds = false;
-  }
+  
   var zmanimLanguage = localStorage.getItem("zmanimLanguage");
   if (zmanimLanguage == "TranslatedEnglish") {
     isZmanimInHebrew = false;
@@ -288,7 +283,12 @@ function init() {
     }
     shabbatMode();
   });
-
+  var isShowSeconds = localStorage.getItem("isShowSeconds");
+  if (isShowSeconds == "true") {
+    showSeconds = true;
+  } else {
+    showSeconds = false;
+  }
   var showSecondsButton = document.getElementById("showSeconds");
   if (showSeconds) {
     showSecondsButton.innerHTML = "Hide Seconds";
@@ -309,7 +309,6 @@ function init() {
   var isDarkMode = localStorage.getItem("isDarkMode");
   if (isDarkMode == "true") {
     toggleDarkMode();
-    document.getElementById("banner").src = "banner.png";
     darkModeButton.innerHTML = "Light Mode";
   }
   darkModeButton.addEventListener("click", function () {
@@ -1523,22 +1522,16 @@ function numberToHebrew(num) {
 }
 
 function saveCandleLightingSetting() {
-  var date = new Date();
-  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
-  var expires = "expires=" + date.toUTCString();
   var candleLightingTime = document.getElementById("candleMinutes").value;
   zmanimCalendar.setCandleLightingOffset(candleLightingTime);
-  setCookie("candleLightingTime", candleLightingTime, expires);
+  setCookie("candleLightingTime", candleLightingTime, 36500);//100 years
   updateZmanimList();
 }
 
 function saveTzeitShabbatSetting() {
-  var date = new Date();
-  date.setTime(date.getTime() + 36500 * 24 * 60 * 60 * 1000);//100 years
-  var expires = "expires=" + date.toUTCString();
   var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
   zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
-  setCookie("tzeitShabbatTime", tzeitShabbatTime, expires);
+  setCookie("tzeitShabbatTime", tzeitShabbatTime, 36500);//100 years
   updateZmanimList();
 }
 

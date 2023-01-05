@@ -24,6 +24,7 @@
     style="
       background-image: url(https://wallpaperaccess.com/full/627835.jpg);
       height: 100%;
+      width: 100%;
       background-repeat: no-repeat;
       background-size: cover;
     "
@@ -41,7 +42,7 @@
       please change the time zone or date in the drop down menu. <br /><br />
       <select id="timezoneInput"></select>
       <br /><br />
-      <input type="date" id="dateInput" /> <br /><br />
+      <input id="dateInput" style="text-align: center;" /> <br /><br />
       <input type="button" value="Calculate" onclick="calculateMolad()" />
       <input type="button" value="Reset" onclick="resetMolad()" />
     </p>
@@ -52,8 +53,22 @@
 
     <script src="kosher-zmanim.min.js"></script>
     <script src="luxon.js"></script>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="jquery-ui.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="flexcal.css" />
+    <link rel="stylesheet" href="jquery-ui.css" />
+    <script src="jquery.textpopup.js" type="text/javascript"></script>
+    <script src="jquery.flexcal.js" type="text/javascript"></script>
     <script>
-      let select = document.getElementById("timezoneInput");
+      $("document").ready(function () {
+        $("#dateInput").flexcal({
+          calendars: ["en", "jewish", "he-jewish"],
+          selected: "en",
+        });
+      });
+    </script>
+    <script>
+      let select = document.getElementById("timezoneInput");//init timezone select
       if (!Intl.supportedValuesOf) {
         let opt = new Option(
           "Your browser does not support Intl.supportedValuesOf().",
@@ -68,7 +83,7 @@
           select.options.add(new Option(timeZone));
         }
         select.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      }
+      }//end init timezone select
       var jewishCalendar = new KosherZmanim.JewishCalendar();
       var dateInput = document.getElementById("dateInput");
       var timeZoneInput = document.getElementById("timezoneInput");
@@ -115,10 +130,14 @@
 
       function calculateMolad() {
         if (dateInput.value == "") {
-          dateInput.value = new Date().toISOString().slice(0, 10); //if no date is selected, use today's date
+          dateInput.value = new Date().toLocaleDateString( "en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
         }
         var JSDate = dateInput.value;
-        var dateObject = luxon.DateTime.fromFormat(JSDate, "yyyy-MM-dd");
+        var dateObject = luxon.DateTime.fromFormat(JSDate, "MM/dd/yyyy");
         jewishCalendar.setDate(dateObject);
         molad = jewishCalendar.getMolad();
         moladTimeAnnounced =
@@ -129,7 +148,7 @@
           "m and " +
           molad.getMoladChalakim() +
           " chalakim";
-        moladParagraph.innerHTML = "<h2>" + moladTimeAnnounced + "</h2>";
+        moladParagraph.innerHTML = "<h2 class='h2DarkMode'>" + moladTimeAnnounced + "</h2>";
 
         moladTime = new Date(jewishCalendar.getMoladAsDate());
         moladTimeParagraph.innerHTML =
@@ -156,7 +175,7 @@
       }
 
       function resetMolad() {
-        jewishCalendar.setDate(luxon.DateTime.local());
+        jewishCalendar.setDate(luxon.DateTime.now());
         molad = jewishCalendar.getMolad();
         moladTimeAnnounced =
           "The molad time announced: " +
@@ -166,22 +185,22 @@
           "m and " +
           molad.getMoladChalakim() +
           " chalakim";
-        moladParagraph.innerHTML = "<h2>" + moladTimeAnnounced + "</h2>";
+        moladParagraph.innerHTML = "<h2 class='h2DarkMode'>" + moladTimeAnnounced + "</h2>";
 
         moladTime = new Date(jewishCalendar.getMoladAsDate());
         moladTimeParagraph.innerHTML =
-          "The molad for the month:<h2>" + moladTime.toLocaleString() + "</h2>";
+          "The molad for the month:<h2 class='h2DarkMode'>" + moladTime.toLocaleString() + "</h2>";
 
         earliestBirchatHalevanah =
           jewishCalendar.getTchilasZmanKidushLevana7Days();
         earliestBirchatHalevanahParagraph.innerHTML =
-          "The earliest time to say birchat helevanah:<h2>" +
+          "The earliest time to say birchat helevanah:<h2 class='h2DarkMode'>" +
           earliestBirchatHalevanah.toJSDate().toLocaleString() +
           "</h2>";
 
         latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
         latestBirchatHalevanahParagraph.innerHTML =
-          "The latest time to say birchat helevana:<h2>" +
+          "The latest time to say birchat helevana:<h2 class='h2DarkMode'>" +
           latestBirchatHalevanah.toJSDate().toLocaleString() +
           "</h2>";
       }
