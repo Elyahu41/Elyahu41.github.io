@@ -299,6 +299,7 @@ function init() {
     showSeconds = !showSeconds;
     if (showSeconds) {
       showSecondsButton.innerHTML = "Hide Seconds";
+      updateZmanimList();
     } else {
       showSecondsButton.innerHTML = "Show Seconds";
     }
@@ -314,12 +315,12 @@ function init() {
   darkModeButton.addEventListener("click", function () {
     toggleDarkMode();
     var isDarkMode = localStorage.getItem("isDarkMode");
-    if (isDarkMode == "true") {
-      darkModeButton.innerHTML = "Dark Mode";
-      isDarkMode = "false";
-    } else if (isDarkMode == "false") {
+    if (isDarkMode == "false") {
       darkModeButton.innerHTML = "Light Mode";
       isDarkMode = "true";
+    } else {
+      darkModeButton.innerHTML = "Dark Mode";
+      isDarkMode = "false";
     }
     localStorage.setItem("isDarkMode", isDarkMode);
   });
