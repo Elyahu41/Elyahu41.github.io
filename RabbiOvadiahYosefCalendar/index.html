@@ -40,7 +40,13 @@
         alt="banner"
     /></a>
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
-    <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
+    <h5>(Based on the Ohr HaChaim calendar in israel)
+      <br> 
+      <button id="darkMode" class="darkMode-button">
+        Dark Mode <i class="fas fa-lightbulb"></i>
+      </button>
+    </h5>
+   
 
     <p class="border">
       Help this webpage find your location. <br /><br />
@@ -159,7 +165,24 @@
       document.getElementById("footer").classList.toggle("footerDarkMode");
      }
     }
-  toggleDarkMode();
+    var darkModeButton = document.getElementById("darkMode");
+  var isDarkMode = localStorage.getItem("isDarkMode");
+  if (isDarkMode == "true") {
+    toggleDarkMode();
+    darkModeButton.innerHTML = "Light Mode <i class='fas fa-lightbulb'></i>";
+  }
+  darkModeButton.addEventListener("click", function () {
+    toggleDarkMode();
+    var isDarkMode = localStorage.getItem("isDarkMode");
+    if (isDarkMode == "false") {
+      darkModeButton.innerHTML = "Light Mode <i class='fas fa-lightbulb'></i>";
+      isDarkMode = "true";
+    } else {
+      darkModeButton.innerHTML = "Dark Mode <i class='fas fa-moon'></i>";
+      isDarkMode = "false";
+    }
+    localStorage.setItem("isDarkMode", isDarkMode);
+  });
     </script>
   </body>
   <footer id="footer">

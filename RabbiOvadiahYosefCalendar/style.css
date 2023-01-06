@@ -348,6 +348,17 @@ body {
     width: 150px;
 }
 
+.darkMode-button {
+  background-color: #0A66C2; /* Blue */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
 .location-button {
   background-color: #4caf50; /* Green */
   border: none;
