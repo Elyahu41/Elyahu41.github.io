@@ -12,6 +12,8 @@ var zmanimFormatter = new KosherZmanim.ZmanimFormatter();
 zmanimFormatter.setTimeFormat(KosherZmanim.ZmanimFormatter.SEXAGESIMAL_FORMAT);
 var isShabbatMode = false;
 var showSeconds = false;
+var nextUpcomingZman = null;
+var initAlreadyCalledOnceBefore = false;
 //end of global variables
 
 //get the location details from the query string and create the zmanim calendar
@@ -253,12 +255,19 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
 function init() {
   //initializes the zmanim calendar and anythign else that needs to be initialized when the page loads and updates the zmanim list. This function is called at the end of the script
   zmanimCalendar = new ROZmanim(geoLocation);
+  if (initAlreadyCalledOnceBefore) {
+    updateZmanimList();
+    return;
+  }
   document.getElementById("LocationName").innerHTML = locationName;
   if (document.getElementById("LocationName").innerHTML == "") {
     document.getElementById("LocationName").innerHTML =
       "No Location Name Provided";
   }
-  
+  document.getElementById("shabbatModeBanner").addEventListener("click", () => {
+    document.getElementById("shabbatModeBanner").style.display = "none";
+  });
+  initAlreadyCalledOnceBefore = true;
   var zmanimLanguage = localStorage.getItem("zmanimLanguage");
   if (zmanimLanguage == "TranslatedEnglish") {
     isZmanimInHebrew = false;
@@ -272,8 +281,11 @@ function init() {
   }
   setButtonsState(isZmanimInHebrew, isZmanimInTranslatedEnglish);
   initLanguageButtons();
-  updateZmanimList();
+  setupButtons();
+  updateZmanimList();//Note: if there are no parameters, this method will crash because there is no timezone set. However, it will be recalled in the getJson method
+}
 
+function setupButtons() {
   var shabbatModeButton = document.getElementById("shabbatMode");
   shabbatModeButton.addEventListener("click", function () {
     if (isShabbatMode) {
@@ -307,22 +319,45 @@ function init() {
     localStorage.setItem("isShowSeconds", showSeconds);
   });
   var darkModeButton = document.getElementById("darkMode");
-  var isDarkMode = localStorage.getItem("isDarkMode");
-  if (isDarkMode == "true") {
-    toggleDarkMode();
-    darkModeButton.innerHTML = "Light Mode";
+      var isDarkMode = localStorage.getItem("isDarkMode");
+      if (isDarkMode == "true") {
+        toggleDarkMode();
+        darkModeButton.innerHTML =
+          "Light Mode&nbsp;<i class='fas fa-lightbulb'></i>";
+      }
+      darkModeButton.addEventListener("click", function () {
+        toggleDarkMode();
+        var isDarkMode = localStorage.getItem("isDarkMode");
+        if (isDarkMode == "false") {
+          darkModeButton.innerHTML =
+            "Light Mode&nbsp;<i class='fas fa-lightbulb'></i>";
+          isDarkMode = "true";
+        } else {
+          darkModeButton.innerHTML = "Dark Mode&nbsp;<i class='fas fa-moon'></i>";
+          isDarkMode = "false";
+        }
+        localStorage.setItem("isDarkMode", isDarkMode);
+      });
+  var useElevationButton = document.getElementById("useElevation");
+  var isUseElevation = localStorage.getItem("isUseElevation");
+  if (isUseElevation == "true") {
+    zmanimCalendar.setUseElevation(true);
+    useElevationButton.innerHTML = "Do Not Use Elevation";
+  } else {
+    zmanimCalendar.setUseElevation(false);
+    useElevationButton.innerHTML = "Use Elevation";
   }
-  darkModeButton.addEventListener("click", function () {
-    toggleDarkMode();
-    var isDarkMode = localStorage.getItem("isDarkMode");
-    if (isDarkMode == "false") {
-      darkModeButton.innerHTML = "Light Mode";
-      isDarkMode = "true";
-    } else {
-      darkModeButton.innerHTML = "Dark Mode";
-      isDarkMode = "false";
+  updateZmanimList();
+  useElevationButton.addEventListener("click", function () {
+    if (zmanimCalendar.isUseElevation()) {//if it is currently using elevation, then we want to turn it off
+      zmanimCalendar.setUseElevation(false);
+      useElevationButton.innerHTML = "Use Elevation";
+    } else {// else we want to turn it on
+      zmanimCalendar.setUseElevation(true);
+      useElevationButton.innerHTML = "Do Not Use Elevation";
     }
-    localStorage.setItem("isDarkMode", isDarkMode);
+    localStorage.setItem("isUseElevation", zmanimCalendar.isUseElevation());
+    updateZmanimList();
   });
 }
 
@@ -353,18 +388,20 @@ function initLanguageButtons() {
   });
 }
 
-//TODO: debug elevation on the bottom of the page,
-
 function updateZmanimList() {
-  //common information first
+  //common information first, we always skip the first one because it is location name and we already have it set in init()
   var date = document.getElementById("Date");
   date.innerHTML =
-    jewishCalendar.getDate().toJSDate().toDateString() +
+    jewishCalendar.getDate().toLocaleString(luxon.DateTime.DATE_FULL) +
     " • " +
     jewishCalendar.toString().replace("Teves", "Tevet").replace("Tishrei", "Tishri")
     +
     "  •  " +
     hebrewFormatter.format(jewishCalendar);
+
+    if (zmanimCalendar.getDate().hasSame(luxon.DateTime.local(), "day")) {
+      date.innerHTML = "<strong>" + date.innerHTML + "</strong>";
+    }
 
   var parasha = document.getElementById("Parasha");
 
@@ -1686,12 +1723,24 @@ function setButtonsState(isZmanimInHebrew, isZmanimInTranslatedEnglish) {
 }
 
 function toggleDarkMode() {
+  if (document.getElementById("logo").src.includes("/RabbiOvadiahYosefCalendar/ro_flag.png")) {
+    document.getElementById("logo").src = "/RabbiOvadiahYosefCalendar/ro_flag_light.png";
+  } else if (document.getElementById("logo").src.includes("/RabbiOvadiahYosefCalendar/ro_flag_light.png")) {
+    document.getElementById("logo").src = "/RabbiOvadiahYosefCalendar/ro_flag.png";
+  }
+  document.getElementById("hd").classList.toggle("hdDarkMode");
+  var as = document.getElementsByTagName("a");
+  for (var i = 0; i < as.length; i++) {
+    as[i].classList.toggle("aDarkMode");
+  }
+  document.getElementsByClassName("main-nav__megamenu")[0].classList.toggle("darkMode");
+  document.getElementsByClassName("main-nav__toogle")[0].classList.toggle("darkMode");
+  if (document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor == "rgb(59, 57, 57)") {
+    document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor = "rgb(229, 232, 233)";
+  } else {
+    document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor = "rgb(59, 57, 57)";
+  }
     document.querySelector("title").classList.toggle("titleDarkMode");
-    if (document.getElementById("banner").src.includes("banner.png")) {
-        document.getElementById("banner").src = "banner_light.png";
-    } else {
-        document.getElementById("banner").src = "banner.png";
-    }
     document.querySelector("body").classList.toggle("bodyDarkMode");
     document.querySelector("h2").classList.toggle("h2DarkMode");
     document.querySelector("h5").classList.toggle("h5DarkMode");
@@ -1709,6 +1758,60 @@ function toggleDarkMode() {
    if (document.getElementById("footer") !== null) {
     document.getElementById("footer").classList.toggle("footerDarkMode");
    }
+}
+
+function setNextUpcomingZman() {
+  var zmanim = [];
+  var currentSelectedDate = zmanimCalendar.getDate();
+  zmanimCalendar.setDate(new luxon.DateTime.now());
+  zmanimCalendar.setDate(luxon.DateTime.now().minus({ days: 1 }));
+  addZmanim(zmanim);
+  zmanimCalendar.setDate(luxon.DateTime.now());
+  addZmanim(zmanim); 
+  zmanimCalendar.setDate(luxon.DateTime.now().plus({ days: 1 }));
+  addZmanim(zmanim);
+  zmanimCalendar.setDate(currentSelectedDate);//reset the date to the current date
+  
+  for (let i = 0; i < zmanim.length; i++) {
+    if (zmanim[i] !== null && zmanim[i].toMillis() > luxon.DateTime.now().toMillis() && (nextUpcomingZman === null || zmanim[i].toMillis() < nextUpcomingZman.toMillis())) {
+      nextUpcomingZman = zmanim[i];
+      console.log("nextUpcomingZman: " + "" + i + " " + nextUpcomingZman);
+    }
+  }
+  console.log(nextUpcomingZman);
+}
+
+function addZmanim(zmanim) {
+  zmanim.push(zmanimCalendar.getAlos72Zmanis());
+  zmanim.push(zmanimCalendar.getEarliestTalitAndTefilin());
+  zmanim.push(zmanimCalendar.getSunrise());
+  zmanim.push(zmanimCalendar.getSofZmanShmaMGA72MinutesZmanis());
+  zmanim.push(zmanimCalendar.getSofZmanShmaGRA());
+  if (jewishCalendar.getYomTovIndex() == KosherZmanim.JewishCalendar.EREV_PESACH) {
+    zmanim.push(zmanimCalendar.getSofZmanTfilaMGA72MinutesZmanis());
+    zmanim.push(zmanimCalendar.getSofZmanTfilaGRA());
+    zmanim.push(zmanimCalendar.getSofZmanBiurChametzMGA());
+  } else {
+    zmanim.push(zmanimCalendar.getSofZmanTfilaGRA());
+  }
+  zmanim.push(zmanimCalendar.getChatzos());
+  zmanim.push(zmanimCalendar.getMinchaGedolaGreaterThan30());
+  zmanim.push(zmanimCalendar.getMinchaKetana());
+  zmanim.push(zmanimCalendar.getPlagHamincha());
+  if ((jewishCalendar.hasCandleLighting() && !jewishCalendar.isAssurBemelacha()) || jewishCalendar.getDayOfWeek == 6) {
+    zmanim.push(zmanimCalendar.getCandleLighting());
+  }
+  zmanim.push(zmanimCalendar.getSunset());
+  zmanim.push(zmanimCalendar.getTzait());
+  if (jewishCalendar.isTaanis() && jewishCalendar.getYomTovIndex() !== KosherZmanim.JewishCalendar.YOM_KIPPUR) {
+    zmanim.push(zmanimCalendar.getTzaitTaanit());
+    zmanim.push(zmanimCalendar.getTzaitTaanitLChumra());
+  }
+  if (jewishCalendar.isAssurBemelacha() && !jewishCalendar.hasCandleLighting()) {
+    zmanim.push(zmanimCalendar.getTzaisAteretTorah());
+  }    
+  zmanim.push(zmanimCalendar.getTzais72Zmanis());
+  zmanim.push(zmanimCalendar.getSolarMidnight());
 }
 
 init(); // initialize the page with the current date and location as well as any other buttons that need to be initialized

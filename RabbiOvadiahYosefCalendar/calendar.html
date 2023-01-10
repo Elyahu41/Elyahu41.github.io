@@ -16,70 +16,104 @@
     />
     <meta name="mobile-web-app-capable" content="yes" />
     <link href="banner.ico" rel="icon" type="image/x-icon" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+    crossorigin="anonymous"
+  />
+  <p id="shabbatModeBanner" class="marquee">
+    <span>Shabbat Mode</span>
+    <span>Shabbat Mode</span>
+    <span>Shabbat Mode</span>
+    <span>Shabbat Mode</span>
+    <span>Shabbat Mode</span>
+  </p>
+    <link rel="stylesheet" href="lessphp_ad1b8ffc00d80736ec84e56b70cc9fdaa1655030.css" />
+    <script src="/RabbiOvadiahYosefCalendar/jquery.min.js"></script>
+    <header id="hd" class="hdReg">
+
+      <div class="main-nav" role="navigation">
+        <div class="main-nav__toogle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <a class="logo" href="/RabbiOvadiahYosefCalendar/index.html"
+          ><img
+          id="logo"
+            src="/RabbiOvadiahYosefCalendar/ro_flag.png"
+            alt="elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
+          />Rabbi Ovadiah Yosef Calendar</a>
+          
+
+        <nav class="main-nav__nav">
+          <ul class="main-nav__list">
+            <li><a id="shabbatMode" href="#">Shabbat Mode</a></li>
+            <li class="dropdown-parent">
+              <a>Languages <i class="fa fa-caret-down"></i></a>
+                        <nav class="main-nav__megamenu">
+                <ul class="main-nav__megamenu-list">
+                  <div class="btn-group">
+                    <button
+                      id="hebrewZmanim"
+                      style="width: 33%; height: auto"
+                      class="button-18"
+                    >
+                      Hebrew
+                    </button>
+                    <button
+                      id="defaultZmanim"
+                      style="width: 33%; height: auto"
+                      class="button-18"
+                    >
+                      Default
+                    </button>
+                    <button
+                      id="englishZmanim"
+                      style="width: 33%; height: auto"
+                      class="button-18"
+                    >
+                      English
+                    </button>
+                  </div></ul>
+              </nav>
+                      </li>
+            <li><a href="/RabbiOvadiahYosefCalendar/moladCalculator.html">Molad Calculator</a></li>
+            <li><a href="/RabbiOvadiahYosefCalendar/settings.html">Settings</a></li>
+            <li><a href="/README.md">About</a></li>
+            <li><a href="#" class="dark-mode-link" id="darkMode">Dark Mode&nbsp;<i class="fas fa-moon"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+          $(".main-nav__toogle").on("click", function () {
+            $(".main-nav__nav").toggleClass("open");
+          });
+        });
+      </script>
+    </header>
     <title>Rabbi Ovadiah Yosef Calendar</title>
   </head>
 
   <body>
-    <p id="shabbatModeBanner" class="marquee">
-      <span>Shabbat Mode</span>
-      <span>Shabbat Mode</span>
-      <span>Shabbat Mode</span>
-      <span>Shabbat Mode</span>
-      <span>Shabbat Mode</span>
-    </p>
-    <a href="https://elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
-      ><img
-        id="banner"
-        src="banner_light.png"
-        style="
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          width: 20%;
-        "
-        alt="banner"
-    /></a>
+    
     <div class="btn-group">
-      <button id="shabbatMode" style="width: 25%" class="button-18">
-        Shabbat Mode
+      <p class="border">
+      <button id="useElevation" class="button-18">
+        Use Elevation
       </button>
-      <button id="showSeconds" style="width: 25%" class="button-18">
+      <button id="showSeconds" class="button-18">
         Show Seconds
       </button>
-      <button
-        style="width: 25%"
-        onclick="window.open('/RabbiOvadiahYosefCalendar/moladCalculator.html')"
-        class="button-18"
-      >
-        Molad Calculator
-      </button>
-      <button id="darkMode" style="width: 25%" class="button-18">Dark Mode</button>
+      </p>
     </div>
+  
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
-    <div class="btn-group">
-      <button
-        id="hebrewZmanim"
-        style="width: 33%; height: auto"
-        class="button-18"
-      >
-        Hebrew
-      </button>
-      <button
-        id="defaultZmanim"
-        style="width: 33%; height: auto"
-        class="button-18"
-      >
-        Default
-      </button>
-      <button
-        id="englishZmanim"
-        style="width: 33%; height: auto"
-        class="button-18"
-      >
-        English
-      </button>
-    </div>
     <!--Non Zmanim Information-->
     <p id="LocationName" class="border"></p>
     <p id="Date" class="border"></p>
@@ -141,7 +175,7 @@
 
     <p class="noBorder">
       <button id="backButton" class="button-18" onclick="backwardOneDay()">
-        Previous Day
+        <i class="fa fa-arrow-left"></i>
       </button>
       <!--<input type="date" id="date" onchange="updateDate()" />-->
       <input id="date" style="text-align: center" /><input
@@ -159,7 +193,7 @@
         });
       </script>
       <button id="forwardButton" class="button-18" onclick="forwardOneDay()">
-        Next Day
+        <i class="fa fa-arrow-right"></i>
       </button>
     </p>
   </body>
@@ -171,8 +205,7 @@
         href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
         >Source Code</a
       ></button
-    >) <br />
-    <br />
+    >) <br/>
     If you have any questions, feedback, or concerns, please contact me at my
     email:
     <a href="mailto:ElyahuJacobi@gmail.com">
