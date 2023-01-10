@@ -340,7 +340,7 @@ function setupButtons() {
       });
   var useElevationButton = document.getElementById("useElevation");
   var isUseElevation = localStorage.getItem("isUseElevation");
-  if (isUseElevation == "true") {
+  if (isUseElevation == "true" || isUseElevation == null) {//by default we want to use elevation
     zmanimCalendar.setUseElevation(true);
     useElevationButton.innerHTML = "Do Not Use Elevation";
   } else {
