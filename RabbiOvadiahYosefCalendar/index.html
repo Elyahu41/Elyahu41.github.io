@@ -16,10 +16,12 @@
     />
     <meta name="mobile-web-app-capable" content="yes" />
     <link href="banner.ico" rel="icon" type="image/x-icon" />
-    <link rel="stylesheet" href="lessphp_ad1b8ffc00d80736ec84e56b70cc9fdaa1655030.css" />
+    <link
+      rel="stylesheet"
+      href="lessphp_ad1b8ffc00d80736ec84e56b70cc9fdaa1655030.css"
+    />
     <script src="/RabbiOvadiahYosefCalendar/jquery.min.js"></script>
     <header id="hd" class="hdReg">
-
       <div class="main-nav" role="navigation">
         <div class="main-nav__toogle">
           <span></span>
@@ -29,19 +31,35 @@
 
         <a class="logo" href="/RabbiOvadiahYosefCalendar/index.html"
           ><img
-          id="logo"
+            id="logo"
             src="/RabbiOvadiahYosefCalendar/ro_flag.png"
             alt="elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
           />Rabbi Ovadiah Yosef Calendar</a
         >
         <nav class="main-nav__nav">
           <ul class="main-nav__list">
-            <li><a href="/RabbiOvadiahYosefCalendar/moladCalculator.html">Molad Calculator</a></li>
-            <li><a href="https://halachayomit.co.il/en/default.aspx">Halacha Yomit</a></li>
-            <li><a href="https://www.torahanytime.com/#/speaker?l=84">Shiurim</a></li>
-            <li><a href="/RabbiOvadiahYosefCalendar/settings.html">Settings</a></li>
+            <li>
+              <a href="/RabbiOvadiahYosefCalendar/moladCalculator.html"
+                >Molad Calculator</a
+              >
+            </li>
+            <li>
+              <a href="https://halachayomit.co.il/en/default.aspx"
+                >Halacha Yomit</a
+              >
+            </li>
+            <li>
+              <a href="https://www.torahanytime.com/#/speaker?l=84">Shiurim</a>
+            </li>
+            <li>
+              <a href="/RabbiOvadiahYosefCalendar/settings.html">Settings</a>
+            </li>
             <li><a href="/README.md">About</a></li>
-            <li><a href="#" class="dark-mode-link" id="darkMode">Dark Mode&nbsp;<i class="fas fa-moon"></i></a></li>
+            <li>
+              <a href="#" class="dark-mode-link" id="darkMode"
+                >Dark Mode&nbsp;<i class="fas fa-moon"></i
+              ></a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -135,46 +153,83 @@
 
     <p class="noBorder">
       Download the app on Google Play now! <br />
-      <!--<a href="https://apps.apple.com/app/id1551353775">
-        <img 
-          class="apple"
-          src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" 
-          alt="Download on the App Store">
-      </a>-->
-      <a href="#">
-        <img
-          class="apple"
-          src="http://1radionews.com/wp-content/uploads/app_store_coming_soon.png"
-          alt="Download on the App Store"
-        />
-      </a>
-      <a
-        href="https://play.google.com/store/apps/details?id=com.EJ.ROvadiahYosefCalendar&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-      >
-        <img
-          class="android"
-          alt="Get it on Google Play"
-          src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-        />
-      </a>
+      <td style="text-align: center">
+        <a
+          href="#"
+          style="color: #0a66c2; display: inline-block; text-decoration: none"
+          target="_blank"
+        >
+          <img
+            alt="Download on the App Store"
+            src="/RabbiOvadiahYosefCalendar/app_store_coming_soon.png"
+            style="
+              outline: none;
+              text-decoration: none;
+              height: 40px;
+              width: 120px;
+              padding-right: 8px;
+            "
+            width="120"
+            height="40"
+            data-bit="iit"
+          /> </a
+        ><a
+          href="https://play.google.com/store/apps/details?id=com.EJ.ROvadiahYosefCalendar"
+          style="color: #0a66c2; display: inline-block; text-decoration: none"
+          target="_blank"
+        >
+          <img
+            alt="Get it on Google Play"
+            src="/RabbiOvadiahYosefCalendar/google_play.png"
+            style="
+              outline: none;
+              text-decoration: none;
+              height: 40px;
+              width: 134px;
+            "
+            width="134"
+            height="40"
+            data-bit="iit"
+          />
+        </a>
+      </td>
     </p>
     <script>
       function toggleDarkMode() {
-        if (document.getElementById("logo").src.includes("/RabbiOvadiahYosefCalendar/ro_flag.png")) {
-          document.getElementById("logo").src = "/RabbiOvadiahYosefCalendar/ro_flag_light.png";
-        } else if (document.getElementById("logo").src.includes("/RabbiOvadiahYosefCalendar/ro_flag_light.png")) {
-          document.getElementById("logo").src = "/RabbiOvadiahYosefCalendar/ro_flag.png";
+        if (
+          document
+            .getElementById("logo")
+            .src.includes("/RabbiOvadiahYosefCalendar/ro_flag.png")
+        ) {
+          document.getElementById("logo").src =
+            "/RabbiOvadiahYosefCalendar/ro_flag_light.png";
+        } else if (
+          document
+            .getElementById("logo")
+            .src.includes("/RabbiOvadiahYosefCalendar/ro_flag_light.png")
+        ) {
+          document.getElementById("logo").src =
+            "/RabbiOvadiahYosefCalendar/ro_flag.png";
         }
         document.getElementById("hd").classList.toggle("hdDarkMode");
         var as = document.getElementsByTagName("a");
         for (var i = 0; i < as.length; i++) {
           as[i].classList.toggle("aDarkMode");
         }
-        document.getElementsByClassName("main-nav__toogle")[0].classList.toggle("darkMode");
-        if (document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor == "rgb(59, 57, 57)") {
-          document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor = "rgb(229, 232, 233)";
+        document
+          .getElementsByClassName("main-nav__toogle")[0]
+          .classList.toggle("darkMode");
+        if (
+          document.getElementsByClassName("main-nav__nav")[0].style
+            .backgroundColor == "rgb(59, 57, 57)"
+        ) {
+          document.getElementsByClassName(
+            "main-nav__nav"
+          )[0].style.backgroundColor = "rgb(229, 232, 233)";
         } else {
-          document.getElementsByClassName("main-nav__nav")[0].style.backgroundColor = "rgb(59, 57, 57)";
+          document.getElementsByClassName(
+            "main-nav__nav"
+          )[0].style.backgroundColor = "rgb(59, 57, 57)";
         }
         document.querySelector("title").classList.toggle("titleDarkMode");
         document.querySelector("body").classList.toggle("bodyDarkMode");
@@ -215,7 +270,8 @@
             "Light Mode&nbsp;<i class='fas fa-lightbulb'></i>";
           isDarkMode = "true";
         } else {
-          darkModeButton.innerHTML = "Dark Mode&nbsp;<i class='fas fa-moon'></i>";
+          darkModeButton.innerHTML =
+            "Dark Mode&nbsp;<i class='fas fa-moon'></i>";
           isDarkMode = "false";
         }
         localStorage.setItem("isDarkMode", isDarkMode);
@@ -226,7 +282,8 @@
     Made by Elyahu Jacobi (This project is in it's Beta Stage and is
     open-source. You can look at the source code here:
     <button class="button-18">
-      <a class="sourceCode"
+      <a
+        class="sourceCode"
         href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
         >Source Code</a
       ></button
