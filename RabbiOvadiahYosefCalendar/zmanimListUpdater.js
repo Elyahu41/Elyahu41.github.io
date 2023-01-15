@@ -1190,11 +1190,10 @@ function updateZmanimList() {
       tzaitShabbatChag.innerHTML =
         "<b>" +
         getTzaitShabbatChagString(jewishCalendar) +
-        
-        "</b>" +
         " (" +
         zmanimCalendar.getAteretTorahSunsetOffset() +
         ") " +
+        "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
         zmanimCalendar
