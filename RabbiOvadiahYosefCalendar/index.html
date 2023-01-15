@@ -250,9 +250,17 @@
         }
         document.addEventListener("DOMContentLoaded", function (event) {
           document.getElementById("footer").classList.toggle("footerDarkMode");
+          var links = document.getElementsByClassName("sourceCode");
+          for (var i = 0; i < links.length; i++) {
+            links[i].classList.toggle("sourceCodeDarkMode");
+          }
         });
         if (document.getElementById("footer") !== null) {
           document.getElementById("footer").classList.toggle("footerDarkMode");
+          var links = document.getElementsByClassName("sourceCode");
+          for (var i = 0; i < links.length; i++) {
+            links[i].classList.toggle("sourceCodeDarkMode");
+          }
         }
       }
       var darkModeButton = document.getElementById("darkMode");
@@ -279,19 +287,18 @@
     </script>
   </body>
   <footer id="footer">
-    Made by Elyahu Jacobi (This project is in it's Beta Stage and is
-    open-source. You can look at the source code here:
-    <button class="button-18">
+    Made by Elyahu Jacobi. This project is in it's Beta Stage and is
+    open-source. You can look at the source code 
       <a
         class="sourceCode"
-        href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
-        >Source Code</a
-      ></button
-    >) <br />
+        href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar">
+        HERE <i class="fas fa-code"></i></a>
+        <br /> Contributions are welcome!<br />
     If you have any questions, feedback, or concerns, please contact me at my
     email:
-    <a href="mailto:ElyahuJacobi@gmail.com">
-      <button class="button-18">ElyahuJacobi@gmail.com</button>
+    <a class="sourceCode" href="mailto:ElyahuJacobi@gmail.com"> <i
+        class="fas fa-envelope"></i>
+       ElyahuJacobi@gmail.com
     </a>
   </footer>
 </html>

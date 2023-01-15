@@ -413,10 +413,6 @@ body {
   color: rgba(0, 0, 0, .3);
 }
 
-.sourceCode {
-  color: #fff;
-}
-
 .btn-group {
   display: flex;
   flex-direction: row;
@@ -477,4 +473,12 @@ footer {
 .footerDarkMode {
   text-align: center; 
   color: rgb(255, 255, 255);
+}
+
+.sourceCode {
+  color: #000;
+}
+
+.sourceCodeDarkMode {
+  color: #fff;
 }

@@ -2065,9 +2065,17 @@ function toggleDarkMode() {
   }
   document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("footer").classList.toggle("footerDarkMode");
+    var links = document.getElementsByClassName("sourceCode");
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.toggle("sourceCodeDarkMode");
+    }
   });
   if (document.getElementById("footer") !== null) {
     document.getElementById("footer").classList.toggle("footerDarkMode");
+  }
+  var links = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.toggle("sourceCodeDarkMode");
   }
 }
 
