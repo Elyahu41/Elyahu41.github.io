@@ -317,7 +317,7 @@ body {
   sans-serif;
   font-size: large;
   text-shadow: none;
-  unicode-bidi: --webkit-plaintext;
+  unicode-bidi: plaintext;
 }
 
 .border-split span {
