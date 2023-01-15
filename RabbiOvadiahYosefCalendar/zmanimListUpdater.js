@@ -777,7 +777,7 @@ function updateZmanimList() {
               .getCandleLighting()
               .setZone(timezone)
               .toFormat("h:mm a") +
-            "</span>"; //no need to convert to JSDate
+            "</span>"; 
         }
       };
     } else {
@@ -799,7 +799,7 @@ function updateZmanimList() {
       "<span>" +
       addArrowIfNextUpcomingZman(zmanimCalendar.getTzait()) +
       zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
 
     if (
       jewishCalendar.isTaanis() &&
@@ -922,7 +922,7 @@ function updateZmanimList() {
         .getEarliestTalitAndTefilin()
         .setZone(timezone)
         .toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
     sunrise.innerHTML =
       "<b>" +
       getMishorSunriseString() +
@@ -999,7 +999,7 @@ function updateZmanimList() {
           .getSofZmanBiurChametzMGA()
           .setZone(timezone)
           .toFormat("h:mm:ss a") +
-        "</span>"; //no need to convert to JSDate
+        "</span>"; 
     } else {
       sofZmanAchilatChametz.style.display = "none";
       sofZmanBiurChametz.style.display = "none";
@@ -1052,7 +1052,7 @@ function updateZmanimList() {
       "<span>" +
       addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHamincha()) +
       zmanimCalendar.getPlagHamincha().setZone(timezone).toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
     if (
       jewishCalendar.hasCandleLighting() &&
       jewishCalendar.isAssurBemelacha()
@@ -1099,7 +1099,7 @@ function updateZmanimList() {
           .getCandleLighting()
           .setZone(timezone)
           .toFormat("h:mm:ss a") +
-        "</span>"; //no need to convert to JSDate
+        "</span>"; 
       // add on click event to the candle lighting time to save the time to a cookie
       candle.onclick = function () {
         if (document.getElementById("candleMinutes") == null) {
@@ -1116,7 +1116,7 @@ function updateZmanimList() {
               .getCandleLighting()
               .setZone(timezone)
               .toFormat("h:mm:ss a") +
-            "</span>"; //no need to convert to JSDate
+            "</span>"; 
         }
       };
     } else {
@@ -1130,7 +1130,7 @@ function updateZmanimList() {
       "<span>" +
       addArrowIfNextUpcomingZman(zmanimCalendar.getSunset()) +
       zmanimCalendar.getSunset().setZone(timezone).toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
     tzeit.innerHTML =
       "<b>" +
       getTzeitString() +
@@ -1138,7 +1138,7 @@ function updateZmanimList() {
       "<span>" +
       addArrowIfNextUpcomingZman(zmanimCalendar.getTzait()) +
       zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
 
     if (
       jewishCalendar.isTaanis() &&
@@ -1159,7 +1159,7 @@ function updateZmanimList() {
           .getTzaitTaanit()
           .setZone(timezone)
           .toFormat("h:mm:ss a") +
-        "</span>"; //no need to convert to JSDate
+        "</span>"; 
       tzeitTL.innerHTML =
         "<b>" +
         getTzaitTaanitLChumraString() +
@@ -1170,7 +1170,7 @@ function updateZmanimList() {
           .getTzaitTaanitLChumra()
           .setZone(timezone)
           .toFormat("h:mm:ss a") +
-        "</span>"; //no need to convert to JSDate
+        "</span>"; 
     } else {
       tzeitT.style.display = "none";
       tzeitTL.style.display = "none";
@@ -1234,7 +1234,7 @@ function updateZmanimList() {
         .getTzais72Zmanis()
         .setZone(timezone)
         .toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
     chatzotLayla.innerHTML =
       "<b>" +
       getChatzotLaylaString() +
@@ -1245,7 +1245,7 @@ function updateZmanimList() {
         .getSolarMidnight()
         .setZone(timezone)
         .toFormat("h:mm:ss a") +
-      "</span>"; //no need to convert to JSDate
+      "</span>"; 
   }
   var dafObject = KosherZmanim.YomiCalculator.getDafYomiBavli(jewishCalendar);
   daf.innerHTML =
