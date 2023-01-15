@@ -565,7 +565,7 @@ function updateZmanimList() {
   var tzeitCandles = document.getElementById("TzeitCandles");
   var tzeitT = document.getElementById("TzeitT");
   var tzeitTL = document.getElementById("TzeitTL");
-  var tzaitSC = document.getElementById("TzeitShabbatChag");
+  var tzaitShabbatChag = document.getElementById("TzeitShabbatChag");
   var rt = document.getElementById("RT");
   var chatzotLayla = document.getElementById("ChatzotLayla");
   var daf = document.getElementById("Daf");
@@ -752,9 +752,9 @@ function updateZmanimList() {
       candle.innerHTML =
         "<b>" +
         getCandleLightingString() +
-        " ( " +
+        " (" +
         zmanimCalendar.getCandleLightingOffset() +
-        " ) " +
+        ") " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -769,7 +769,7 @@ function updateZmanimList() {
           candle.innerHTML =
             "<b>" +
             getCandleLightingString() +
-            ' ( <input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/> ) ' +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -844,13 +844,13 @@ function updateZmanimList() {
       } else {
         zmanimCalendar.setAteretTorahSunsetOffset(40); //default to 40 minutes
       }
-      tzaitSC.style.display = "block";
-      tzaitSC.innerHTML =
+      tzaitShabbatChag.style.display = "block";
+      tzaitShabbatChag.innerHTML =
         "<b>" +
         getTzaitShabbatChagString(jewishCalendar) +
-        " ( " +
+        " (" +
         zmanimCalendar.getAteretTorahSunsetOffset() +
-        " ) " +
+        ") " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -860,13 +860,13 @@ function updateZmanimList() {
           .toFormat("h:mm a") +
         "</span>";
 
-      tzaitSC.onclick = function () {
+      tzaitShabbatChag.onclick = function () {
         // add on click event to the tzeit shabbat time to save the time to a cookie
         if (document.getElementById("tzeitShabbatMinutes") == null) {
-          tzaitSC.innerHTML =
+          tzaitShabbatChag.innerHTML =
             "<b>" +
             getTzaitShabbatChagString(jewishCalendar) +
-            ' ( <input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/> ): ' +
+            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -878,7 +878,7 @@ function updateZmanimList() {
         }
       };
     } else {
-      tzaitSC.style.display = "none";
+      tzaitShabbatChag.style.display = "none";
     }
 
     rt.innerHTML =
@@ -1089,9 +1089,9 @@ function updateZmanimList() {
       candle.innerHTML =
         "<b>" +
         getCandleLightingString() +
-        " ( " +
+        " (" +
         zmanimCalendar.getCandleLightingOffset() +
-        " ) " +
+        ") " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -1108,7 +1108,7 @@ function updateZmanimList() {
             "<b>" +
             getCandleLightingString() +
             "</b>" +
-            ' ( <input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/> ) ' +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -1186,14 +1186,15 @@ function updateZmanimList() {
       } else {
         zmanimCalendar.setAteretTorahSunsetOffset(40); //default to 40 minutes
       }
-      tzaitSC.style.display = "block";
-      tzaitSC.innerHTML =
+      tzaitShabbatChag.style.display = "block";
+      tzaitShabbatChag.innerHTML =
         "<b>" +
         getTzaitShabbatChagString(jewishCalendar) +
-        " ( " +
-        zmanimCalendar.getAteretTorahSunsetOffset() +
-        " ) " +
+        
         "</b>" +
+        " (" +
+        zmanimCalendar.getAteretTorahSunsetOffset() +
+        ") " +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
         zmanimCalendar
@@ -1202,14 +1203,14 @@ function updateZmanimList() {
           .toFormat("h:mm:ss a") +
         "</span>";
 
-      tzaitSC.onclick = function () {
+      tzaitShabbatChag.onclick = function () {
         // add on click event to the tzeit shabbat time to save the time to a cookie
         if (document.getElementById("tzeitShabbatMinutes") == null) {
-          tzaitSC.innerHTML =
+          tzaitShabbatChag.innerHTML =
             "<b>" +
             getTzaitShabbatChagString(jewishCalendar) +
             "</b>" +
-            ' ( <input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/> ) ' +
+            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -1221,7 +1222,7 @@ function updateZmanimList() {
         }
       };
     } else {
-      tzaitSC.style.display = "none";
+      tzaitShabbatChag.style.display = "none";
     }
 
     rt.innerHTML =
