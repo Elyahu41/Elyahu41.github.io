@@ -752,9 +752,9 @@ function updateZmanimList() {
       candle.innerHTML =
         "<b>" +
         getCandleLightingString() +
-        " (" +
+        " ( " +
         zmanimCalendar.getCandleLightingOffset() +
-        ") " +
+        " ) " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -769,7 +769,7 @@ function updateZmanimList() {
           candle.innerHTML =
             "<b>" +
             getCandleLightingString() +
-            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            ' ( <input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/> ) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -848,9 +848,9 @@ function updateZmanimList() {
       tzaitSC.innerHTML =
         "<b>" +
         getTzaitShabbatChagString(jewishCalendar) +
-        " (" +
+        " ( " +
         zmanimCalendar.getAteretTorahSunsetOffset() +
-        ") " +
+        " ) " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -866,7 +866,7 @@ function updateZmanimList() {
           tzaitSC.innerHTML =
             "<b>" +
             getTzaitShabbatChagString(jewishCalendar) +
-            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>): ' +
+            ' ( <input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/> ): ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -1089,9 +1089,9 @@ function updateZmanimList() {
       candle.innerHTML =
         "<b>" +
         getCandleLightingString() +
-        " (" +
+        " ( " +
         zmanimCalendar.getCandleLightingOffset() +
-        ") " +
+        " ) " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -1108,7 +1108,7 @@ function updateZmanimList() {
             "<b>" +
             getCandleLightingString() +
             "</b>" +
-            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            ' ( <input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/> ) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
@@ -1190,9 +1190,9 @@ function updateZmanimList() {
       tzaitSC.innerHTML =
         "<b>" +
         getTzaitShabbatChagString(jewishCalendar) +
-        " (" +
+        " ( " +
         zmanimCalendar.getAteretTorahSunsetOffset() +
-        ") " +
+        " ) " +
         "</b>" +
         "<span>" +
         addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -1209,7 +1209,7 @@ function updateZmanimList() {
             "<b>" +
             getTzaitShabbatChagString(jewishCalendar) +
             "</b>" +
-            ' (<input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/>) ' +
+            ' ( <input type="number" id="tzeitShabbatMinutes" onchange="saveTzeitShabbatSetting()"/> ) ' +
             "</b>" +
             "<span>" +
             addArrowIfNextUpcomingZman(zmanimCalendar.getTzaisAteretTorah()) +
@@ -1289,8 +1289,7 @@ function backwardOneDay() {
 
 function updateDate() {
   var date = document.getElementById("date");
-  var JSDate = date.value;
-  var dateObject = luxon.DateTime.fromFormat(JSDate, "MM/dd/yyyy");
+  var dateObject = luxon.DateTime.fromFormat(date.value, "MM/dd/yyyy");
   jewishCalendar.setDate(dateObject);
   zmanimCalendar.setDate(dateObject);
   updateZmanimList();
@@ -1589,20 +1588,15 @@ function getTekufaAsDate() {
 }
 
 function getIsTonightStartOrEndBirchatLevana() {
-  // The start time of Birchat Levana is is 7 days into the jewish month after the molad
-  // The end time of Birchat Levana is 15 days into the jewish month after the molad
-  var startTimeSevenDays = jewishCalendar.getTchilasZmanKidushLevana7Days(); //getSofZmanKidushLevana7Days() returns a luxon.DateTime object
-  var endTimeFifteenDays = jewishCalendar.getSofZmanKidushLevana15Days(); // returns a luxon.DateTime object
+  var startTimeSevenDays = jewishCalendar.getTchilasZmanKidushLevana7Days();
+  var endTimeFifteenDays = jewishCalendar.getSofZmanKidushLevana15Days();
 
-  // if the current date set in the zmanim calendar is on the same day as the start time of Birchat Levana, return "start"
   if (zmanimCalendar.getDate().hasSame(startTimeSevenDays, "day")) {
     return "Birchat HaLevana starts tonight";
   }
-  // if the current date set in the zmanim calendar is on the same day as the end time of Birchat Levana, return "end"
   if (zmanimCalendar.getDate().hasSame(endTimeFifteenDays, "day")) {
     return "Last night for Birchat HaLevana";
   }
-
   return "";
 }
 
@@ -1990,7 +1984,6 @@ function initUpdaterForZmanim() {
   tomorrow = tomorrow.set({ hour: 0, minute: 0, second: 2, millisecond: 0 });
   var timeUntilTomorrow = tomorrow.diffNow().as("milliseconds");
   setTimeout(function () {
-    //TODO test this
     var date = new luxon.DateTime.now();
     jewishCalendar.setDate(date);
     updateZmanimList();
