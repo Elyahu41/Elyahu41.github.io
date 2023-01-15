@@ -20,7 +20,7 @@ function getTalitTefilinString() {
 
 function getMishorSunriseString() {
   if (isZmanimInHebrew) {
-    return "(הנץ (מישור";
+    return "הנץ (משור)";
   }
   if (isZmanimInTranslatedEnglish) {
     return "Sunrise (Sea Level)";
