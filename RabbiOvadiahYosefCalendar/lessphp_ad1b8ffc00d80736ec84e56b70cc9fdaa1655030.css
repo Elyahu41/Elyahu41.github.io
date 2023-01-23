@@ -4680,12 +4680,6 @@ pre code {
 table {
   background-color: transparent;
 }
-caption {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  color: #999999;
-  text-align: left;
-}
 th {
   text-align: left;
 }

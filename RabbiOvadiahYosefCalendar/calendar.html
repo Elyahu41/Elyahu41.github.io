@@ -17,21 +17,25 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link href="banner.ico" rel="icon" type="image/x-icon" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-    crossorigin="anonymous"
-  />
-  <p id="shabbatModeBanner" class="marquee">
-    <span>Shabbat Mode</span>
-    <span>Shabbat Mode</span>
-    <span>Shabbat Mode</span>
-    <span>Shabbat Mode</span>
-    <span>Shabbat Mode</span>
-  </p>
-    <link rel="stylesheet" href="lessphp_ad1b8ffc00d80736ec84e56b70cc9fdaa1655030.css" />
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
+    <p id="shabbatModeBanner" class="marquee">
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+      <span>Shabbat Mode</span>
+    </p>
+    <link
+      rel="stylesheet"
+      href="lessphp_ad1b8ffc00d80736ec84e56b70cc9fdaa1655030.css"
+    />
     <script src="/RabbiOvadiahYosefCalendar/jquery.min.js"></script>
-    <header id="hd" class="hdReg"><!-- Top page navigator starts here -->
+    <header id="hd" class="hdReg">
+      <!-- Top page navigator starts here -->
       <div class="main-nav" role="navigation">
         <div class="main-nav__toogle">
           <span></span>
@@ -41,18 +45,18 @@
 
         <a class="logo" href="/RabbiOvadiahYosefCalendar/index.html"
           ><img
-          id="logo"
+            id="logo"
             src="/RabbiOvadiahYosefCalendar/ro_flag.png"
             alt="elyahu41.github.io/RabbiOvadiahYosefCalendar/index.html"
-          />Rabbi Ovadiah Yosef Calendar</a>
-          
+          />Rabbi Ovadiah Yosef Calendar</a
+        >
 
         <nav class="main-nav__nav">
           <ul class="main-nav__list">
             <li><a id="shabbatMode" href="#">Shabbat Mode</a></li>
             <li class="dropdown-parent">
               <a>Languages <i class="fa fa-caret-down"></i></a>
-                        <nav class="main-nav__megamenu">
+              <nav class="main-nav__megamenu">
                 <ul class="main-nav__megamenu-list">
                   <div class="btn-group">
                     <button
@@ -76,13 +80,39 @@
                     >
                       English
                     </button>
-                  </div></ul>
+                  </div>
+                </ul>
               </nav>
-                      </li>
-            <li><a href="/RabbiOvadiahYosefCalendar/moladCalculator.html" target="_blank" rel="noopener noreferrer">Molad Calculator</a></li>
-            <li><a href="/RabbiOvadiahYosefCalendar/settings.html" target="_blank" rel="noopener noreferrer">Settings</a></li>
-            <li><a href="/RabbiOvadiahYosefCalendar/about.html" target="_blank" rel="noopener noreferrer">About</a></li>
-            <li><a href="#" class="dark-mode-link" id="darkMode">Dark Mode&nbsp;<i class="fas fa-moon"></i></a></li>
+            </li>
+            <li>
+              <a
+                href="/RabbiOvadiahYosefCalendar/moladCalculator.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Molad Calculator</a
+              >
+            </li>
+            <li>
+              <a
+                href="/RabbiOvadiahYosefCalendar/settings.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Settings</a
+              >
+            </li>
+            <li>
+              <a
+                href="/RabbiOvadiahYosefCalendar/about.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                >About</a
+              >
+            </li>
+            <li>
+              <a href="#" class="dark-mode-link" id="darkMode"
+                >Dark Mode&nbsp;<i class="fas fa-moon"></i
+              ></a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -99,18 +129,30 @@
   </head>
 
   <body>
-    
     <div class="btn-group">
       <p class="border">
-      <button id="useElevation" class="button-18">
-        Use Elevation
-      </button>
-      <button id="showSeconds" class="button-18">
-        Show Seconds
-      </button>
+        <button id="useElevation" class="button-18">Use Elevation</button>
+        <button id="showSeconds" class="button-18">Show Seconds</button>
+        <button id="showInfoIcons" class="button-18">
+          Hide&nbsp<svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-info-circle"
+            viewbox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+            />
+          </svg>
+        </button>
       </p>
     </div>
-  
+
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>(Based on the Ohr HaChaim calendar in israel)</h5>
     <!--Non Zmanim Information-->
@@ -154,6 +196,13 @@
     <p id="SeasonalPrayers" class="border"></p>
     <p id="ShaahZmanit" class="border"></p>
 
+    <div id="dialog" title="Basic dialog" style="display: none">
+      <p id="dialogMessage">
+        This is the default dialog which is useful for displaying information.
+        The dialog window can be moved, resized and closed with the 'x' icon.
+      </p>
+    </div>
+
     <noscript>This website requires JavaScript to run</noscript>
     <script src="/RabbiOvadiahYosefCalendar/kosher-zmanim.min.js"></script>
     <!--Include kosherjava js port-->
@@ -163,11 +212,14 @@
     <!--This file just has multiple different names for the same zmanim. I find it easier to put these methods in a different file-->
     <script src="zmanimListUpdater.js" type="text/javascript"></script>
     <!-- This script has all the magic methods that update the information-->
+    <script src="zmanimListModals.js" type="text/javascript"></script>
+    <!--This script has all the modals for the information of each zman-->
 
     <script src="jquery.min.js" type="text/javascript"></script>
     <script src="jquery-ui.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="flexcal.css" />
     <link rel="stylesheet" href="jquery-ui.css" />
+    <link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/dark-hive/jquery-ui.css">
     <script src="jquery.textpopup.js" type="text/javascript"></script>
     <script src="jquery.flexcal.js" type="text/javascript"></script>
     <!--All these files just to include flexcal.js for a jewish calendar popup widget-->
@@ -190,6 +242,11 @@
             selected: "en",
           });
         });
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            setNextUpcomingZman();
+          }
+        });
       </script>
       <button id="forwardButton" class="button-18" onclick="forwardOneDay()">
         <i class="fa fa-arrow-right"></i>
@@ -197,16 +254,18 @@
     </p>
   </body>
   <footer id="footer">
-    Source code 
-      <a
-        class="sourceCode"
-        href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar">
-        HERE <i class="fas fa-code"></i></a>
-        <br /><br />Made by Elyahu Jacobi.<br>
+    Source code
+    <a
+      class="sourceCode"
+      href="https://github.com/Elyahu41/Elyahu41.github.io/tree/master/RabbiOvadiahYosefCalendar"
+    >
+      HERE <i class="fas fa-code"></i
+    ></a>
+    <br /><br />Made by Elyahu Jacobi.<br />
     Email:
-    <a class="sourceCode" href="mailto:ElyahuJacobi@gmail.com"> <i
-        class="fas fa-envelope"></i>
-       ElyahuJacobi@gmail.com
+    <a class="sourceCode" href="mailto:ElyahuJacobi@gmail.com">
+      <i class="fas fa-envelope"></i>
+      ElyahuJacobi@gmail.com
     </a>
   </footer>
 </html>

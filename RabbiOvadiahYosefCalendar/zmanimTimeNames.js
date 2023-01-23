@@ -13,7 +13,7 @@ function getAlotString() {
 
 function getTalitTefilinString() {
   if (isZmanimInHebrew) {
-    return "סוף זמן טלית ותפילין";
+    return "טלית ותפילין";
   }
   return "Earliest Talit and Tefilin";
 }
