@@ -42,6 +42,44 @@ function TalitDialog() {
     });
 }
 
+function SofZmanAchilatChametzDialog() {
+    $("#dialogMessage").html("This is the latest time a person can eat chametz.\n\n" +
+    "This is calculated as 4 zmaniyot/seasonal hours, according to the Magen Avraham, after Alot HaShachar (Dawn) with " +
+    "elevation included. Since Chametz is a mitzvah from the torah, we are stringent and we use the Magen Avraham's time to " +
+    "calculate the last time a person can eat chametz.");
+
+    $("#dialog").dialog({
+        modal: true,
+        title: "Eating Chametz - אכילת חמץ - Achilat Chametz",
+        width: 300,
+        height: 600,
+        buttons: {
+            "Close": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+}
+
+function SofZmanBiurChametzDialog() {
+    $("#dialogMessage").html("This is the latest time a person can own chametz before pesach begins. You should get rid of all chametz in your " +
+    "possession by this time.\n\n" +
+    "This is calculated as 5 zmaniyot/seasonal hours, according to the MG\"A, after Alot HaShachar (Dawn) with " +
+    "elevation included.");
+
+    $("#dialog").dialog({
+        modal: true,
+        title: "Burning Chametz - ביעור חמץ - Biur Chametz",
+        width: 300,
+        height: 600,
+        buttons: {
+            "Close": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+}
+
 function SunriseDialog() {
     $("#dialogMessage").html("This is the earliest time when all mitzvot (commandments) that are to be done during the daytime are allowed to be " +
     "performed L'chatchila (optimally). Halachic sunrise is defined as the moment when the top edge of the sun appears on the " +
