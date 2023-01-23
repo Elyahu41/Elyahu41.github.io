@@ -283,7 +283,7 @@ function TzeitDialog() {
     });
 }
 
-function TzeitTaanitDialog() {
+function TzaitTaanitDialog() {
     $("#dialogMessage").html("This is the time that the fast/taanit ends.\n\n" +
     "This time is calculated as 20 regular minutes after sunset (elevation included).");
 
@@ -300,7 +300,7 @@ function TzeitTaanitDialog() {
     });
 }
 
-function TzeitTaanitLChumraDialog() {
+function TzaitTaanitLChumraDialog() {
     $("#dialogMessage").html("This is the more stringent time that the fast/taanit ends. This time is according to the opinion of Chacham Ben Zion Abba Shaul\n\n" +
     "This time is calculated as 30 regular minutes after sunset (elevation included).");
 
