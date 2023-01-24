@@ -206,7 +206,7 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   }
 
   getEarliestTalitAndTefilin() {
-    var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
+    var shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
     var dakahZmanit = shaahZmanit / 60;
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
       this.getAlos72Zmanis(),
@@ -228,7 +228,7 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   }
 
   getPlagHamincha() {
-    var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
+    var shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
     var dakahZmanit = shaahZmanit / 60;
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
       this.getTzait(),
@@ -238,30 +238,30 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
 
   getCandleLighting() {
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-      this.getSunset(),
+      this.getElevationAdjustedSunset(),
       -(this.getCandleLightingOffset() * 60_000)
     );
   }
 
   getTzait() {
-    var shaahZmanit = this.getTemporalHour(this.getSunrise(), this.getSunset());
+    var shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
     var dakahZmanit = shaahZmanit / 60;
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-      this.getSunset(),
+      this.getElevationAdjustedSunset(),
       13 * dakahZmanit + dakahZmanit / 2
     );
   }
 
   getTzaitTaanit() {
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-      this.getSunset(),
+      this.getElevationAdjustedSunset(),
       20 * 60_000
     );
   }
 
   getTzaitTaanitLChumra() {
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-      this.getSunset(),
+      this.getElevationAdjustedSunset(),
       30 * 60_000
     );
   }
@@ -805,8 +805,8 @@ function updateZmanimList() {
       getSunsetString() +
       "</b>" + addInfoIcon("Sunset") +
       "<span>" +
-      addArrowIfNextUpcomingZman(zmanimCalendar.getSunset()) +
-      zmanimCalendar.getSunset().setZone(timezone).toFormat("h:mm a") +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getElevationAdjustedSunset()) +
+      zmanimCalendar.getElevationAdjustedSunset().setZone(timezone).toFormat("h:mm a") +
       "</span>";
     tzeit.innerHTML =
       "<b>" +
@@ -1144,8 +1144,8 @@ function updateZmanimList() {
       getSunsetString() +
       "</b>" + addInfoIcon("Sunset") +
       "<span>" +
-      addArrowIfNextUpcomingZman(zmanimCalendar.getSunset()) +
-      zmanimCalendar.getSunset().setZone(timezone).toFormat("h:mm:ss a") +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getElevationAdjustedSunset()) +
+      zmanimCalendar.getElevationAdjustedSunset().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>";
     tzeit.innerHTML =
       "<b>" +
