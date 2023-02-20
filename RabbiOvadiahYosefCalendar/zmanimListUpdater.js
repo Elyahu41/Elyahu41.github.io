@@ -1277,7 +1277,7 @@ function updateZmanimList() {
   } else {
     dafYerushalmi.innerHTML =
       "Daf Yomi Yerushalmi: " +
-      dafYerushalmiObject.getMasechta() +
+      dafYerushalmiObject.getYerushalmiMasechta() +
       " " +
       numberToHebrew(dafYerushalmiObject.getDaf());
   }
