@@ -1081,7 +1081,6 @@ function updateZmanimList() {
           "</b>" + addInfoIcon("CandleLighting") +
           "<span>" +
           addArrowIfNextUpcomingZman(zmanimCalendar.getTzait()) +
-          z;
         zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm:ss a") +
           +"</span>";
       } else {
