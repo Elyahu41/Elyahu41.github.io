@@ -1763,7 +1763,7 @@ function getTachanun() {
   var yomTovIndex = jewishCalendar.getYomTovIndex();
   if (
     jewishCalendar.isRoshChodesh() ||
-    yomTovIndex == KosherZmanim.JewishCalendar ||
+    yomTovIndex == KosherZmanim.JewishCalendar.PESACH_SHENI ||
     yomTovIndex == KosherZmanim.JewishCalendar.LAG_BAOMER ||
     yomTovIndex == KosherZmanim.JewishCalendar.TISHA_BEAV ||
     yomTovIndex == KosherZmanim.JewishCalendar.TU_BEAV ||
