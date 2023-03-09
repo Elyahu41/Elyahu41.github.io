@@ -1363,7 +1363,7 @@ function tomorrowIsTaanitBechorot() {
 
 function isTaanisBechoros(jewishCalendar) {
   if (
-    jewishCalendar.getJewishMonth() === jewishCalendar.NISSAN &&
+    jewishCalendar.getJewishMonth() === KosherZmanim.JewishCalendar.NISSAN &&
     ((jewishCalendar.getJewishDayOfMonth() === 14 &&
       jewishCalendar.getDayOfWeek() !== 7) ||
       (jewishCalendar.getJewishDayOfMonth() === 12 &&
