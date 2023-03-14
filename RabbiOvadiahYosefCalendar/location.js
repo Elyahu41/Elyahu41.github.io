@@ -23,7 +23,7 @@ function showManualLocationSettings() {
   manualLocationButton.innerHTML = "Hide Manual Location";
   manualLocation.style.display = "block";
   let select = document.getElementById("timezoneInput");
-  if (!Intl.supportedValuesOf) {
+  if (!Intl.supportedValuesOf) {// TODO replace the option with a console warning
     let opt = new Option(
       "Your browser does not support Intl.supportedValuesOf().",
       null,

@@ -6,8 +6,7 @@ var timezone = "";
 var geoLocation = null;
 var zmanimCalendar = null;
 var jewishCalendar = new KosherZmanim.JewishCalendar();
-var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
-hebrewFormatter.setHebrewFormat(true);
+var hebrewFormatter = null;
 var zmanimFormatter = new KosherZmanim.ZmanimFormatter();
 zmanimFormatter.setTimeFormat(KosherZmanim.ZmanimFormatter.SEXAGESIMAL_FORMAT);
 var isShabbatMode = false;
@@ -27,6 +26,8 @@ if (isNaN(elevation)) {
   elevation = 0;
 }
 timezone = urlParams.get("timeZone");
+hebrewFormatter = new KosherZmanim.HebrewDateFormatter(timezone);
+hebrewFormatter.setHebrewFormat(true);
 if (isNaN(lat) && isNaN(long)) {
   getLocation();
 }
@@ -39,7 +40,8 @@ var geoLocation = new KosherZmanim.GeoLocation(
 );
 
 if (timezone == "Asia/Jerusalem") {
-  //if the timezone is Asia/Jerusalem, then the location is probably very close to the Israel or in Israel, so we set the jewish calendar to inIsrael mode
+  //if the timezone is Asia/Jerusalem, then the location is probably very close to the Israel or in Israel, so we set the jewish calendar to inIsrael mode.
+  //What we really should do is confirm with the user if they are in Israel or not. We'll leave that for another day.
   jewishCalendar.setInIsrael(true);
 }
 
