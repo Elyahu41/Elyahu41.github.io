@@ -1347,11 +1347,10 @@ function getSpecialDay() {
 
 function addTaanitBechorot(result) {
   if (tomorrowIsTaanitBechorot()) {
-    //edge case
-    result.push("Erev Ta'anit Bechorot");
+    result.push("Erev Taanit Bechorot");
   }
   if (isTaanisBechoros(jewishCalendar)) {
-    result.push("Ta'anit Bechorot");
+    result.push("Taanit Bechorot");
   }
   return result;
 }
@@ -1385,7 +1384,7 @@ function addRoshChodesh(result) {
 
 function getRoshChodeshOrErevRoshChodesh() {
   var result = "";
-  var hebrewFormatter = new KosherZmanim.HebrewDateFormatter();
+  var hebrewFormatter = new KosherZmanim.HebrewDateFormatter(timezone);
   if (jewishCalendar.isRoshChodesh()) {
     var roshChodesh = hebrewFormatter.formatRoshChodesh(jewishCalendar);
     if (roshChodesh.includes("Teves")) {
@@ -1409,8 +1408,6 @@ function getRoshChodeshOrErevRoshChodesh() {
       hebrewMonth = "Rosh Chodesh Tishri";
     }
     result = "Erev " + hebrewMonth;
-  } else {
-    result = "";
   }
   return result;
 }
