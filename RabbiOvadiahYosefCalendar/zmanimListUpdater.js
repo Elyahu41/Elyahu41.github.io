@@ -6,6 +6,7 @@ var timezone = "";
 var geoLocation = null;
 var zmanimCalendar = null;
 var jewishCalendar = new KosherZmanim.JewishCalendar();
+jewishCalendar.setUseModernHolidays(true);
 var hebrewFormatter = null;
 var zmanimFormatter = new KosherZmanim.ZmanimFormatter();
 zmanimFormatter.setTimeFormat(KosherZmanim.ZmanimFormatter.SEXAGESIMAL_FORMAT);
@@ -564,6 +565,7 @@ function updateZmanimList() {
       getTekufaForNextDayAsDate().toJSDate().toLocaleTimeString();
   }
 
+  var shabbatAndChagTimes = document.getElementById("ShabbatAndChagTimes");//not really a zman but an alert for shabbat and chag times
   //zmanim list updated here
   var alot = document.getElementById("Alot");
   var talit = document.getElementById("Talit");
@@ -766,6 +768,30 @@ function updateZmanimList() {
       } else {
         zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
       }
+      shabbatAndChagTimes.style.display = "block";
+      var alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<br>------<br>";
+      var backup = zmanimCalendar.getDate().toJSDate();
+      var nextDay = zmanimCalendar.getDate().toJSDate();
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      while (jewishCalendar.isAssurBemelacha()) {//while the day is assur bemelacha,
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      if (!jewishCalendar.isAssurBemelacha()) {// if the day is not assur bemelacha, we moved to the day after shabbat/yom tov
+        nextDay.setDate(nextDay.getDate() - 1);//go back to the last day of shabbat/yom tov
+      }
+      }
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      zmanimCalendar.setDate(nextDay);
+      
+      alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a")
+      + "</b>";
+
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
+      zmanimCalendar.setDate(backup);
+
+      shabbatAndChagTimes.innerHTML = alertString;
+
       candle.style.display = "block";
       candle.innerHTML =
         "<b>" +
@@ -799,6 +825,7 @@ function updateZmanimList() {
         }
       };
     } else {
+      shabbatAndChagTimes.style.display = "none";
       candle.style.display = "none";
     }
 
@@ -1101,6 +1128,30 @@ function updateZmanimList() {
       } else {
         zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
       }
+      shabbatAndChagTimes.style.display = "block";
+      var alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm:ss a") + "<br>------<br>";
+      var backup = zmanimCalendar.getDate().toJSDate();
+      var nextDay = zmanimCalendar.getDate().toJSDate();
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      while (jewishCalendar.isAssurBemelacha()) {//while the day is assur bemelacha,
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      if (!jewishCalendar.isAssurBemelacha()) {// if the day is not assur bemelacha, we moved to the day after shabbat/yom tov
+        nextDay.setDate(nextDay.getDate() - 1);//go back to the last day of shabbat/yom tov
+      }
+      }
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      zmanimCalendar.setDate(nextDay);
+      
+      alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm:ss a")
+      + "</b>";
+
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
+      zmanimCalendar.setDate(backup);
+
+      shabbatAndChagTimes.innerHTML = alertString;
+
       candle.style.display = "block";
       candle.innerHTML =
         "<b>" +
@@ -1136,6 +1187,7 @@ function updateZmanimList() {
         }
       };
     } else {
+      shabbatAndChagTimes.style.display = "none";
       candle.style.display = "none";
     }
 
@@ -2068,6 +2120,7 @@ function toggleDarkMode() {
   document.querySelector("body").classList.toggle("bodyDarkMode");
   document.querySelector("h2").classList.toggle("h2DarkMode");
   document.querySelector("h5").classList.toggle("h5DarkMode");
+  document.getElementById("ShabbatAndChagTimes").classList.toggle("borderAlertDarkMode");
   var borders = document.getElementsByClassName("border");
   for (var i = 0; i < borders.length; i++) {
     borders[i].classList.toggle("borderDarkMode");

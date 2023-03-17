@@ -252,6 +252,38 @@ body {
     background-color: #eee; /* Add a hover effect to all links, except for headers */
   }
 
+  .borderAlert {
+    font-family: 'Roboto',
+    sans-serif;
+    align-content: center;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 100px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(0, 0, 0);
+    border: solid 1px #ff0909;
+    padding: 6px;
+    display: none;
+}
+
+.borderAlertDarkMode {
+  font-family: 'Roboto',
+  sans-serif;
+  align-content: center;
+  max-width: 400px;
+  text-align: center;
+  margin-top: 100px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+  border: solid 1px #ff0909;
+  padding: 6px;
+  display: none;
+}
+
 .border {
     font-family: 'Roboto',
     sans-serif;
