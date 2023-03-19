@@ -769,7 +769,12 @@ function updateZmanimList() {
         zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
       }
       shabbatAndChagTimes.style.display = "block";
-      var alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<br>------<br>";
+      var alertString = "";
+      if (isZmanimInHebrew) {
+        alertString = "<b>" + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + " : " + getCandleLightingString() + "<hr>";
+      } else {
+        alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<hr>";
+      }
       var backup = zmanimCalendar.getDate().toJSDate();
       var nextDay = zmanimCalendar.getDate().toJSDate();
       nextDay.setDate(nextDay.getDate() + 1);//move to next day
@@ -783,9 +788,13 @@ function updateZmanimList() {
       }
       jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
       zmanimCalendar.setDate(nextDay);
-      
-      alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a")
-      + "</b>";
+
+      if (isZmanimInHebrew) {
+        alertString += zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a") + " : " + getTzaitShabbatChagString(jewishCalendar)
+      } else {
+        alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a")
+        + "</b>";
+      }
 
       jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
       zmanimCalendar.setDate(backup);
@@ -1129,7 +1138,12 @@ function updateZmanimList() {
         zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
       }
       shabbatAndChagTimes.style.display = "block";
-      var alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm:ss a") + "<br>------<br>";
+      var alertString = "";
+      if (isZmanimInHebrew) {
+        alertString = "<b>" + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + " : " + getCandleLightingString() + "<hr>";
+      } else {
+        alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<hr>";
+      }
       var backup = zmanimCalendar.getDate().toJSDate();
       var nextDay = zmanimCalendar.getDate().toJSDate();
       nextDay.setDate(nextDay.getDate() + 1);//move to next day
@@ -1143,9 +1157,13 @@ function updateZmanimList() {
       }
       jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
       zmanimCalendar.setDate(nextDay);
-      
-      alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm:ss a")
-      + "</b>";
+
+      if (isZmanimInHebrew) {
+        alertString += zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a") + " : " + getTzaitShabbatChagString(jewishCalendar)
+      } else {
+        alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaisAteretTorah().setZone(timezone).toFormat("h:mm a")
+        + "</b>";
+      }
 
       jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
       zmanimCalendar.setDate(backup);
