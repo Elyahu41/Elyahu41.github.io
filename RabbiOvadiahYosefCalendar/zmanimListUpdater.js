@@ -2178,14 +2178,17 @@ function setNextUpcomingZman() {
   nextUpcomingZman = null;
   var zmanim = [];
   var currentSelectedDate = zmanimCalendar.getDate();
-  zmanimCalendar.setDate(new luxon.DateTime.now());
   zmanimCalendar.setDate(luxon.DateTime.now().minus({ days: 1 }));
+  jewishCalendar.setDate(luxon.DateTime.now().minus({ days: 1 }));
   addZmanim(zmanim);
   zmanimCalendar.setDate(luxon.DateTime.now());
+  jewishCalendar.setDate(luxon.DateTime.now());
   addZmanim(zmanim);
   zmanimCalendar.setDate(luxon.DateTime.now().plus({ days: 1 }));
+  jewishCalendar.setDate(luxon.DateTime.now().plus({ days: 1 }));
   addZmanim(zmanim);
   zmanimCalendar.setDate(currentSelectedDate); //reset the date to the current date
+  jewishCalendar.setDate(currentSelectedDate); //reset the date to the current date
 
   for (let i = 0; i < zmanim.length; i++) {
     if (
