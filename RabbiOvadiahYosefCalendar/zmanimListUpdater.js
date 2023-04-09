@@ -455,7 +455,7 @@ function updateZmanimList() {
   if (hebrewFormatter.formatParsha(jewishCalendar) !== "") {
     parasha.innerHTML = hebrewFormatter.formatParsha(jewishCalendar);
   } else {
-    parasha.innerHTML = "No Parasha this week";
+    parasha.innerHTML = "No Weekly Parasha";
   }
   if (hebrewFormatter.formatSpecialParsha(jewishCalendar) !== "") {
     parasha.innerHTML +=
@@ -1672,7 +1672,7 @@ function getTekufaAsDate() {
       second: 0,
       millisecond: 0,
     },
-    { zone: "Asia/Jerusalem" }
+    { zone: "Europe/Amsterdam", isOffsetFixed: false }//Luxon does not support GMT+2, so we need to use Europe/Amsterdam and then make sure that DST is not applied
   ).plus({ hours: hours, minutes: minutes });
   return date;
 }
