@@ -1679,12 +1679,11 @@ function getTekufaAsDate() {
 
 function getIsTonightStartOrEndBirchatLevana() {
   var startTimeSevenDays = jewishCalendar.getTchilasZmanKidushLevana7Days();
-  var endTimeFifteenDays = jewishCalendar.getSofZmanKidushLevana15Days();
 
   if (zmanimCalendar.getDate().hasSame(startTimeSevenDays, "day")) {
     return "Birchat HaLevana starts tonight";
   }
-  if (zmanimCalendar.getDate().hasSame(endTimeFifteenDays, "day")) {
+  if (jewishCalendar.getJewishDayOfMonth() === 14) {
     return "Last night for Birchat HaLevana";
   }
   return "";
