@@ -118,15 +118,13 @@
         earliestBirchatHalevanah.toJSDate().toLocaleString() +
         "</h2>";
 
-      var latestBirchatHalevanah =
-        jewishCalendar.getSofZmanKidushLevana15Days();
       var latestBirchatHalevanahParagraph = document.getElementById(
         "Latest Birchat Halevanah"
       );
       latestBirchatHalevanahParagraph.innerHTML =
-        "The latest time to say birchat helevana:<h2 class='h2DarkMode'>" +
-        latestBirchatHalevanah.toJSDate().toLocaleString() +
-        "</h2>";
+          "The latest time to say birchat helevana:<h2 class='h2DarkMode'>" +
+            "The entire night of the 15th day of the Hebrew month" +
+          "</h2>";
 
       function calculateMolad() {
         if (dateInput.value == "") {
@@ -165,12 +163,9 @@
             .toLocaleString("en-US", { timeZone: select.value }) +
           "</h2>";
 
-        latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
         latestBirchatHalevanahParagraph.innerHTML =
           "The latest time to say birchat helevana:<h2 class='h2DarkMode'>" +
-          latestBirchatHalevanah
-            .toJSDate()
-            .toLocaleString("en-US", { timeZone: select.value }) +
+            "The entire night of the 15th day of the Hebrew month" +
           "</h2>";
       }
 
@@ -198,10 +193,9 @@
           earliestBirchatHalevanah.toJSDate().toLocaleString() +
           "</h2>";
 
-        latestBirchatHalevanah = jewishCalendar.getSofZmanKidushLevana15Days();
         latestBirchatHalevanahParagraph.innerHTML =
           "The latest time to say birchat helevana:<h2 class='h2DarkMode'>" +
-          latestBirchatHalevanah.toJSDate().toLocaleString() +
+            "The entire night of the 15th day of the Hebrew month" +
           "</h2>";
       }
     </script>
