@@ -1976,7 +1976,7 @@ function eraseCookie(name) {
 function getIsOkayToListenToMusic() {
   if (
     jewishCalendar.getDayOfOmer() >= 8 &&
-    jewishCalendar.getDayOfOmer() <= 33
+    jewishCalendar.getDayOfOmer() <= 32
   ) {
     return false;
   } else if (
