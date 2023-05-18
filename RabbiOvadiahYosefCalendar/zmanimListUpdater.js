@@ -1935,14 +1935,14 @@ function numberToHebrew(num) {
 }
 
 function saveCandleLightingSetting() {
-  var candleLightingTime = document.getElementById("candleMinutes").value;
+  var candleLightingTime = document.getElementById("candleMinutes")["value"];
   zmanimCalendar.setCandleLightingOffset(candleLightingTime);
   setCookie("candleLightingTime", candleLightingTime, 36500); //100 years
   updateZmanimList();
 }
 
 function saveTzeitShabbatSetting() {
-  var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes").value;
+  var tzeitShabbatTime = document.getElementById("tzeitShabbatMinutes")["value"];
   zmanimCalendar.setAteretTorahSunsetOffset(tzeitShabbatTime);
   setCookie("tzeitShabbatTime", tzeitShabbatTime, 36500); //100 years
   updateZmanimList();
