@@ -21,7 +21,7 @@ function AlotDialog() {
     });
 }
 
-function TalitDialog() {
+function TalitTefilinDialog() {
     $("#dialogMessage").html("Misheyakir (literally \"when you recognize\") is the time when a person can distinguish between blue and white. " +
     "The gemara (ברכות ט) explains that when a person can distinguish between the blue (techelet) and white strings " +
     "of their tzitzit, that is the earliest time a person can put on their talit and tefilin for shacharit.\n\n" +
