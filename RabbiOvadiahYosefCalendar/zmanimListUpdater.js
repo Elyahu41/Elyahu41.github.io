@@ -13,6 +13,7 @@ zmanimFormatter.setTimeFormat(KosherZmanim.ZmanimFormatter.SEXAGESIMAL_FORMAT);
 var isShabbatMode = false;
 var showSeconds = false;
 var nextUpcomingZman = null;
+var isLuachAmudeiHoraahMode = localStorage.getItem("LuachAmudeiHoraah") == "true";
 var initAlreadyCalledOnceBefore = false;
 //end of global variables
 
@@ -268,6 +269,122 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
       30 * 60_000
     );
   }
+
+  //Amudei Horaah Zmanim:
+
+  getAlos72ZmanisAmudeiHoraah() {
+		const originalDate = this.getDate()
+		this.setDate(new Date("March 17 " + originalDate.year.toString()))
+		const sunrise = this.getSeaLevelSunrise();
+		const alotBy16point1Degrees = this.getAlos16Point1Degrees();
+		const numberOfMinutes = ((sunrise.toMillis() - alotBy16point1Degrees.toMillis()) / 60_000);
+		this.setDate(originalDate);
+
+		const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+		const dakahZmanit = shaahZmanit / 60;
+
+		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit))
+	}
+
+  getEarliestTalitAndTefilinAmudeiHoraah() {
+			const originalDate = this.getDate()
+			this.setDate(new Date("March 17 " + originalDate.year.toString())); // Set the Calendar to the equinox
+			const sunrise = this.getSeaLevelSunrise();
+			const alotBy16point1Degrees = this.getAlos16Point1Degrees(); // 16.1 degrees is 72 minutes before sunrise in Netanya on the equinox, so no adjustment is needed
+			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point1Degrees.toMillis()) / 60_000);
+			this.setDate(originalDate);
+
+			const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+			const dakahZmanit = shaahZmanit / 60;
+
+			return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit * 5 / 6));
+  }
+
+  getSofZmanShmaMGA72MinutesZmanisAmudeiHoraah() {
+    return this.getSofZmanShma(this.getAlos72ZmanisAmudeiHoraah(), this.getTzais72ZmanisAmudeiHoraah());
+}
+
+getSofZmanAchilatChametzMGAAmudeiHoraah() {
+  return this.getSofZmanTfila(this.getAlos72ZmanisAmudeiHoraah(), this.getTzais72ZmanisAmudeiHoraah());
+}
+
+getSofZmanBiurChametzMGAAmudeiHoraah() {
+  var shaahZmanit = this.getTemporalHour(this.getAlos72ZmanisAmudeiHoraah(), this.getTzais72ZmanisAmudeiHoraah());
+  return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+    this.getAlos72ZmanisAmudeiHoraah(),
+    shaahZmanit * 5
+  );
+}
+
+getPlagHaminchaYalkutYosefAmudeiHoraah() {
+  const shaahZmanit = this.getTemporalHour(getSeaLevelSunrise(), getSeaLevelSunset());
+		const dakahZmanit = shaahZmanit / 60;
+		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+			getTzaitAmudeiHoraah(), -(shaahZmanit + (15 * dakahZmanit))
+		);
+}
+
+getPlagHaminchaHalachaBerurahAmudeiHoraah() {
+  const shaahZmanit = this.getTemporalHour(getSeaLevelSunrise(), getSeaLevelSunset());
+		const dakahZmanit = shaahZmanit / 60;
+		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
+			getSeaLevelSunset(), -(shaahZmanit + (15 * dakahZmanit))
+		);
+}
+
+getTzaitAmudeiHoraah() {
+    const originalDate = this.getDate()
+    this.setDate(new Date("March 17 " + originalDate.year.toString()))
+    const sunset = this.getSeaLevelSunset();
+    const tzaitBy3point86degrees = this.getSunsetOffsetByDegrees(KosherZmanim.AstronomicalCalendar.GEOMETRIC_ZENITH + 3.86);
+    const numberOfMinutes = ((tzaitBy3point86degrees.toMillis() - sunset.toMillis()) / 60_000);
+    this.setDate(originalDate);
+
+    const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+    const dakahZmanit = shaahZmanit / 60;
+
+    return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), numberOfMinutes * dakahZmanit);
+}
+
+getTzaitLChumraAmudeiHoraah() {
+  const originalDate = this.getDate()
+  this.setDate(new Date("March 17 " + originalDate.year.toString()))
+  const sunset = this.getSeaLevelSunset();
+  const tzaitBy5point054degrees = this.getSunriseOffsetByDegrees(90.0 + 5.054);
+  const numberOfMinutes = ((tzaitBy5point054degrees.toMillis() - sunset.toMillis()) / 60_000);
+  this.setDate(originalDate);
+
+  const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+  const dakahZmanit = shaahZmanit / 60;
+
+  return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), numberOfMinutes * dakahZmanit);
+}
+
+getTzaitShabbatAmudeiHoraah() {
+  return this.getSunsetOffsetByDegrees(90.0 + 7.18);
+}
+
+getTzais72ZmanisAmudeiHoraah() {
+  const originalDate = this.getDate()
+  this.setDate(new Date("March 17 " + originalDate.year.toString()))
+  const sunset = this.getSeaLevelSunset();
+  const tzaitBy16Degrees = this.getSunriseOffsetByDegrees(90.0 + 16.0);
+  const numberOfMinutes = ((tzaitBy16Degrees.toMillis() - sunset.toMillis()) / 60_000);
+  this.setDate(originalDate);
+
+  const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+  const dakahZmanit = shaahZmanit / 60;
+
+  return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), (numberOfMinutes * dakahZmanit))
+}
+
+getTzais72ZmanisLKulah() {
+  if (this.getTzais72().toMillis() > this.getTzais72ZmanisAmudeiHoraah().toMillis()) {
+    return this.getTzais72ZmanisAmudeiHoraah();
+  } else {
+    return this.getTzais72();
+  }
+}
 }
 
 function init() {
@@ -593,6 +710,9 @@ function updateZmanimList() {
   var seasonal = document.getElementById("SeasonalPrayers");
   var shaahZmanit = document.getElementById("ShaahZmanit");
 
+  if (isLuachAmudeiHoraahMode) {
+    
+  } else {
   if (!showSeconds) {
     alot.innerHTML =
       "<b>" +
@@ -1333,6 +1453,7 @@ function updateZmanimList() {
         .toFormat("h:mm:ss a") +
       "</span>";
   }
+}
   var dafObject = KosherZmanim.YomiCalculator.getDafYomiBavli(jewishCalendar);
   daf.innerHTML =
     "Daf Yomi: " +
@@ -1406,7 +1527,9 @@ function getSpecialDay() {
     //if today and the next day have yom tov
     result.push(yomTovOfToday + " / Erev " + yomTovOfNextDay);
   } else {
-    result.push(yomTovOfToday);
+    if (yomTovOfToday !== "") {
+      result.push(yomTovOfToday);
+    }
   }
   result = addTaanitBechorot(result);
   result = addRoshChodesh(result);

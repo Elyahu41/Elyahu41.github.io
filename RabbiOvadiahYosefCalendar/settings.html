@@ -94,9 +94,13 @@
       </head>
 <body>
 
-  <p class="border">
-    Settings are under construction. Please check back later.
-  </p><!--TODO-->
+  <p class="border" style="  display: flex; justify-content: space-between; align-items: center;">
+    Luach Amudei Horaah
+    <label class="form-switch">
+      <input type="checkbox" id="LuachAmudeiHoraah">
+      <i></i>
+    </label>
+  </p>
 
     <script>
 function toggleDarkMode() {
@@ -180,6 +184,16 @@ function toggleDarkMode() {
             isDarkMode = "false";
           }
           localStorage.setItem("isDarkMode", isDarkMode);
+        });
+      </script>
+      <script>
+        let inputForLuachAmudeiHoraah = document.getElementById("LuachAmudeiHoraah");
+        inputForLuachAmudeiHoraah.addEventListener("change", function () {
+          if (inputForLuachAmudeiHoraah.checked) {
+            localStorage.setItem("LuachAmudeiHoraah", "true");
+          } else {
+            localStorage.setItem("LuachAmudeiHoraah", "false");
+          }
         });
       </script>
 </body>
