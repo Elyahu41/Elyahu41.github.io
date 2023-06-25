@@ -2197,9 +2197,7 @@ function initUpdaterForZmanim() {
   tomorrow = tomorrow.set({ hour: 0, minute: 0, second: 2, millisecond: 0 });
   var timeUntilTomorrow = tomorrow.diffNow().as("milliseconds");
   setTimeout(function () {
-    var date = new luxon.DateTime.now();
-    jewishCalendar.setDate(date);
-    updateZmanimList();
+    forwardOneDay();
     initUpdaterForZmanim();
   }, timeUntilTomorrow);
 }
