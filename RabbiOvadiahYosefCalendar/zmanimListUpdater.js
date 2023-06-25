@@ -2299,17 +2299,17 @@ function setNextUpcomingZman() {
   nextUpcomingZman = null;
   var zmanim = [];
   var currentSelectedDate = zmanimCalendar.getDate();
-  zmanimCalendar.setDate(luxon.DateTime.now().minus({ days: 1 }));
-  jewishCalendar.setDate(luxon.DateTime.now().minus({ days: 1 }));
+  zmanimCalendar.setDate(zmanimCalendar.getDate().minus({ days: 1 }));
+  jewishCalendar.setDate(zmanimCalendar.getDate().minus({ days: 1 }));
   addZmanim(zmanim);
-  zmanimCalendar.setDate(luxon.DateTime.now());
-  jewishCalendar.setDate(luxon.DateTime.now());
+  zmanimCalendar.setDate(zmanimCalendar.getDate());
+  jewishCalendar.setDate(zmanimCalendar.getDate());
   addZmanim(zmanim);
-  zmanimCalendar.setDate(luxon.DateTime.now().plus({ days: 1 }));
-  jewishCalendar.setDate(luxon.DateTime.now().plus({ days: 1 }));
+  zmanimCalendar.setDate(zmanimCalendar.getDate().plus({ days: 1 }));
+  jewishCalendar.setDate(zmanimCalendar.getDate().plus({ days: 1 }));
   addZmanim(zmanim);
-  zmanimCalendar.setDate(currentSelectedDate); //reset the date to the current date
-  jewishCalendar.setDate(currentSelectedDate); //reset the date to the current date
+  zmanimCalendar.setDate(currentSelectedDate);
+  jewishCalendar.setDate(currentSelectedDate); //reset the dates to the current date
 
   for (let i = 0; i < zmanim.length; i++) {
     if (
@@ -2325,7 +2325,7 @@ function setNextUpcomingZman() {
   //call back this function 1 second after the nextUpcomingZman passes
   setTimeout(
     setNextUpcomingZman,
-    nextUpcomingZman.toMillis() - luxon.DateTime.now().toMillis() + 1000
+    (nextUpcomingZman.toMillis() - luxon.DateTime.now().toMillis()) + 1000
   ); //TODO test
 }
 
