@@ -422,3 +422,53 @@ xandr.com, 13799, RESELLER
 xandr.com, 14082, RESELLER
 yieldmo.com, 3591550211052216798, RESELLER, 6a92c77cfc3d2258
 zmaticoo.com, 5135655, RESELLER
+appnexus.com, 12061, RESELLER, f5ab79cb980f11d1
+iion.io, 10162, RESELLER
+ucfunnel.com, par-BE7E667E3339AD6BC7BA2887D6E7227A, RESELLER
+screenil.com, 554156, RESELLER
+appnexus.com, 14080, RESELLER, f5ab79cb980f11d1
+33across.com, 0010b00002MptSLAAZ, RESELLER, bbea06d9c4d2853c
+app-stock.com, 256917, RESELLER-$2K-$5K
+axonix.com, 59107, RESELLER, bc385f2b4a87b721
+pubnative.net, 1007262, RESELLER, d641df8625486a7b
+appnexus.com, 1354, RESELLER
+opera.com, pub6650235485952, RESELLER, 55a0c5fd61378de3
+sonobi.com, 2b51f34067, RESELLER, d1a215d9eb5aee9e
+improvedigital.com, 1408, RESELLER
+triplelift.com, 10223, RESELLER, 6c33edb13117fd86
+video.unrulymedia.com, 3881266972, RESELLER
+lijit.com, 273050, RESELLER, fafdf38b16bf6b2b
+openx.com, 540396775, RESELLER, 6a698e2ec38604c6
+lijit.com, 491737, RESELLER, fafdf38b16bf6b2b
+videoheroes.tv, 212450, RESELLER, 064bc410192443d8
+loopme.com, 11347, RESELLER, 6c8d5f95897a5a3b
+inmobi.com, 33f042dcf10549ae9fb1b9e2ee0ecfc3, RESELLER, 83e75a7ae333ca9d
+adyoulike.com, 994b7b4e03898048761c7110f11e56c2, RESELLER
+improvedigital.com, 2371, RESELLER
+carbonatix.com, 14840966, RESELLER
+onairglobal.com, 4357629, RESELLER
+contextweb.com, 562818, RESELLER, 89ff185a4c4e857c
+aralego.com, par-BE7E667E3339AD6BC7BA2887D6E7227A, RESELLER
+opera.com, pub6148735850944, RESELLER, 55a0c5fd61378de3
+sharethrough.com, DQQogebZ, RESELLER, d53b998a7bd4ecd2
+start.io, 150505487, RESELLER
+e-planning.net, af5a107262468954, RESELLER, c1ba615865ed87b2
+richaudience.com, q3KyMB36ue, RESELLER
+appnexus.com, 15670, RESELLER
+freewheel.tv, 1601388, RESELLER
+adiiix.com, par-BE7E667E3339AD6BC7BA2887D6E7227A, RESELLER
+smartadserver.com, 4865, RESELLER
+contextweb.com, 563605, RESELLER, 89ff185a4c4e857c
+inmobi.com, ef083d721beb4c0f8776ced01e262c03, RESELLER, 83e75a7ae333ca9d
+appnexus.com, 16244, RESELLER
+thebrave.io, 9840732, RESELLER, c25b2154543746ac
+xandr.com, 15769, RESELLER
+rubiconproject.com, 26386, RESELLER, 0bfd66d529a55807
+lijit.com, 502284, RESELLER, fafdf38b16bf6b2b
+pubmatic.com, 159499, RESELLER, 5d62403b186f2ace
+video.unrulymedia.com, 3634565696, RESELLER, 6f752381ad5ec0e5
+contextweb.com, 562726, RESELLER, 89ff185a4c4e857c
+loopme.com, 14009, RESELLER, 6c8d5f95897a5a3b
+improvedigital.com, 1664, RESELLER
+loopme.com, 11561, RESELLER, 6c8d5f95897a5a3b
+xandr.com, 13293, RESELLER, f5ab79cb980f11d1
