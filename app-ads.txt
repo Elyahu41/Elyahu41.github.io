@@ -9,7 +9,6 @@ openx.com, 540338069, RESELLER, 6a698e2ec38604c6
 rhythmone.com, 1605779867, RESELLER, a670c89d4a324e47
 rubiconproject.com, 16834, RESELLER, 0bfd66d529a55807
 lunamedia.io, 193bca549318aed0434226d4d73e13f3, RESELLER, 524ecb396915caaf
-themediagrid.com, R28I9J, RESELLER, 35d5010d7789b49d
 advertising.com, 28734, RESELLER
 spotxchange.com, 295535, RESELLER, 7842df1d2fe2db34
 spotx.tv, 295535, RESELLER, 7842df1d2fe2db34
@@ -32,7 +31,6 @@ onetag.com, 59aa7be4921bac8, RESELLER
 advertising.com, 28246, RESELLER
 sonobi.com, eaec54c63f, RESELLER, d1a215d9eb5aee9e
 video.unrulymedia.com, 1605779867, RESELLER
-lunamedia.io, 193bca549318aed0434226d4d73e13f3, RESELLER, 524ecb396915caaf
 themediagrid.com, R28I9J, RESELLER, 35d5010d7789b49d
 pubmatic.com, 160492, RESELLER, 5d62403b186f2ace
 pubmatic.com, 160493, RESELLER, 5d62403b186f2ace
@@ -73,7 +71,6 @@ rubiconproject.com, 20744, RESELLER, 0bfd66d529a55807
 openx.com, 540298543, RESELLER, 6a698e2ec38604c6
 contextweb.com, 562499, RESELLER, 89ff185a4c4e857c
 mintegral.com, 10003, RESELLER
-video.unrulymedia.com, 322585001, RESELLER
 rhebus.works, 7597018658, RESELLER
 blis.com, 33, RESELLER, 61453ae19a4b73f4
 algorix.co, 54190, RESELLER, 5b394c12fea27a1d
@@ -128,8 +125,6 @@ programmaticx.ai, 6999766, RESELLER
 pubmatic.com, 156931, RESELLER, 5d62403b186f2ace
 pubmatic.com, 159035, RESELLER, 5d62403b186f2ace
 appnexus.com, 8178, RESELLER, f5ab79cb980f11d1
-advertising.com, 28246, RESELLER
-onetag.com, 59aa7be4921bac8, RESELLER
 contextweb.com, 558638, RESELLER, 89ff185a4c4e857c
 rubiconproject.com, 26064, RESELLER, 0bfd66d529a55807
 video.unrulymedia.com, 188404962, RESELLER
@@ -297,8 +292,6 @@ rubiconproject.com, 17960, reseller, 0bfd66d529a55807
 rubiconproject.com, 18202, reseller, 0bfd66d529a55807
 rubiconproject.com, 18364, reseller, 0bfd66d529a55807
 rubiconproject.com, 20014, reseller, 0bfd66d529a55807
-rubiconproject.com, 20050, reseller, 0bfd66d529a55807
-rubiconproject.com, 20744, reseller, 0bfd66d529a55807
 rubiconproject.com, 22134, reseller, 0bfd66d529a55807
 rubiconproject.com, 22412, reseller, 0bfd66d529a55807
 rubiconproject.com, 24170, reseller, 0bfd66d529a55807
@@ -391,7 +384,6 @@ zmaticoo.com, 5135195, reseller
 zmaticoo.com, 5135704, reseller
 smartadserver.com, 4190, RESELLER, 060d053dcf45cbf3
 app-stock.com, 384491, RESELLER
-
 applovin.com, b684de091bd8dc866cb1894f7f6ef9cb, DIRECT
 adyoulike.com, 2d578cf695c89ec2ba707280319d2020, RESELLER
 algorix.co, 60532, RESELLER, 5b394c12fea27a1d
