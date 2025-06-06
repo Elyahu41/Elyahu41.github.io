@@ -472,3 +472,13 @@ loopme.com, 14009, RESELLER, 6c8d5f95897a5a3b
 improvedigital.com, 1664, RESELLER
 loopme.com, 11561, RESELLER, 6c8d5f95897a5a3b
 xandr.com, 13293, RESELLER, f5ab79cb980f11d1
+thebrave.io, 1234764, RESELLER, c25b2154543746ac
+ushareit.com, LCb555b3bc8667a09a, RESELLER
+google.com, pub-1682595508078257, RESELLER, f08c47fec0942fa0
+betweendigital.com, 45827, RESELLER
+lacunads.com, LCb555b3bc8667a09a, RESELLER
+taurusx.com, 80635, RESELLER
+themediagrid.com, FALINO, RESELLER, 35d5010d7789b49d
+thebrave.io, 1234634, RESELLER, c25b2154543746ac
+advertising.com, 82632, RESELLER
+lijit.com, 556191, RESELLER, fafdf38b16bf6b2b
