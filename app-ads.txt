@@ -492,3 +492,4 @@ lijit.com, 558045, RESELLER, fafdf38b16bf6b2b
 pubmatic.com, 166078, RESELLER, 5d62403b186f2ace
 video.unrulymedia.com, 389957698, RESELLER
 zmaticoo.com, 5135063, RESELLER
+improvedigital.com, 2609, RESELLER
