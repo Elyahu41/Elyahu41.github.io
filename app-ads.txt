@@ -493,3 +493,6 @@ pubmatic.com, 166078, RESELLER, 5d62403b186f2ace
 video.unrulymedia.com, 389957698, RESELLER
 zmaticoo.com, 5135063, RESELLER
 improvedigital.com, 2609, RESELLER
+loopme.com, 15629, RESELLER, 6c8d5f95897a5a3b
+opera.com, pub7275292332480, RESELLER, 55a0c5fd61378de3
+opera.com, pub6843437470464, RESELLER, 55a0c5fd61378de3
