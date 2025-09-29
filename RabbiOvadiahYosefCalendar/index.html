@@ -12,7 +12,7 @@
     />
     <meta
       name="Keywords"
-      content="Rabbi, Ovadia, Ovadiah, Yosef, Calendar, Zmanim, Daven, Davening"
+      content="Rabbi, Ovadia, Ovadiah, Yosef, Calendar, Zman, Zeman, Zemaneh, Yalkut, Zmanim, Daven, Davening"
     />
     <meta name="mobile-web-app-capable" content="yes" />
     <link href="ic_launcher-playstore.ico" rel="icon" type="image/x-icon" />
@@ -84,6 +84,65 @@
 
   <body>
     <noscript>This website requires JavaScript to run</noscript>
+
+    <!-- Banner Notice -->
+<div id="site-banner">
+  <p>
+    📢 This website is no longer being updated.  
+    Please visit our new site: 
+    <a href="https://royzmanim.com" target="_blank">royzmanim.com</a>
+  </p>
+  <button id="close-banner">✖</button>
+</div>
+
+<style>
+  #site-banner {
+    background: linear-gradient(90deg, #f8d568, #f4b942);
+    color: #222;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  #site-banner p {
+    margin: 0;
+  }
+
+  #site-banner a {
+    color: #004085;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  #close-banner {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+  }
+</style>
+
+<script>
+  // Allow users to dismiss the banner
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("close-banner").onclick = function() {
+      document.getElementById("site-banner").style.display = "none";
+    };
+  });
+</script>
+    
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
     <h5>
       (Based on the Ohr HaChaim calendar in israel)
@@ -299,3 +358,4 @@
     </a>
   </footer>
 </html>
+
