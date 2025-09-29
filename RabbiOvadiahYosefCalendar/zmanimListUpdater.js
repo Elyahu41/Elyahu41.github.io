@@ -273,25 +273,25 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
   //Amudei Horaah Zmanim:
 
   getAlos72ZmanisAmudeiHoraah() {
-		const originalDate = this.getDate()
-		this.setDate(new Date("March 17 " + originalDate.year.toString()))
-		const sunrise = this.getSeaLevelSunrise();
-		const alotBy16point1Degrees = this.getAlos16Point1Degrees();
-		const numberOfMinutes = ((sunrise.toMillis() - alotBy16point1Degrees.toMillis()) / 60_000);
-		this.setDate(originalDate);
+			const originalDate = this.getDate()
+			this.setDate(new Date("March 17 " + originalDate.year.toString())); // Set the Calendar to the equinox
+			const sunrise = this.getSeaLevelSunrise();
+			const alotBy16point04Degrees = this.getSunriseOffsetByDegrees(90.0 + 16.04);
+			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point04Degrees.toMillis()) / 60_000);
+			this.setDate(originalDate);
 
-		const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
-		const dakahZmanit = shaahZmanit / 60;
+			const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+			const dakahZmanit = shaahZmanit / 60;
 
-		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit))
-	}
+			return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit))
+  }
 
   getEarliestTalitAndTefilinAmudeiHoraah() {
 			const originalDate = this.getDate()
 			this.setDate(new Date("March 17 " + originalDate.year.toString())); // Set the Calendar to the equinox
 			const sunrise = this.getSeaLevelSunrise();
-			const alotBy16point1Degrees = this.getAlos16Point1Degrees(); // 16.1 degrees is 72 minutes before sunrise in Netanya on the equinox, so no adjustment is needed
-			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point1Degrees.toMillis()) / 60_000);
+			const alotBy16point04Degrees = this.getSunriseOffsetByDegrees(90.0 + 16.04);
+			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point04Degrees.toMillis()) / 60_000);
 			this.setDate(originalDate);
 
 			const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
@@ -336,7 +336,7 @@ getTzaitAmudeiHoraah() {
     const originalDate = this.getDate()
     this.setDate(new Date("March 17 " + originalDate.year.toString()))
     const sunset = this.getSeaLevelSunset();
-    const tzaitBy3point86degrees = this.getSunsetOffsetByDegrees(KosherZmanim.AstronomicalCalendar.GEOMETRIC_ZENITH + 3.86);
+    const tzaitBy3point86degrees = this.getSunsetOffsetByDegrees(KosherZmanim.AstronomicalCalendar.GEOMETRIC_ZENITH + 3.7);
     const numberOfMinutes = ((tzaitBy3point86degrees.toMillis() - sunset.toMillis()) / 60_000);
     this.setDate(originalDate);
 
@@ -350,7 +350,7 @@ getTzaitLChumraAmudeiHoraah() {
   const originalDate = this.getDate()
   this.setDate(new Date("March 17 " + originalDate.year.toString()))
   const sunset = this.getSeaLevelSunset();
-  const tzaitBy5point054degrees = this.getSunriseOffsetByDegrees(90.0 + 5.054);
+  const tzaitBy5point054degrees = this.getSunsetOffsetByDegrees(90.0 + 5.075);
   const numberOfMinutes = ((tzaitBy5point054degrees.toMillis() - sunset.toMillis()) / 60_000);
   this.setDate(originalDate);
 
@@ -361,14 +361,14 @@ getTzaitLChumraAmudeiHoraah() {
 }
 
 getTzaitShabbatAmudeiHoraah() {
-  return this.getSunsetOffsetByDegrees(90.0 + 7.18);
+  return this.getSunsetOffsetByDegrees(90.0 + 7.165);
 }
 
 getTzais72ZmanisAmudeiHoraah() {
   const originalDate = this.getDate()
   this.setDate(new Date("March 17 " + originalDate.year.toString()))
   const sunset = this.getSeaLevelSunset();
-  const tzaitBy16Degrees = this.getSunriseOffsetByDegrees(90.0 + 16.0);
+  const tzaitBy16Degrees = this.getSunsetOffsetByDegrees(90.0 + 16.04);
   const numberOfMinutes = ((tzaitBy16Degrees.toMillis() - sunset.toMillis()) / 60_000);
   this.setDate(originalDate);
 
@@ -711,8 +711,698 @@ function updateZmanimList() {
   var shaahZmanit = document.getElementById("ShaahZmanit");
 
   if (isLuachAmudeiHoraahMode) {
-    
-  } else {
+      if (!showSeconds) {
+    alot.innerHTML =
+      "<b>" +
+      getAlotString() +
+      "</b>" + addInfoIcon("Alot") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getAlos72ZmanisAmudeiHoraah()) +
+      zmanimCalendar.getAlos72ZmanisAmudeiHoraah().setZone(timezone).toFormat("h:mm a") +
+      "</span>";
+    talit.innerHTML =
+      "<b>" +
+      getTalitTefilinString() +
+      "</b>" + addInfoIcon("TalitTefilin") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getEarliestTalitAndTefilinAmudeiHoraah()) +
+      zmanimCalendar
+        .getEarliestTalitAndTefilinAmudeiHoraah()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+    sunrise.innerHTML =
+      "<b>" +
+      getMishorSunriseString() +
+      "</b>" + addInfoIcon("Sunrise") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSeaLevelSunrise()) +
+      zmanimCalendar
+        .getSeaLevelSunrise()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+    latestShmaMGA.innerHTML =
+      "<b>" +
+      getLatestShmaMGAString() +
+      "</b>" + addInfoIcon("LatestShmaMGA") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(
+        zmanimCalendar.getSofZmanShmaMGA72MinutesZmanisAmudeiHoraah()
+      ) +
+      zmanimCalendar
+        .getSofZmanShmaMGA72MinutesZmanisAmudeiHoraah()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+    latestShmaGRA.innerHTML =
+      "<b>" +
+      getLatestShmaGRAString() +
+      "</b>" + addInfoIcon("LatestShmaGRA") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanShmaGRA()) +
+      zmanimCalendar
+        .getSofZmanShmaGRA()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+
+    if (
+      jewishCalendar.getYomTovIndex() ===
+      KosherZmanim.JewishCalendar.EREV_PESACH
+    ) {
+      sofZmanAchilatChametz.style.display = "block";
+      sofZmanBiurChametz.style.display = "block";
+      sofZmanAchilatChametz.innerHTML =
+        "<b>" +
+        getSofZmanAchilatChametzString() +
+        "</b>" + addInfoIcon("SofZmanAchilatChametz") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(
+          zmanimCalendar.getSofZmanAchilatChametzMGAAmudeiHoraah()
+        ) +
+        zmanimCalendar
+          .getSofZmanAchilatChametzMGAAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm a") +
+        "</span>";
+      latestBerachotShmaGRA.innerHTML =
+        "<b>" +
+        getLatestBerachotShmaGRAString() +
+        "</b>" + addInfoIcon("LatestBerachotShmaGRA") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanTfilaGRA()) +
+        zmanimCalendar
+          .getSofZmanTfilaGRA()
+          .setZone(timezone)
+          .toFormat("h:mm a") +
+        "</span>";
+      sofZmanBiurChametz.innerHTML =
+        "<b>" +
+        getSofZmanBiurChametzString() +
+        "</b>" + addInfoIcon("SofZmanBiurChametz") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanBiurChametzMGAAmudeiHoraah()) +
+        zmanimCalendar
+          .getSofZmanBiurChametzMGAAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm a") +
+        "</span>";
+    } else {
+      sofZmanAchilatChametz.style.display = "none";
+      sofZmanBiurChametz.style.display = "none";
+      latestBerachotShmaGRA.innerHTML =
+        "<b>" +
+        getLatestBerachotShmaGRAString() +
+        "</b>" + addInfoIcon("LatestBerachotShmaGRA") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanTfilaGRA()) +
+        zmanimCalendar
+          .getSofZmanTfilaGRA()
+          .setZone(timezone)
+          .toFormat("h:mm a") +
+        "</span>";
+    }
+
+    chatzot.innerHTML =
+      "<b>" +
+      getChatzotString() +
+      "</b>" + addInfoIcon("Chatzot") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getChatzos()) +
+      zmanimCalendar.getChatzos().setZone(timezone).toFormat("h:mm a") +
+      "</span>";
+    minchaGedola.innerHTML =
+      "<b>" +
+      getMinchaGedolaString() +
+      "</b>" + addInfoIcon("MinchaGedola") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(
+        zmanimCalendar.getMinchaGedolaGreaterThan30()
+      ) +
+      zmanimCalendar
+        .getMinchaGedolaGreaterThan30()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+    minchaKetana.innerHTML =
+      "<b>" +
+      getMinchaKetanaString() +
+      "</b>" + addInfoIcon("MinchaKetana") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getMinchaKetana()) +
+      zmanimCalendar.getMinchaKetana().setZone(timezone).toFormat("h:mm a") +
+      "</span>";
+    plag.innerHTML =
+      "<b>" +
+      getPlagString() + " (הלכה ברורה)" +
+      "</b>" + addInfoIcon("Plag") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah()) +
+      zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah().setZone(timezone).toFormat("h:mm a") +
+      "</span>"
+		  +
+		"<b>" +
+      getPlagString() + " (ילקוט יוסף)" +
+      "</b>" + addInfoIcon("Plag") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaYalkutYosefAmudeiHoraah()) +
+      zmanimCalendar.getPlagHaminchaYalkutYosefAmudeiHoraah().setZone(timezone).toFormat("h:mm a") +
+      "</span>"
+    if (
+      jewishCalendar.hasCandleLighting() &&
+      jewishCalendar.isAssurBemelacha()
+    ) {
+      if (jewishCalendar.getDayOfWeek() !== 6) {
+        tzeitCandles.style.display = "block";
+        tzeitCandles.innerHTML =
+          "<b>" +
+          getCandleLightingString() +
+          "</b>" + addInfoIcon("CandleLighting") +
+          "<span>" +
+          addArrowIfNextUpcomingZman(zmanimCalendar.getTzait()) +
+        zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm a") + "</span>";
+      } else {
+        tzeitCandles.style.display = "none";
+      }
+    } else {
+      tzeitCandles.style.display = "none";
+    }
+    if (
+      (jewishCalendar.hasCandleLighting() &&
+        !jewishCalendar.isAssurBemelacha()) ||
+      jewishCalendar.getDayOfWeek() === 6
+    ) {
+      var cookieForCLT = getCookie("candleLightingTime");
+      if (cookieForCLT) {
+        zmanimCalendar.setCandleLightingOffset(parseInt(cookieForCLT));
+      } else {
+        zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
+      }
+      shabbatAndChagTimes.style.display = "block";
+      var alertString = "";
+      if (isZmanimInHebrew) {
+        alertString = "<b>" + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + " : " + getCandleLightingString() + "<hr>";
+      } else {
+        alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<hr>";
+      }
+      var backup = zmanimCalendar.getDate().toJSDate();
+      var nextDay = zmanimCalendar.getDate().toJSDate();
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      while (jewishCalendar.isAssurBemelacha()) {//while the day is assur bemelacha,
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      if (!jewishCalendar.isAssurBemelacha()) {// if the day is not assur bemelacha, we moved to the day after shabbat/yom tov
+        nextDay.setDate(nextDay.getDate() - 1);//go back to the last day of shabbat/yom tov
+      }
+      }
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      zmanimCalendar.setDate(nextDay);
+
+      if (isZmanimInHebrew) {
+        alertString += zmanimCalendar.getTzaitShabbatAmudeiHoraah().setZone(timezone).toFormat("h:mm a") + " : " + getTzaitShabbatChagString(jewishCalendar)
+      } else {
+        alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaitShabbatAmudeiHoraah().setZone(timezone).toFormat("h:mm a")
+        + "</b>";
+      }
+
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
+      zmanimCalendar.setDate(backup);
+
+      shabbatAndChagTimes.innerHTML = alertString;
+
+      candle.style.display = "block";
+      candle.innerHTML =
+        "<b>" +
+        getCandleLightingString() +
+        " (" +
+        zmanimCalendar.getCandleLightingOffset() +
+        ")" +
+        "</b>" + addInfoIcon("CandleLighting") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
+        zmanimCalendar
+          .getCandleLighting()
+          .setZone(timezone)
+          .toFormat("h:mm a") +
+        "</span>";
+      // add on click event to the candle lighting time to save the time to a cookie
+      candle.onclick = function () {
+        if (document.getElementById("candleMinutes") == null) {
+          //if the input element doesn't exist yet then add it to the webpage
+          candle.innerHTML =
+            "<b>" +
+            getCandleLightingString() +
+            "</b>" + addInfoIcon("CandleLighting") +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            "</b>" +
+            "<span>" +
+            addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
+            zmanimCalendar
+              .getCandleLighting()
+              .setZone(timezone)
+              .toFormat("h:mm a") +
+            "</span>";
+        }
+      };
+    } else {
+      shabbatAndChagTimes.style.display = "none";
+      candle.style.display = "none";
+    }
+
+    sunset.innerHTML =
+      "<b>" +
+      getSunsetString() +
+      "</b>" + addInfoIcon("Sunset") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getElevationAdjustedSunset()) +
+      zmanimCalendar.getElevationAdjustedSunset().setZone(timezone).toFormat("h:mm a") +
+      "</span>";
+    tzeit.innerHTML =
+      "<b>" +
+      getTzeitString() +
+      "</b>" + addInfoIcon("Tzeit") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitAmudeiHoraah()) +
+      zmanimCalendar.getTzaitAmudeiHoraah().setZone(timezone).toFormat("h:mm a") +
+      "</span>";
+
+    if (
+      jewishCalendar.isTaanis() &&
+      !(
+        jewishCalendar.getYomTovIndex() ===
+        KosherZmanim.JewishCalendar.YOM_KIPPUR
+      )
+    ) {
+      tzeitT.style.display = "block";
+      tzeitTL.style.display = "none";
+      tzeitT.innerHTML =
+        "<b>" +
+        getTzaitTaanitString() +
+        "</b>" + addInfoIcon("TzaitTaanit") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitLChumraAmudeiHoraah()) +
+        zmanimCalendar
+          .getTzaitLChumraAmudeiHoraah()
+          .setZone(timezone)
+        .toFormat("h:mm a") +
+        "</span>";
+    } else {
+      tzeitT.style.display = "none";
+      tzeitTL.style.display = "none";
+    }
+
+    if (
+      jewishCalendar.isAssurBemelacha() &&
+      !jewishCalendar.hasCandleLighting()
+    ) {
+      tzaitShabbatChag.style.display = "block";
+      tzaitShabbatChag.innerHTML =
+        "<b>" +
+        getTzaitShabbatChagString(jewishCalendar) +
+        " (7.165) " +
+        "</b>" + addInfoIcon("TzaitShabbat") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitShabbatAmudeiHoraah()) +
+        zmanimCalendar
+          .getTzaitShabbatAmudeiHoraah()
+          .setZone(timezone)
+        .toFormat("h:mm a") +
+        "</span>";
+    } else {
+      tzaitShabbatChag.style.display = "none";
+    }
+
+    rt.innerHTML =
+      "<b>" +
+      getRabbeinuTamString() +
+      "</b>" + addInfoIcon("RabbeinuTam") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getTzais72ZmanisLKulah()) +
+      zmanimCalendar
+        .getTzais72ZmanisLKulah()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+    chatzotLayla.innerHTML =
+      "<b>" +
+      getChatzotLaylaString() +
+      "</b>" + addInfoIcon("ChatzotLayla") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSolarMidnight()) +
+      zmanimCalendar
+        .getSolarMidnight()
+        .setZone(timezone)
+        .toFormat("h:mm a") +
+      "</span>";
+  } else {// if the user wants to see the seconds
+    alot.innerHTML =
+      "<b>" +
+      getAlotString() +
+      "</b>" + addInfoIcon("Alot") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getAlos72ZmanisAmudeiHoraah()) +
+      zmanimCalendar.getAlos72ZmanisAmudeiHoraah().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>";
+    talit.innerHTML =
+      "<b>" +
+      getTalitTefilinString() +
+      "</b>" + addInfoIcon("TalitTefilin") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getEarliestTalitAndTefilinAmudeiHoraah()) +
+      zmanimCalendar
+        .getEarliestTalitAndTefilinAmudeiHoraah()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+    sunrise.innerHTML =
+      "<b>" +
+      getMishorSunriseString() +
+      "</b>" + addInfoIcon("Sunrise") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSeaLevelSunrise()) +
+      zmanimCalendar
+        .getSeaLevelSunrise()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+    latestShmaMGA.innerHTML =
+      "<b>" +
+      getLatestShmaMGAString() +
+      "</b>" + addInfoIcon("LatestShmaMGA") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(
+        zmanimCalendar.getSofZmanShmaMGA72MinutesZmanisAmudeiHoraah()
+      ) +
+      zmanimCalendar
+        .getSofZmanShmaMGA72MinutesZmanisAmudeiHoraah()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+    latestShmaGRA.innerHTML =
+      "<b>" +
+      getLatestShmaGRAString() +
+      "</b>" + addInfoIcon("LatestShmaGRA") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanShmaGRA()) +
+      zmanimCalendar
+        .getSofZmanShmaGRA()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+
+    if (
+      jewishCalendar.getYomTovIndex() ===
+      KosherZmanim.JewishCalendar.EREV_PESACH
+    ) {
+      sofZmanAchilatChametz.style.display = "block";
+      sofZmanBiurChametz.style.display = "block";
+      sofZmanAchilatChametz.innerHTML =
+        "<b>" +
+        getSofZmanAchilatChametzString() +
+        "</b>" + addInfoIcon("SofZmanAchilatChametz") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(
+          zmanimCalendar.getSofZmanAchilatChametzMGAAmudeiHoraah()
+        ) +
+        zmanimCalendar
+          .getSofZmanAchilatChametzMGAAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+      latestBerachotShmaGRA.innerHTML =
+        "<b>" +
+        getLatestBerachotShmaGRAString() +
+        "</b>" + addInfoIcon("LatestBerachotShmaGRA") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanTfilaGRA()) +
+        zmanimCalendar
+          .getSofZmanTfilaGRA()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+      sofZmanBiurChametz.innerHTML =
+        "<b>" +
+        getSofZmanBiurChametzString() +
+        "</b>" + addInfoIcon("SofZmanBiurChametz") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanBiurChametzMGAAmudeiHoraah()) +
+        zmanimCalendar
+          .getSofZmanBiurChametzMGAAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+    } else {
+      sofZmanAchilatChametz.style.display = "none";
+      sofZmanBiurChametz.style.display = "none";
+      latestBerachotShmaGRA.innerHTML =
+        "<b>" +
+        getLatestBerachotShmaGRAString() +
+        "</b>" + addInfoIcon("LatestBerachotShmaGRA") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getSofZmanTfilaGRA()) +
+        zmanimCalendar
+          .getSofZmanTfilaGRA()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+    }
+
+    chatzot.innerHTML =
+      "<b>" +
+      getChatzotString() +
+      "</b>" + addInfoIcon("Chatzot") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getChatzos()) +
+      zmanimCalendar.getChatzos().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>";
+    minchaGedola.innerHTML =
+      "<b>" +
+      getMinchaGedolaString() +
+      "</b>" + addInfoIcon("MinchaGedola") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(
+        zmanimCalendar.getMinchaGedolaGreaterThan30()
+      ) +
+      zmanimCalendar
+        .getMinchaGedolaGreaterThan30()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+    minchaKetana.innerHTML =
+      "<b>" +
+      getMinchaKetanaString() +
+      "</b>" + addInfoIcon("MinchaKetana") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getMinchaKetana()) +
+      zmanimCalendar.getMinchaKetana().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>";
+    plag.innerHTML =
+      "<b>" +
+      getPlagString() + " (הלכה ברורה)" +
+      "</b>" + addInfoIcon("Plag") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah()) +
+      zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>"
+		  +
+		"<b>" +
+      getPlagString() + " (ילקוט יוסף)" +
+      "</b>" + addInfoIcon("Plag") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaYalkutYosefAmudeiHoraah()) +
+      zmanimCalendar.getPlagHaminchaYalkutYosefAmudeiHoraah().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>"
+    if (
+      jewishCalendar.hasCandleLighting() &&
+      jewishCalendar.isAssurBemelacha()
+    ) {
+      if (jewishCalendar.getDayOfWeek() !== 6) {
+        tzeitCandles.style.display = "block";
+        tzeitCandles.innerHTML =
+          "<b>" +
+          getCandleLightingString() +
+          "</b>" + addInfoIcon("CandleLighting") +
+          "<span>" +
+          addArrowIfNextUpcomingZman(zmanimCalendar.getTzait()) +
+        zmanimCalendar.getTzait().setZone(timezone).toFormat("h:mm:ss a") + "</span>";
+      } else {
+        tzeitCandles.style.display = "none";
+      }
+    } else {
+      tzeitCandles.style.display = "none";
+    }
+    if (
+      (jewishCalendar.hasCandleLighting() &&
+        !jewishCalendar.isAssurBemelacha()) ||
+      jewishCalendar.getDayOfWeek() === 6
+    ) {
+      var cookieForCLT = getCookie("candleLightingTime");
+      if (cookieForCLT) {
+        zmanimCalendar.setCandleLightingOffset(parseInt(cookieForCLT));
+      } else {
+        zmanimCalendar.setCandleLightingOffset(20); //default to 20 minutes
+      }
+      shabbatAndChagTimes.style.display = "block";
+      var alertString = "";
+      if (isZmanimInHebrew) {
+        alertString = "<b>" + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + " : " + getCandleLightingString() + "<hr>";
+      } else {
+        alertString = "<b>" + getCandleLightingString() + " : " + zmanimCalendar.getCandleLighting().setZone(timezone).toFormat("h:mm a") + "<hr>";
+      }
+      var backup = zmanimCalendar.getDate().toJSDate();
+      var nextDay = zmanimCalendar.getDate().toJSDate();
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      while (jewishCalendar.isAssurBemelacha()) {//while the day is assur bemelacha,
+      nextDay.setDate(nextDay.getDate() + 1);//move to next day
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      if (!jewishCalendar.isAssurBemelacha()) {// if the day is not assur bemelacha, we moved to the day after shabbat/yom tov
+        nextDay.setDate(nextDay.getDate() - 1);//go back to the last day of shabbat/yom tov
+      }
+      }
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(nextDay));
+      zmanimCalendar.setDate(nextDay);
+
+      if (isZmanimInHebrew) {
+        alertString += zmanimCalendar.getTzaitShabbatAmudeiHoraah().setZone(timezone).toFormat("h:mm a") + " : " + getTzaitShabbatChagString(jewishCalendar)
+      } else {
+        alertString += getTzaitShabbatChagString(jewishCalendar) + " : " + zmanimCalendar.getTzaitShabbatAmudeiHoraah().setZone(timezone).toFormat("h:mm a")
+        + "</b>";
+      }
+
+      jewishCalendar.setDate(luxon.DateTime.fromJSDate(backup));
+      zmanimCalendar.setDate(backup);
+
+      shabbatAndChagTimes.innerHTML = alertString;
+
+      candle.style.display = "block";
+      candle.innerHTML =
+        "<b>" +
+        getCandleLightingString() +
+        " (" +
+        zmanimCalendar.getCandleLightingOffset() +
+        ")" +
+        "</b>" + addInfoIcon("CandleLighting") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
+        zmanimCalendar
+          .getCandleLighting()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+      // add on click event to the candle lighting time to save the time to a cookie
+      candle.onclick = function () {
+        if (document.getElementById("candleMinutes") == null) {
+          //if the input element doesn't exist yet then add it to the webpage
+          candle.innerHTML =
+            "<b>" +
+            getCandleLightingString() +
+            "</b>" + addInfoIcon("CandleLighting") +
+            ' (<input type="number" id="candleMinutes" onchange="saveCandleLightingSetting()"/>) ' +
+            "</b>" +
+            "<span>" +
+            addArrowIfNextUpcomingZman(zmanimCalendar.getCandleLighting()) +
+            zmanimCalendar
+              .getCandleLighting()
+              .setZone(timezone)
+              .toFormat("h:mm:ss a") +
+            "</span>";
+        }
+      };
+    } else {
+      shabbatAndChagTimes.style.display = "none";
+      candle.style.display = "none";
+    }
+
+    sunset.innerHTML =
+      "<b>" +
+      getSunsetString() +
+      "</b>" + addInfoIcon("Sunset") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getElevationAdjustedSunset()) +
+      zmanimCalendar.getElevationAdjustedSunset().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>";
+    tzeit.innerHTML =
+      "<b>" +
+      getTzeitString() +
+      "</b>" + addInfoIcon("Tzeit") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitAmudeiHoraah()) +
+      zmanimCalendar.getTzaitAmudeiHoraah().setZone(timezone).toFormat("h:mm:ss a") +
+      "</span>";
+
+    if (
+      jewishCalendar.isTaanis() &&
+      !(
+        jewishCalendar.getYomTovIndex() ===
+        KosherZmanim.JewishCalendar.YOM_KIPPUR
+      )
+    ) {
+      tzeitT.style.display = "block";
+      tzeitTL.style.display = "none";
+      tzeitT.innerHTML =
+        "<b>" +
+        getTzaitTaanitString() +
+        "</b>" + addInfoIcon("TzaitTaanit") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitLChumraAmudeiHoraah()) +
+        zmanimCalendar
+          .getTzaitLChumraAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+    } else {
+      tzeitT.style.display = "none";
+      tzeitTL.style.display = "none";
+    }
+
+    if (
+      jewishCalendar.isAssurBemelacha() &&
+      !jewishCalendar.hasCandleLighting()
+    ) {
+      tzaitShabbatChag.style.display = "block";
+      tzaitShabbatChag.innerHTML =
+        "<b>" +
+        getTzaitShabbatChagString(jewishCalendar) +
+        " (7.165) " +
+        "</b>" + addInfoIcon("TzaitShabbat") +
+        "<span>" +
+        addArrowIfNextUpcomingZman(zmanimCalendar.getTzaitShabbatAmudeiHoraah()) +
+        zmanimCalendar
+          .getTzaitShabbatAmudeiHoraah()
+          .setZone(timezone)
+          .toFormat("h:mm:ss a") +
+        "</span>";
+    } else {
+      tzaitShabbatChag.style.display = "none";
+    }
+
+    rt.innerHTML =
+      "<b>" +
+      getRabbeinuTamString() +
+      "</b>" + addInfoIcon("RabbeinuTam") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getTzais72ZmanisLKulah()) +
+      zmanimCalendar
+        .getTzais72ZmanisLKulah()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+    chatzotLayla.innerHTML =
+      "<b>" +
+      getChatzotLaylaString() +
+      "</b>" + addInfoIcon("ChatzotLayla") +
+      "<span>" +
+      addArrowIfNextUpcomingZman(zmanimCalendar.getSolarMidnight()) +
+      zmanimCalendar
+        .getSolarMidnight()
+        .setZone(timezone)
+        .toFormat("h:mm:ss a") +
+      "</span>";
+  }
+  } else {// not Amudei Horaah mode
   if (!showSeconds) {
     alot.innerHTML =
       "<b>" +
@@ -2375,3 +3065,4 @@ function addZmanim(zmanim) {
 }
 
 init(); // initialize the page with the current date and location as well as any other buttons that need to be initialized
+
