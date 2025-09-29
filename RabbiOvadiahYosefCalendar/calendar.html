@@ -154,7 +154,7 @@
     </div>
 
     <h2>Rabbi Ovadiah Yosef Calendar</h2>
-    <h5>(Luach Ohr HaChaim)</h5>
+    <h5 id="luach-title">(Luach Ohr HaChaim)</h5>
     <p id="ShabbatAndChagTimes" class="borderAlert"></p>
     <!--Non Zmanim Information-->
     <p id="LocationName" class="border"></p>
@@ -253,6 +253,14 @@
           zmanimCalendar.setDate(dateObject);
           updateZmanimList();
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+          if (localStorage.getItem("LuachAmudeiHoraah") == "true") {
+            document.getElementById("luach-title").textContent = "(Luach Amudei Horaah)";
+          } else {
+            document.getElementById("luach-title").textContent = "(Luach Ohr HaChaim)";
+          }
+        });
       </script>
       <button id="forwardButton" class="button-18" onclick="forwardOneDay()">
         <i class="fa fa-arrow-right"></i>
@@ -275,3 +283,4 @@
     </a>
   </footer>
 </html>
+
