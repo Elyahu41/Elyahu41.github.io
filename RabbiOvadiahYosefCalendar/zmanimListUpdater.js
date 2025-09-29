@@ -280,7 +280,7 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
 			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point04Degrees.toMillis()) / 60_000);
 			this.setDate(originalDate);
 
-			const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+    		const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
 			const dakahZmanit = shaahZmanit / 60;
 
 			return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit))
@@ -294,7 +294,7 @@ class ROZmanim extends KosherZmanim.ComplexZmanimCalendar {
 			const numberOfMinutes = ((sunrise.toMillis() - alotBy16point04Degrees.toMillis()) / 60_000);
 			this.setDate(originalDate);
 
-			const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+    		const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
 			const dakahZmanit = shaahZmanit / 60;
 
 			return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunrise(), -(numberOfMinutes * dakahZmanit * 5 / 6));
@@ -317,18 +317,18 @@ getSofZmanBiurChametzMGAAmudeiHoraah() {
 }
 
 getPlagHaminchaYalkutYosefAmudeiHoraah() {
-  const shaahZmanit = this.getTemporalHour(getSeaLevelSunrise(), getSeaLevelSunset());
+    	const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
 		const dakahZmanit = shaahZmanit / 60;
 		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-			getTzaitAmudeiHoraah(), -(shaahZmanit + (15 * dakahZmanit))
+			this.getTzaitAmudeiHoraah(), -(shaahZmanit + (15 * dakahZmanit))
 		);
 }
 
 getPlagHaminchaHalachaBerurahAmudeiHoraah() {
-  const shaahZmanit = this.getTemporalHour(getSeaLevelSunrise(), getSeaLevelSunset());
+    	const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
 		const dakahZmanit = shaahZmanit / 60;
 		return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(
-			getSeaLevelSunset(), -(shaahZmanit + (15 * dakahZmanit))
+			this.getSeaLevelSunset(), -(shaahZmanit + (15 * dakahZmanit))
 		);
 }
 
@@ -340,7 +340,7 @@ getTzaitAmudeiHoraah() {
     const numberOfMinutes = ((tzaitBy3point86degrees.toMillis() - sunset.toMillis()) / 60_000);
     this.setDate(originalDate);
 
-    const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+    const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
     const dakahZmanit = shaahZmanit / 60;
 
     return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), numberOfMinutes * dakahZmanit);
@@ -354,7 +354,7 @@ getTzaitLChumraAmudeiHoraah() {
   const numberOfMinutes = ((tzaitBy5point054degrees.toMillis() - sunset.toMillis()) / 60_000);
   this.setDate(originalDate);
 
-  const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+  const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
   const dakahZmanit = shaahZmanit / 60;
 
   return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), numberOfMinutes * dakahZmanit);
@@ -372,7 +372,7 @@ getTzais72ZmanisAmudeiHoraah() {
   const numberOfMinutes = ((tzaitBy16Degrees.toMillis() - sunset.toMillis()) / 60_000);
   this.setDate(originalDate);
 
-  const shaahZmanit = this.getTemporalHour(this.getSeaLevelSunrise(), this.getSeaLevelSunset());
+  const shaahZmanit = this.getTemporalHour(this.getElevationAdjustedSunrise(), this.getElevationAdjustedSunset());
   const dakahZmanit = shaahZmanit / 60;
 
   return KosherZmanim.ComplexZmanimCalendar.getTimeOffset(this.getSeaLevelSunset(), (numberOfMinutes * dakahZmanit))
@@ -3065,4 +3065,5 @@ function addZmanim(zmanim) {
 }
 
 init(); // initialize the page with the current date and location as well as any other buttons that need to be initialized
+
 
