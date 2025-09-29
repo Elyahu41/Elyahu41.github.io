@@ -861,7 +861,7 @@ function updateZmanimList() {
       addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah()) +
       zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah().setZone(timezone).toFormat("h:mm a") +
       "</span>"
-		  +
+		  + "<br>"
 		"<b>" +
       getPlagString() + " (ילקוט יוסף)" +
       "</b>" + addInfoIcon("Plag") +
@@ -1206,7 +1206,7 @@ function updateZmanimList() {
       addArrowIfNextUpcomingZman(zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah()) +
       zmanimCalendar.getPlagHaminchaHalachaBerurahAmudeiHoraah().setZone(timezone).toFormat("h:mm:ss a") +
       "</span>"
-		  +
+		  + "<br>"
 		"<b>" +
       getPlagString() + " (ילקוט יוסף)" +
       "</b>" + addInfoIcon("Plag") +
@@ -3065,5 +3065,6 @@ function addZmanim(zmanim) {
 }
 
 init(); // initialize the page with the current date and location as well as any other buttons that need to be initialized
+
 
 
