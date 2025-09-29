@@ -186,6 +186,7 @@ function toggleDarkMode() {
           localStorage.setItem("isDarkMode", isDarkMode);
         });
       </script>
+    
       <script>
         let inputForLuachAmudeiHoraah = document.getElementById("LuachAmudeiHoraah");
         inputForLuachAmudeiHoraah.addEventListener("change", function () {
@@ -195,6 +196,7 @@ function toggleDarkMode() {
             localStorage.setItem("LuachAmudeiHoraah", "false");
           }
         });
+        inputForLuachAmudeiHoraah.checked = localStorage.getItem("LuachAmudeiHoraah") == "true";
       </script>
 </body>
 <footer id="footer">
