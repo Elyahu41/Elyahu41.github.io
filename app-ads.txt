@@ -428,7 +428,7 @@ ucfunnel.com, par-BE7E667E3339AD6BC7BA2887D6E7227A, RESELLER
 screenil.com, 554156, RESELLER
 appnexus.com, 14080, RESELLER, f5ab79cb980f11d1
 33across.com, 0010b00002MptSLAAZ, RESELLER, bbea06d9c4d2853c
-app-stock.com, 256917, RESELLER-$2K-$5K
+app-stock.com, 256917, RESELLER
 axonix.com, 59107, RESELLER, bc385f2b4a87b721
 pubnative.net, 1007262, RESELLER, d641df8625486a7b
 appnexus.com, 1354, RESELLER
